@@ -2,30 +2,40 @@
 #include "gpu_resource.h"
 #include "gpu_buffer.h"
 namespace kengine{
-	enum BufferType {
-		BT_POSITION,
-		BT_COLOR,
-		BT_NORMAL,
-		BT_TANGENT,
-		BT_UV0,
-		BT_UV1,
-		BT_BONEIDS,
-		BT_WEIGHTS,
-		BT_CUSTOM1,
-		BT_CUSTOM2,
-		BT_CUSTOM3,
-		BT_CUSTOM4,
-		BT_CUSTOM5,
-		BT_INDICES,
+	enum class GPUType {
+		BYTE = GL_BYTE,
+		UNSIGNED_BYTE = GL_UNSIGNED_BYTE,
+		SHORT = GL_SHORT,
+		UNSIGNED_SHORT = GL_UNSIGNED_SHORT,
+		INT = GL_INT,
+		UNSIGNED_INT = GL_UNSIGNED_INT,
+		FLOAT = GL_FLOAT,
+	};
+
+	enum class MeshBufferType {
+		POSITION,
+		COLOR,
+		NORMAL,
+		TANGENT,
+		UV1,
+		UV2,
+		BONEIDS,
+		WEIGHTS,
+		CUSTOM1,
+		CUSTOM2,
+		CUSTOM3,
+		CUSTOM4,
+		CUSTOM5,
+		INDICES,
 	};
 
 	class MeshBuffer {
 	public:
-		BufferType type;
+		MeshBufferType type;
+		GPUType data_type = GPUType::FLOAT;
+		GPUBufferHit hit = GPUBufferHit::STATIC_DRAW;
 		bool need_normalized = false;
-		int data_type = GL_FLOAT;
-		int component_num = 0;
-		int size = 0;
+		uint8 component_num = 1;
 		BufferPtr buffer;
 	};
 	class GPUObject:public GPUResource
@@ -33,7 +43,7 @@ namespace kengine{
 	public:
 		GPUID gpu_id;
 		std::vector<GPUBufferPtr> gpu_buffers;
-		GPUObject(std::map<BufferType, MeshBuffer>& buffers)
+		GPUObject(std::map<MeshBufferType, MeshBuffer>& buffers)
 		{
 			create(buffers);
 		}
@@ -43,7 +53,7 @@ namespace kengine{
 			destroy();
 		}
 
-		void create(std::map<BufferType, MeshBuffer>& buffers) {
+		void create(std::map<MeshBufferType, MeshBuffer>& buffers) {
 			glGenVertexArrays(1, &gpu_id);
 			glBindVertexArray(gpu_id);
 
@@ -53,19 +63,19 @@ namespace kengine{
 				auto buffer_type = item.first;
 				GPUBufferPtr gpu_buffer = std::make_shared<GPUBuffer>();
 				gpu_buffers.push_back(gpu_buffer);
-				if(buffer_type== BT_INDICES)
+				if(buffer_type== MeshBufferType::INDICES)
 				{
-					gpu_buffer->create(buffer.buffer, GL_ELEMENT_ARRAY_BUFFER, GL_STATIC_DRAW);
+					gpu_buffer->create(buffer.buffer, GL_ELEMENT_ARRAY_BUFFER,(int) buffer.hit);
 				}else
 				{
-					gpu_buffer->create(buffer.buffer, GL_ARRAY_BUFFER, GL_STATIC_DRAW);
-					glEnableVertexAttribArray(buffer_type);
-					if (buffer.data_type == GL_FLOAT)
+					gpu_buffer->create(buffer.buffer, GL_ARRAY_BUFFER, (int)buffer.hit);
+					glEnableVertexAttribArray((int) buffer_type);
+					if (buffer.data_type == GPUType::FLOAT)
 					{
-						glVertexAttribPointer((GLuint)buffer_type, buffer.component_num, buffer.data_type, buffer.need_normalized, 0, (const GLvoid*)0);
+						glVertexAttribPointer((GLuint)buffer_type, buffer.component_num, (GLenum)buffer.data_type, buffer.need_normalized, 0, (const GLvoid*)0);
 					}
-					else if (buffer.data_type == GL_INT) {
-						glVertexAttribIPointer((GLuint)buffer_type, buffer.component_num, buffer.data_type, 0, (const GLvoid*)0);
+					else if (buffer.data_type == GPUType::INT) {
+						glVertexAttribIPointer((GLuint)buffer_type, buffer.component_num, (GLenum)buffer.data_type, 0, (const GLvoid*)0);
 					}
 				}
 			}

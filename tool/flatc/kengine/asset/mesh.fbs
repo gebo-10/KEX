@@ -1,0 +1,11 @@
+include "common.fbs";
+namespace kserialize;
+table Mesh{
+	asset_common:AssetCommon;
+	indices:[ubyte];
+	position:[ubyte];
+	color:[ubyte];
+	normal:[ubyte];
+	uv:[ubyte];
+}
+root_type Mesh;
