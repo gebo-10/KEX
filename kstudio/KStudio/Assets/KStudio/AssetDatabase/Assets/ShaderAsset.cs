@@ -50,9 +50,11 @@ namespace KStudio
                         break;
                     case State.Vert:
                         shader.Vert += line;
+                        shader.Vert += "\n";
                         break;
                     case State.Frag:
                         shader.Frag += line;
+                        shader.Frag += "\n";
                         break;
                 }
             }

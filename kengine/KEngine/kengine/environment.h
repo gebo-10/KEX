@@ -8,6 +8,7 @@
 
 #include "service/name_service.h"
 #define Env Environment::instance()
+#define NAME(str) Env.name_service.get_id(str) 
 namespace kengine
 {
 	class Environment

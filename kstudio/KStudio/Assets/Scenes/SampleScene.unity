@@ -289,9 +289,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 100b3b9b679b69f4c8e7443d148ebe80, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  namedatabase: Out/name.db
+  namedatabase: ../../bundle/name.db
   dir: Assets/Bundle
-  bundleName: Out/test.bundle
+  bundleName: ../../bundle/test.bundle
 --- !u!4 &779735859
 Transform:
   m_ObjectHideFlags: 0

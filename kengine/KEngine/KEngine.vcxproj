@@ -74,21 +74,27 @@
     <LinkIncremental>true</LinkIncremental>
     <IncludePath>D:\KEngine\KEngine\KEngine\kengine\external;D:\KEngine\KEngine\KEngine\kengine\external\flatbuffers\include;D:\KEngine\KEngine\KEngine\kengine\external\mio\single_include\mio;D:\KEngine\KEngine\KEngine\kengine\external\rapidjson\include;D:\KEngine\KEngine\KEngine\kengine\external\glm;D:\KEngine\KEngine\KEngine\kengine\external\spdlog\include;D:\KEngine\KEngine\KEngine;D:\KEngine\KEngine\KEngine\window\extern\glfw\include;D:\KEngine\KEngine\KEngine\window\extern\glew\include;D:\KEngine\KEngine\KEngine\kengine\external\libuv\include;D:\KEngine\KEngine\KEngine\kengine\external\sol;D:\KEngine\KEngine\KEngine\kengine\external\lua-5.1.5\src;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)$(Platform)\$(Configuration)\;$(LibraryPath)</LibraryPath>
+    <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)$(Platform)\$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
     <IncludePath>D:\KEngine\KEngine\KEngine\kengine\external;D:\KEngine\KEngine\KEngine\kengine\external\flatbuffers\include;D:\KEngine\KEngine\KEngine\kengine\external\mio\single_include\mio;D:\KEngine\KEngine\KEngine\kengine\external\rapidjson\include;D:\KEngine\KEngine\KEngine\kengine\external\glm;D:\KEngine\KEngine\KEngine\kengine\external\spdlog\include;D:\KEngine\KEngine\KEngine;D:\KEngine\KEngine\KEngine\window\extern\glfw\include;D:\KEngine\KEngine\KEngine\window\extern\glew\include;D:\KEngine\KEngine\KEngine\kengine\external\libuv\include;D:\KEngine\KEngine\KEngine\kengine\external\sol;D:\KEngine\KEngine\KEngine\kengine\external\lua-5.1.5\src;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)$(Platform)\$(Configuration)\;$(LibraryPath)</LibraryPath>
+    <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)$(Platform)\$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
     <IncludePath>$(SolutionDir)KEngine\kengine\external;$(SolutionDir)KEngine\kengine\external\flatbuffers\include;$(SolutionDir)KEngine\kengine\external\mio\single_include\mio;$(SolutionDir)KEngine\kengine\external\rapidjson\include;$(SolutionDir)KEngine\kengine\external\glm;$(SolutionDir)KEngine\kengine\external\spdlog\include;$(SolutionDir)KEngine;$(SolutionDir)KEngine\window\extern\glfw\include;$(SolutionDir)KEngine\window\extern\glew\include;$(SolutionDir)KEngine\kengine\external\libuv\include;$(SolutionDir)KEngine\kengine\external\sol;$(SolutionDir)KEngine\kengine\external\lua-5.1.5\src;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)$(Platform)\$(Configuration)\;$(LibraryPath)</LibraryPath>
+    <IntDir>$(SolutionDir)$(Platform)\$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
     <IncludePath>D:\KEngine\KEngine\KEngine\kengine\external;D:\KEngine\KEngine\KEngine\kengine\external\flatbuffers\include;D:\KEngine\KEngine\KEngine\kengine\external\mio\single_include\mio;D:\KEngine\KEngine\KEngine\kengine\external\rapidjson\include;D:\KEngine\KEngine\KEngine\kengine\external\glm;D:\KEngine\KEngine\KEngine\kengine\external\spdlog\include;D:\KEngine\KEngine\KEngine;D:\KEngine\KEngine\KEngine\window\extern\glfw\include;D:\KEngine\KEngine\KEngine\window\extern\glew\include;D:\KEngine\KEngine\KEngine\kengine\external\libuv\include;D:\KEngine\KEngine\KEngine\kengine\external\sol;D:\KEngine\KEngine\KEngine\kengine\external\lua-5.1.5\src;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)$(Platform)\$(Configuration)\;$(LibraryPath)</LibraryPath>
+    <IntDir>$(SolutionDir)$(Platform)\$(Configuration)\</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>

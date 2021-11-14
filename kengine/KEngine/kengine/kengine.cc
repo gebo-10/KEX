@@ -24,18 +24,23 @@ void KEngine::init() {
     //ResourceManager.load_resource();
     //Platform::instance().init_platform();
     Env.init();
-    auto vert_buff = Env.io->read_file("main/shader/default.vert.glsl");
-    string file("main/shader/default.vert.glsl");
-    auto b = Env.io->mmap_file(file);
-    info(b->data());
-    //auto bundle = Env.assets_database.load_bundle("test.bundle");
-    //Env.assets_database.load_all_bundle_asset(bundle);
-    //auto res = Env.assets_database.get_resource<Shader>(1);
-    //info(res->vert_source);
-    //res = Env.assets_database.get_resource<Shader>(0);
-    //info(res->vert_source);
+
     auto name_buff = Env.io->read_file("name.db");
     Env.name_service.init(name_buff);
+
+    //auto vert_buff = Env.io->read_file("main/shader/default.vert.glsl");
+    //string file("main/shader/default.vert.glsl");
+    //auto b = Env.io->mmap_file(file);
+    //info(b->data());
+    auto bundle = Env.assets_database.load_bundle("test.bundle");
+    Env.assets_database.load_all_bundle_asset(bundle);
+    auto id = NAME("Assets/Bundle/default.glsl");
+    auto shader = Env.assets_database.get_resource<Shader>(id);
+    info(shader->vert_source);
+    shader->cache_to_gpu();
+    //res = Env.assets_database.get_resource<Shader>(0);
+    //info(res->vert_source);
+    
     
 }
 

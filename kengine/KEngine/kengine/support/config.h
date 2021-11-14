@@ -28,8 +28,8 @@ namespace kengine {
 		~Config() {}
 		void init() {
 			//lua.open_libraries(sol::lib::base);
-			lua.script_file("config.lua");
-			data = lua["Config"];
+			//lua.script_file("config.lua");
+			//data = lua["Config"];
 		}
 		//int get_window_height();
 		//int get_frame_limit();

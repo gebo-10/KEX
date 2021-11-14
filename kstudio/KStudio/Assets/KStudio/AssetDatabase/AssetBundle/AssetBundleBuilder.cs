@@ -7,6 +7,7 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
+using UnityEditor;
 
 namespace KStudio
 {
@@ -33,6 +34,9 @@ namespace KStudio
             {
                 case AssetType.Shader:
                     var shader=new ShaderAsset(path);
+
+                    path=path.Replace("\\", "/");
+                    
                     var id = NameDatabase.Instance.add(path);
                     shader.InitCommon(type, id);
                     buffer = shader.Serialize();
