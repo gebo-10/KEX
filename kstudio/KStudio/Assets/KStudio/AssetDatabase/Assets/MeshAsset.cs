@@ -26,9 +26,9 @@ namespace KStudio
             foreach (var pos in m.vertices)
             {
                 var vec3 = new Vec3T();
-                vec3.X = pos.x;
-                vec3.Y = pos.y;
-                vec3.Z = pos.z;
+                vec3.X = pos.x*100f;
+                vec3.Y = pos.y * 100f;
+                vec3.Z = pos.z * 100f;
                 mesh.Position.Add(vec3);
             }
         }
