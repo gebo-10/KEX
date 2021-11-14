@@ -1,0 +1,48 @@
+namespace kserialize;
+enum AssetType:byte {
+	Texture = 0,
+	Shader = 1,
+	Material = 2,
+	Mesh=3,
+	Model=4,
+	Prefab=5,
+}
+
+enum MemeryType:byte {
+	RAM = 0,
+	GPU = 1,
+	RAMGPU = 2,
+}
+
+struct Vec2 {
+	x:float;
+	y:float;
+}
+struct Vec3 {
+	x:float;
+	y:float;
+	z:float;
+}
+struct Vec4 {
+	x:float;
+	y:float;
+	z:float;
+	w:float;
+}
+struct RGB{
+	r:ubyte;
+	g:ubyte;
+	b:ubyte;
+}
+struct RGBA{
+	r:ubyte;
+	g:ubyte;
+	b:ubyte;
+	a:ubyte;
+}
+
+struct AssetCommon{
+	id:uint;
+	asset_type:AssetType;
+	memery_type:MemeryType;
+}

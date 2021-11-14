@@ -1,0 +1,18 @@
+//|info_offset 4|data|info_buffer|
+
+include "common.fbs";
+namespace kserialize;
+
+table AssetInfo{
+	type:AssetType;
+	id:uint;
+	offset:uint;
+	size:uint;
+}
+
+table AssetBundle{
+	id:uint;
+	asset_infos:[AssetInfo];
+}
+
+root_type AssetBundle;

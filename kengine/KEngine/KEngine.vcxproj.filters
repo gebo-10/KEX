@@ -1,0 +1,309 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="window">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="kengine">
+      <UniqueIdentifier>{fd06948b-d56b-4352-ae17-688a875f4b95}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="kengine\core">
+      <UniqueIdentifier>{97b17164-bbb8-474d-9d91-0320f9181be0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="kengine\render">
+      <UniqueIdentifier>{dfc449d3-d207-4894-96f1-f4804edc52b5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="kengine\external">
+      <UniqueIdentifier>{6633db67-f9f2-48c3-a34d-3dab0cb45822}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="kengine\resource">
+      <UniqueIdentifier>{d8447ae0-0491-40c2-897e-40080525e9ee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="kengine\core\base">
+      <UniqueIdentifier>{20cde189-b05d-49a9-900f-934d18460050}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="kengine\core\graphics">
+      <UniqueIdentifier>{673f834b-804e-49e0-b7c7-7811896b858f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="kengine\core\io">
+      <UniqueIdentifier>{3785a8a3-bac2-4fc8-b859-af87e769244b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="kengine\core\math">
+      <UniqueIdentifier>{3384a5a7-5e75-459d-90d0-feb554e3145b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="kengine\platform">
+      <UniqueIdentifier>{607620f4-523d-48fc-befc-24fdf323c139}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="kengine\platform\window">
+      <UniqueIdentifier>{7a4027a8-197e-47e8-98e3-1d0a99dde891}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="kengine\platform\android">
+      <UniqueIdentifier>{4e266105-1e65-4af3-bbdb-20956c5af8c6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="kengine\external\mio">
+      <UniqueIdentifier>{32503a33-e286-43cd-9058-97a3dc81fa65}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="kengine\driver">
+      <UniqueIdentifier>{d05ec5ef-8662-44a4-ba39-3dc7c9cc81ff}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="kengine\driver\graphics">
+      <UniqueIdentifier>{f6966848-e79c-486d-8760-ac9050043477}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="kengine\driver\graphics\opengl">
+      <UniqueIdentifier>{ee4260e5-c3e4-41dc-8956-e90a91e7dedc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="kengine\resource\gpu">
+      <UniqueIdentifier>{d95d4082-5be9-4548-a035-067b3df1ce51}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="kengine\resource\ram">
+      <UniqueIdentifier>{279fec63-db6e-4934-9499-a4df88e9f28b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="kengine\resource\asset">
+      <UniqueIdentifier>{46a63826-b3d4-4248-823b-bbd88b379f70}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="kengine\resource\asset\loader">
+      <UniqueIdentifier>{487d529f-b0b9-472f-aa6b-ba42c7c3cb59}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="kengine\resource\asset\parser">
+      <UniqueIdentifier>{2fe8d02b-212d-48cf-86aa-1c3b597545a1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="kengine\utiil">
+      <UniqueIdentifier>{2fa1dc71-aad5-4eb2-bec5-71c5dd639007}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="kengine\profiler">
+      <UniqueIdentifier>{a508e8bc-c568-42e1-9017-c2d0e54f6abe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="kengine\support">
+      <UniqueIdentifier>{ce7d7aff-865e-4421-a97c-b0f1c0594a16}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="kengine\interface">
+      <UniqueIdentifier>{4fa4e74c-d40f-4687-b8c8-ba23baee077d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="kengine\resource\asset\zip">
+      <UniqueIdentifier>{71cd5bec-862f-4e92-be40-27121d147651}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="kengine\resource\asset\bundle">
+      <UniqueIdentifier>{580de19f-94a5-405f-8d36-e814c981b23b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="kengine\service">
+      <UniqueIdentifier>{185f80fb-d0b3-4488-9965-6c9c639de86d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="kengine\kserialize">
+      <UniqueIdentifier>{dee51341-8461-475c-8ba8-a4e3f5307381}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="window\main.cc">
+      <Filter>window</Filter>
+    </ClCompile>
+    <ClCompile Include="kengine\core\base\clist.cc">
+      <Filter>kengine\core\base</Filter>
+    </ClCompile>
+    <ClCompile Include="kengine\kengine.cc">
+      <Filter>kengine</Filter>
+    </ClCompile>
+    <ClCompile Include="kengine\platform\window\platform_window.cc">
+      <Filter>kengine\platform\window</Filter>
+    </ClCompile>
+    <ClCompile Include="kengine\external\mio\single_include\mio\mio.cc">
+      <Filter>kengine\external\mio</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="window\test_app.h">
+      <Filter>window</Filter>
+    </ClInclude>
+    <ClInclude Include="kengine\application.h">
+      <Filter>kengine</Filter>
+    </ClInclude>
+    <ClInclude Include="kengine\kengine.h">
+      <Filter>kengine</Filter>
+    </ClInclude>
+    <ClInclude Include="kengine\core\base\buffer.h">
+      <Filter>kengine\core\base</Filter>
+    </ClInclude>
+    <ClInclude Include="kengine\core\base\clist.h">
+      <Filter>kengine\core\base</Filter>
+    </ClInclude>
+    <ClInclude Include="kengine\core\base\color.h">
+      <Filter>kengine\core\base</Filter>
+    </ClInclude>
+    <ClInclude Include="kengine\core\base\log.h">
+      <Filter>kengine\core\base</Filter>
+    </ClInclude>
+    <ClInclude Include="kengine\core\base\memory.h">
+      <Filter>kengine\core\base</Filter>
+    </ClInclude>
+    <ClInclude Include="kengine\core\base\type.h">
+      <Filter>kengine\core\base</Filter>
+    </ClInclude>
+    <ClInclude Include="kengine\core\base\uid.h">
+      <Filter>kengine\core\base</Filter>
+    </ClInclude>
+    <ClInclude Include="kengine\platform\platform.h">
+      <Filter>kengine\platform</Filter>
+    </ClInclude>
+    <ClInclude Include="kengine\core\io\kengine_io.h">
+      <Filter>kengine\core\io</Filter>
+    </ClInclude>
+    <ClInclude Include="kengine\core\graphics\gpu_type.h">
+      <Filter>kengine\core\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="kengine\core\graphics\graphics.h">
+      <Filter>kengine\core\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="kengine\platform\window\io_window.h">
+      <Filter>kengine\platform\window</Filter>
+    </ClInclude>
+    <ClInclude Include="kengine\platform\window\mmap.h">
+      <Filter>kengine\platform\window</Filter>
+    </ClInclude>
+    <ClInclude Include="kengine\core\base\base.h">
+      <Filter>kengine\core\base</Filter>
+    </ClInclude>
+    <ClInclude Include="kengine\core\io\mmap.h">
+      <Filter>kengine\core\io</Filter>
+    </ClInclude>
+    <ClInclude Include="kengine\driver\graphics\opengl\driver_opengl.h">
+      <Filter>kengine\driver\graphics\opengl</Filter>
+    </ClInclude>
+    <ClInclude Include="kengine\resource\ram\animation.h">
+      <Filter>kengine\resource\ram</Filter>
+    </ClInclude>
+    <ClInclude Include="kengine\resource\ram\material.h">
+      <Filter>kengine\resource\ram</Filter>
+    </ClInclude>
+    <ClInclude Include="kengine\resource\ram\mesh.h">
+      <Filter>kengine\resource\ram</Filter>
+    </ClInclude>
+    <ClInclude Include="kengine\resource\ram\model.h">
+      <Filter>kengine\resource\ram</Filter>
+    </ClInclude>
+    <ClInclude Include="kengine\resource\ram\prefab.h">
+      <Filter>kengine\resource\ram</Filter>
+    </ClInclude>
+    <ClInclude Include="kengine\resource\ram\render_target.h">
+      <Filter>kengine\resource\ram</Filter>
+    </ClInclude>
+    <ClInclude Include="kengine\resource\ram\resource.h">
+      <Filter>kengine\resource\ram</Filter>
+    </ClInclude>
+    <ClInclude Include="kengine\resource\ram\script.h">
+      <Filter>kengine\resource\ram</Filter>
+    </ClInclude>
+    <ClInclude Include="kengine\resource\ram\shader.h">
+      <Filter>kengine\resource\ram</Filter>
+    </ClInclude>
+    <ClInclude Include="kengine\resource\ram\texture.h">
+      <Filter>kengine\resource\ram</Filter>
+    </ClInclude>
+    <ClInclude Include="kengine\resource\gpu\gpu_buffer.h">
+      <Filter>kengine\resource\gpu</Filter>
+    </ClInclude>
+    <ClInclude Include="kengine\resource\gpu\gpu_image.h">
+      <Filter>kengine\resource\gpu</Filter>
+    </ClInclude>
+    <ClInclude Include="kengine\resource\gpu\gpu_object.h">
+      <Filter>kengine\resource\gpu</Filter>
+    </ClInclude>
+    <ClInclude Include="kengine\resource\gpu\gpu_resource.h">
+      <Filter>kengine\resource\gpu</Filter>
+    </ClInclude>
+    <ClInclude Include="kengine\resource\gpu\gpu_shader.h">
+      <Filter>kengine\resource\gpu</Filter>
+    </ClInclude>
+    <ClInclude Include="kengine\resource\gpu\gpu_target.h">
+      <Filter>kengine\resource\gpu</Filter>
+    </ClInclude>
+    <ClInclude Include="kengine\render\render.h">
+      <Filter>kengine\render</Filter>
+    </ClInclude>
+    <ClInclude Include="kengine\render\render_api.h">
+      <Filter>kengine\render</Filter>
+    </ClInclude>
+    <ClInclude Include="kengine\resource\asset\loader\asset_loader.h">
+      <Filter>kengine\resource\asset\loader</Filter>
+    </ClInclude>
+    <ClInclude Include="kengine\resource\asset\loader\file_loader.h">
+      <Filter>kengine\resource\asset\loader</Filter>
+    </ClInclude>
+    <ClInclude Include="kengine\resource\asset\loader\network_loader.h">
+      <Filter>kengine\resource\asset\loader</Filter>
+    </ClInclude>
+    <ClInclude Include="kengine\resource\asset\loader\resource_loader.h">
+      <Filter>kengine\resource\asset\loader</Filter>
+    </ClInclude>
+    <ClInclude Include="kengine\resource\asset\parser\asset_parser.h">
+      <Filter>kengine\resource\asset\parser</Filter>
+    </ClInclude>
+    <ClInclude Include="kengine\resource\asset\asset.h">
+      <Filter>kengine\resource\asset</Filter>
+    </ClInclude>
+    <ClInclude Include="kengine\resource\asset\asset_database.h">
+      <Filter>kengine\resource\asset</Filter>
+    </ClInclude>
+    <ClInclude Include="kengine\core\base\guid.h">
+      <Filter>kengine\core\base</Filter>
+    </ClInclude>
+    <ClInclude Include="kengine\profiler\profiler.h">
+      <Filter>kengine\profiler</Filter>
+    </ClInclude>
+    <ClInclude Include="kengine\support\config.h">
+      <Filter>kengine\support</Filter>
+    </ClInclude>
+    <ClInclude Include="kengine\support\ktime.h">
+      <Filter>kengine\support</Filter>
+    </ClInclude>
+    <ClInclude Include="kengine\environment.h">
+      <Filter>kengine</Filter>
+    </ClInclude>
+    <ClInclude Include="kengine\interface\IConfig.h">
+      <Filter>kengine\interface</Filter>
+    </ClInclude>
+    <ClInclude Include="kengine\resource\asset\parser\kbf_parser.h">
+      <Filter>kengine\resource\asset\parser</Filter>
+    </ClInclude>
+    <ClInclude Include="kengine\resource\asset\bundle\access_loader.h">
+      <Filter>kengine\resource\asset\bundle</Filter>
+    </ClInclude>
+    <ClInclude Include="kengine\resource\asset\bundle\asset_bundle.h">
+      <Filter>kengine\resource\asset\bundle</Filter>
+    </ClInclude>
+    <ClInclude Include="kengine\resource\asset\bundle\file_access_loader.h">
+      <Filter>kengine\resource\asset\bundle</Filter>
+    </ClInclude>
+    <ClInclude Include="kengine\resource\asset\bundle\map_access_loader.h">
+      <Filter>kengine\resource\asset\bundle</Filter>
+    </ClInclude>
+    <ClInclude Include="kengine\resource\asset\bundle\memery_access_loader.h">
+      <Filter>kengine\resource\asset\bundle</Filter>
+    </ClInclude>
+    <ClInclude Include="kengine\resource\asset\bundle\asset_info_item.h">
+      <Filter>kengine\resource\asset\bundle</Filter>
+    </ClInclude>
+    <ClInclude Include="kengine\resource\asset\asset_common.h">
+      <Filter>kengine\resource\asset</Filter>
+    </ClInclude>
+    <ClInclude Include="kengine\service\name_service.h">
+      <Filter>kengine\service</Filter>
+    </ClInclude>
+    <ClInclude Include="kengine\kserialize\assetbundle_generated.h">
+      <Filter>kengine\kserialize</Filter>
+    </ClInclude>
+    <ClInclude Include="kengine\kserialize\common_generated.h">
+      <Filter>kengine\kserialize</Filter>
+    </ClInclude>
+    <ClInclude Include="kengine\kserialize\namedatabase_generated.h">
+      <Filter>kengine\kserialize</Filter>
+    </ClInclude>
+    <ClInclude Include="kengine\kserialize\shader_generated.h">
+      <Filter>kengine\kserialize</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="kengine\CMakeLists.txt">
+      <Filter>kengine</Filter>
+    </Text>
+  </ItemGroup>
+</Project>

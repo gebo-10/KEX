@@ -1,0 +1,9 @@
+namespace kserialize;
+table Name{
+	id:uint;
+	str:string;
+}
+table NameDatabase{
+	names:[Name];
+}
+root_type NameDatabase;
