@@ -9,8 +9,11 @@ namespace kengine {
         string_view vert_source;
         string_view frag_source;
 
-        void cache_to_gpu() {
+        void gpucache() {
             gpu_shader = std::make_shared<GPUShader>(vert_source, frag_source);
+        }
+        void uncache() {
+            gpu_shader = nullptr;
         }
     };
     typedef shared_ptr<Shader> ShaderPtr;

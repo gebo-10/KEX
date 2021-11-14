@@ -3,72 +3,46 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
-
+using UnityEditor;
+using UnityEngine;
 namespace KStudio
 {
     class MeshAsset: Asset
     {
-        public kserialize.ShaderT shader=new kserialize.ShaderT();
-        public enum State
-        {
-            Nil,
-            Decl,
-            Vert,
-            Frag,
-        }
-        State state;
+        public MeshT mesh=new MeshT();
         public MeshAsset(string path)
         {
-            state = State.Nil;
-            var lines= File.ReadAllLines(path);
-            foreach(var line in lines)
+            GameObject  go = AssetDatabase.LoadAssetAtPath<GameObject>(path);
+            var filter=go.GetComponent<MeshFilter>();
+            var m = filter.sharedMesh;
+
+            mesh.Indices = new List<ushort>();
+            m.GetIndices(mesh.Indices,0);
+
+            mesh.Position = new List<Vec3T>();
+            foreach (var pos in m.vertices)
             {
-                if (line.Contains("#decl"))
-                {
-                    state = State.Decl;
-                    continue;
-                }else if(line.Contains("#frag"))
-                {
-                    state = State.Frag;
-                    continue;
-                }
-                else if (line.Contains("#vert"))
-                {
-                    state = State.Vert;
-                    continue;
-                }
-
-                switch (state)
-                {
-                    case State.Nil:
-
-                        break;
-                    case State.Decl:
-
-                        break;
-                    case State.Vert:
-                        shader.Vert += line;
-                        shader.Vert += "\n";
-                        break;
-                    case State.Frag:
-                        shader.Frag += line;
-                        shader.Frag += "\n";
-                        break;
-                }
+                var vec3 = new Vec3T();
+                vec3.X = pos.x;
+                vec3.Y = pos.y;
+                vec3.Z = pos.z;
+                mesh.Position.Add(vec3);
             }
-        }
-        public byte[] Serialize()
-        {
-            return shader.SerializeToBinary();
         }
 
         public override void InitCommon(AssetType type, uint id)
         {
-            shader.AssetCommon = new kserialize.AssetCommonT();
-            shader.AssetCommon.AssetType = type;
-            shader.AssetCommon.Id = id;
+            mesh.AssetCommon = new kserialize.AssetCommonT();
+            mesh.AssetCommon.AssetType = type;
+            mesh.AssetCommon.Id = id;
+        }
+
+        public override byte[] Serialize()
+        {
+            return mesh.SerializeToBinary();
         }
     }
 }

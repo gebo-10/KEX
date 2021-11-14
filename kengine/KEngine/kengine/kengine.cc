@@ -37,7 +37,10 @@ void KEngine::init() {
     auto id = NAME("Assets/Bundle/default.glsl");
     auto shader = Env.assets_database.get_resource<Shader>(id);
     info(shader->vert_source);
-    shader->cache_to_gpu();
+    shader->gpucache();
+
+    auto mesh = Env.assets_database.get_resource<Mesh>(NAME("Assets/Bundle/box.fbx"));
+    mesh->gpucache();
     //res = Env.assets_database.get_resource<Shader>(0);
     //info(res->vert_source);
     

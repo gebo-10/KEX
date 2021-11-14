@@ -1,15 +1,22 @@
 #pragma once
 #undef RGB
-#include <kengine/core/base/base.h>
+
 #include <flatbuffers/flatbuffers.h>
 #include <flatbuffers/minireflect.h>
 
 #include <kengine/kserialize/common_generated.h>
 #include <kengine/kserialize/assetbundle_generated.h>
 #include <kengine/kserialize/shader_generated.h>
+#include <kengine/kserialize/mesh_generated.h>
 
-#include"../ram/shader.h"
+
+#include <kengine/core/base/base.h>
 #include"asset_common.h"
+#include"../ram/shader.h"
+#include"../ram/mesh.h"
+
+
+
 namespace kengine
 {
 	class Asset
@@ -53,6 +60,7 @@ namespace kengine
 			case AssetType::MATERIAL:
 				break;
 			case AssetType::MESH:
+				deserialize_mesh(buffer);
 				break;
 			case AssetType::MODEL:
 				break;
@@ -78,6 +86,27 @@ namespace kengine
 			default_resource =std::dynamic_pointer_cast<Resource>( shader);
 			shader->vert_source = flatbuffer_asset->vert;
 			shader->frag_source = flatbuffer_asset->frag;
+		}
+
+		void deserialize_mesh(BufferPtr buffer) {
+			auto flatbuffer_asset = std::make_shared<kserialize::MeshT>();
+			kserialize::GetMesh(buffer->data)->UnPackTo(flatbuffer_asset.get());
+			flat_object = flatbuffer_asset;
+			deserialize_conmmon(flatbuffer_asset->asset_common);
+			auto mesh = std::make_shared<Mesh>();
+			default_resource = std::dynamic_pointer_cast<Resource>(mesh);
+
+			BufferPtr indices_buf = std::make_shared<Buffer>(flatbuffer_asset->indices.data(), flatbuffer_asset->indices.size()*2);
+			mesh->set_indices(indices_buf);
+
+			BufferPtr position_buf = std::make_shared<Buffer>(flatbuffer_asset->position.data(), flatbuffer_asset->position.size()*3*4);
+			mesh->set_indices(position_buf);
+
+			//BufferPtr indices_buf = std::make_shared<Buffer>(flatbuffer_asset->indices.data(), flatbuffer_asset->indices.size());
+			//mesh->set_indices(indices_buf);
+
+			//BufferPtr indices_buf = std::make_shared<Buffer>(flatbuffer_asset->indices.data(), flatbuffer_asset->indices.size());
+			//mesh->set_indices(indices_buf);
 		}
 	};
 	typedef shared_ptr<Asset> AssetPtr;

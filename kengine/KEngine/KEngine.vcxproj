@@ -202,6 +202,7 @@
     <ClInclude Include="kengine\kengine.h" />
     <ClInclude Include="kengine\kserialize\assetbundle_generated.h" />
     <ClInclude Include="kengine\kserialize\common_generated.h" />
+    <ClInclude Include="kengine\kserialize\mesh_generated.h" />
     <ClInclude Include="kengine\kserialize\namedatabase_generated.h" />
     <ClInclude Include="kengine\kserialize\shader_generated.h" />
     <ClInclude Include="kengine\platform\platform.h" />

@@ -19,11 +19,11 @@ inline const flatbuffers::TypeTable *MeshTypeTable();
 struct MeshT : public flatbuffers::NativeTable {
   typedef Mesh TableType;
   std::shared_ptr<kserialize::AssetCommon> asset_common{};
-  std::vector<uint8_t> indices{};
-  std::vector<uint8_t> position{};
-  std::vector<uint8_t> color{};
-  std::vector<uint8_t> normal{};
-  std::vector<uint8_t> uv{};
+  std::vector<uint16_t> indices{};
+  std::vector<kserialize::Vec3> position{};
+  std::vector<kserialize::RGB> color{};
+  std::vector<kserialize::Vec3> normal{};
+  std::vector<kserialize::Vec2> uv{};
 };
 
 struct Mesh FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
@@ -44,20 +44,20 @@ struct Mesh FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
   const kserialize::AssetCommon *asset_common() const {
     return GetStruct<const kserialize::AssetCommon *>(VT_ASSET_COMMON);
   }
-  const flatbuffers::Vector<uint8_t> *indices() const {
-    return GetPointer<const flatbuffers::Vector<uint8_t> *>(VT_INDICES);
+  const flatbuffers::Vector<uint16_t> *indices() const {
+    return GetPointer<const flatbuffers::Vector<uint16_t> *>(VT_INDICES);
   }
-  const flatbuffers::Vector<uint8_t> *position() const {
-    return GetPointer<const flatbuffers::Vector<uint8_t> *>(VT_POSITION);
+  const flatbuffers::Vector<const kserialize::Vec3 *> *position() const {
+    return GetPointer<const flatbuffers::Vector<const kserialize::Vec3 *> *>(VT_POSITION);
   }
-  const flatbuffers::Vector<uint8_t> *color() const {
-    return GetPointer<const flatbuffers::Vector<uint8_t> *>(VT_COLOR);
+  const flatbuffers::Vector<const kserialize::RGB *> *color() const {
+    return GetPointer<const flatbuffers::Vector<const kserialize::RGB *> *>(VT_COLOR);
   }
-  const flatbuffers::Vector<uint8_t> *normal() const {
-    return GetPointer<const flatbuffers::Vector<uint8_t> *>(VT_NORMAL);
+  const flatbuffers::Vector<const kserialize::Vec3 *> *normal() const {
+    return GetPointer<const flatbuffers::Vector<const kserialize::Vec3 *> *>(VT_NORMAL);
   }
-  const flatbuffers::Vector<uint8_t> *uv() const {
-    return GetPointer<const flatbuffers::Vector<uint8_t> *>(VT_UV);
+  const flatbuffers::Vector<const kserialize::Vec2 *> *uv() const {
+    return GetPointer<const flatbuffers::Vector<const kserialize::Vec2 *> *>(VT_UV);
   }
   bool Verify(flatbuffers::Verifier &verifier) const {
     return VerifyTableStart(verifier) &&
@@ -86,19 +86,19 @@ struct MeshBuilder {
   void add_asset_common(const kserialize::AssetCommon *asset_common) {
     fbb_.AddStruct(Mesh::VT_ASSET_COMMON, asset_common);
   }
-  void add_indices(flatbuffers::Offset<flatbuffers::Vector<uint8_t>> indices) {
+  void add_indices(flatbuffers::Offset<flatbuffers::Vector<uint16_t>> indices) {
     fbb_.AddOffset(Mesh::VT_INDICES, indices);
   }
-  void add_position(flatbuffers::Offset<flatbuffers::Vector<uint8_t>> position) {
+  void add_position(flatbuffers::Offset<flatbuffers::Vector<const kserialize::Vec3 *>> position) {
     fbb_.AddOffset(Mesh::VT_POSITION, position);
   }
-  void add_color(flatbuffers::Offset<flatbuffers::Vector<uint8_t>> color) {
+  void add_color(flatbuffers::Offset<flatbuffers::Vector<const kserialize::RGB *>> color) {
     fbb_.AddOffset(Mesh::VT_COLOR, color);
   }
-  void add_normal(flatbuffers::Offset<flatbuffers::Vector<uint8_t>> normal) {
+  void add_normal(flatbuffers::Offset<flatbuffers::Vector<const kserialize::Vec3 *>> normal) {
     fbb_.AddOffset(Mesh::VT_NORMAL, normal);
   }
-  void add_uv(flatbuffers::Offset<flatbuffers::Vector<uint8_t>> uv) {
+  void add_uv(flatbuffers::Offset<flatbuffers::Vector<const kserialize::Vec2 *>> uv) {
     fbb_.AddOffset(Mesh::VT_UV, uv);
   }
   explicit MeshBuilder(flatbuffers::FlatBufferBuilder &_fbb)
@@ -115,11 +115,11 @@ struct MeshBuilder {
 inline flatbuffers::Offset<Mesh> CreateMesh(
     flatbuffers::FlatBufferBuilder &_fbb,
     const kserialize::AssetCommon *asset_common = 0,
-    flatbuffers::Offset<flatbuffers::Vector<uint8_t>> indices = 0,
-    flatbuffers::Offset<flatbuffers::Vector<uint8_t>> position = 0,
-    flatbuffers::Offset<flatbuffers::Vector<uint8_t>> color = 0,
-    flatbuffers::Offset<flatbuffers::Vector<uint8_t>> normal = 0,
-    flatbuffers::Offset<flatbuffers::Vector<uint8_t>> uv = 0) {
+    flatbuffers::Offset<flatbuffers::Vector<uint16_t>> indices = 0,
+    flatbuffers::Offset<flatbuffers::Vector<const kserialize::Vec3 *>> position = 0,
+    flatbuffers::Offset<flatbuffers::Vector<const kserialize::RGB *>> color = 0,
+    flatbuffers::Offset<flatbuffers::Vector<const kserialize::Vec3 *>> normal = 0,
+    flatbuffers::Offset<flatbuffers::Vector<const kserialize::Vec2 *>> uv = 0) {
   MeshBuilder builder_(_fbb);
   builder_.add_uv(uv);
   builder_.add_normal(normal);
@@ -138,16 +138,16 @@ struct Mesh::Traits {
 inline flatbuffers::Offset<Mesh> CreateMeshDirect(
     flatbuffers::FlatBufferBuilder &_fbb,
     const kserialize::AssetCommon *asset_common = 0,
-    const std::vector<uint8_t> *indices = nullptr,
-    const std::vector<uint8_t> *position = nullptr,
-    const std::vector<uint8_t> *color = nullptr,
-    const std::vector<uint8_t> *normal = nullptr,
-    const std::vector<uint8_t> *uv = nullptr) {
-  auto indices__ = indices ? _fbb.CreateVector<uint8_t>(*indices) : 0;
-  auto position__ = position ? _fbb.CreateVector<uint8_t>(*position) : 0;
-  auto color__ = color ? _fbb.CreateVector<uint8_t>(*color) : 0;
-  auto normal__ = normal ? _fbb.CreateVector<uint8_t>(*normal) : 0;
-  auto uv__ = uv ? _fbb.CreateVector<uint8_t>(*uv) : 0;
+    const std::vector<uint16_t> *indices = nullptr,
+    const std::vector<kserialize::Vec3> *position = nullptr,
+    const std::vector<kserialize::RGB> *color = nullptr,
+    const std::vector<kserialize::Vec3> *normal = nullptr,
+    const std::vector<kserialize::Vec2> *uv = nullptr) {
+  auto indices__ = indices ? _fbb.CreateVector<uint16_t>(*indices) : 0;
+  auto position__ = position ? _fbb.CreateVectorOfStructs<kserialize::Vec3>(*position) : 0;
+  auto color__ = color ? _fbb.CreateVectorOfStructs<kserialize::RGB>(*color) : 0;
+  auto normal__ = normal ? _fbb.CreateVectorOfStructs<kserialize::Vec3>(*normal) : 0;
+  auto uv__ = uv ? _fbb.CreateVectorOfStructs<kserialize::Vec2>(*uv) : 0;
   return kserialize::CreateMesh(
       _fbb,
       asset_common,
@@ -170,11 +170,11 @@ inline void Mesh::UnPackTo(MeshT *_o, const flatbuffers::resolver_function_t *_r
   (void)_o;
   (void)_resolver;
   { auto _e = asset_common(); if (_e) _o->asset_common = std::shared_ptr<kserialize::AssetCommon>(new kserialize::AssetCommon(*_e)); }
-  { auto _e = indices(); if (_e) { _o->indices.resize(_e->size()); std::copy(_e->begin(), _e->end(), _o->indices.begin()); } }
-  { auto _e = position(); if (_e) { _o->position.resize(_e->size()); std::copy(_e->begin(), _e->end(), _o->position.begin()); } }
-  { auto _e = color(); if (_e) { _o->color.resize(_e->size()); std::copy(_e->begin(), _e->end(), _o->color.begin()); } }
-  { auto _e = normal(); if (_e) { _o->normal.resize(_e->size()); std::copy(_e->begin(), _e->end(), _o->normal.begin()); } }
-  { auto _e = uv(); if (_e) { _o->uv.resize(_e->size()); std::copy(_e->begin(), _e->end(), _o->uv.begin()); } }
+  { auto _e = indices(); if (_e) { _o->indices.resize(_e->size()); for (flatbuffers::uoffset_t _i = 0; _i < _e->size(); _i++) { _o->indices[_i] = _e->Get(_i); } } }
+  { auto _e = position(); if (_e) { _o->position.resize(_e->size()); for (flatbuffers::uoffset_t _i = 0; _i < _e->size(); _i++) { _o->position[_i] = *_e->Get(_i); } } }
+  { auto _e = color(); if (_e) { _o->color.resize(_e->size()); for (flatbuffers::uoffset_t _i = 0; _i < _e->size(); _i++) { _o->color[_i] = *_e->Get(_i); } } }
+  { auto _e = normal(); if (_e) { _o->normal.resize(_e->size()); for (flatbuffers::uoffset_t _i = 0; _i < _e->size(); _i++) { _o->normal[_i] = *_e->Get(_i); } } }
+  { auto _e = uv(); if (_e) { _o->uv.resize(_e->size()); for (flatbuffers::uoffset_t _i = 0; _i < _e->size(); _i++) { _o->uv[_i] = *_e->Get(_i); } } }
 }
 
 inline flatbuffers::Offset<Mesh> Mesh::Pack(flatbuffers::FlatBufferBuilder &_fbb, const MeshT* _o, const flatbuffers::rehasher_function_t *_rehasher) {
@@ -187,10 +187,10 @@ inline flatbuffers::Offset<Mesh> CreateMesh(flatbuffers::FlatBufferBuilder &_fbb
   struct _VectorArgs { flatbuffers::FlatBufferBuilder *__fbb; const MeshT* __o; const flatbuffers::rehasher_function_t *__rehasher; } _va = { &_fbb, _o, _rehasher}; (void)_va;
   auto _asset_common = _o->asset_common ? _o->asset_common.get() : 0;
   auto _indices = _o->indices.size() ? _fbb.CreateVector(_o->indices) : 0;
-  auto _position = _o->position.size() ? _fbb.CreateVector(_o->position) : 0;
-  auto _color = _o->color.size() ? _fbb.CreateVector(_o->color) : 0;
-  auto _normal = _o->normal.size() ? _fbb.CreateVector(_o->normal) : 0;
-  auto _uv = _o->uv.size() ? _fbb.CreateVector(_o->uv) : 0;
+  auto _position = _o->position.size() ? _fbb.CreateVectorOfStructs(_o->position) : 0;
+  auto _color = _o->color.size() ? _fbb.CreateVectorOfStructs(_o->color) : 0;
+  auto _normal = _o->normal.size() ? _fbb.CreateVectorOfStructs(_o->normal) : 0;
+  auto _uv = _o->uv.size() ? _fbb.CreateVectorOfStructs(_o->uv) : 0;
   return kserialize::CreateMesh(
       _fbb,
       _asset_common,
@@ -204,14 +204,17 @@ inline flatbuffers::Offset<Mesh> CreateMesh(flatbuffers::FlatBufferBuilder &_fbb
 inline const flatbuffers::TypeTable *MeshTypeTable() {
   static const flatbuffers::TypeCode type_codes[] = {
     { flatbuffers::ET_SEQUENCE, 0, 0 },
-    { flatbuffers::ET_UCHAR, 1, -1 },
-    { flatbuffers::ET_UCHAR, 1, -1 },
-    { flatbuffers::ET_UCHAR, 1, -1 },
-    { flatbuffers::ET_UCHAR, 1, -1 },
-    { flatbuffers::ET_UCHAR, 1, -1 }
+    { flatbuffers::ET_USHORT, 1, -1 },
+    { flatbuffers::ET_SEQUENCE, 1, 1 },
+    { flatbuffers::ET_SEQUENCE, 1, 2 },
+    { flatbuffers::ET_SEQUENCE, 1, 1 },
+    { flatbuffers::ET_SEQUENCE, 1, 3 }
   };
   static const flatbuffers::TypeFunction type_refs[] = {
-    kserialize::AssetCommonTypeTable
+    kserialize::AssetCommonTypeTable,
+    kserialize::Vec3TypeTable,
+    kserialize::RGBTypeTable,
+    kserialize::Vec2TypeTable
   };
   static const char * const names[] = {
     "asset_common",

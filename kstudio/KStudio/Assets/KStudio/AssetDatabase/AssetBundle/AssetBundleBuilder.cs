@@ -27,26 +27,25 @@ namespace KStudio
         public void Push(kserialize.AssetType type,string path)
         {
             Debug.Log("Building------ " + path);
+            Asset asset = Asset.CreateAsset(type, path);
+            if(asset == null)
+            {
+                Debug.LogError("type error");
+                return;
+            }
             var info = new AssetInfoT();
             info.Type = type;
-            byte[] buffer=new byte[1];
-            switch (type)
-            {
-                case AssetType.Shader:
-                    var shader=new ShaderAsset(path);
 
-                    path=path.Replace("\\", "/");
-                    
-                    var id = NameDatabase.Instance.add(path);
-                    shader.InitCommon(type, id);
-                    buffer = shader.Serialize();
-                    info.Id = id;
-                    info.Size = (uint)buffer.Length;
-                    info.Offset = (uint)offset;
-                    offset = offset + info.Size;
-                    //Debug.Log(shader.shader.ToString());
-                    break;
-            }
+            var assetPath = path.Replace("\\", "/");
+            var id = NameDatabase.Instance.add(assetPath);
+            info.Id = id;
+
+            asset.InitCommon(type, id);
+            byte[] buffer = asset.Serialize();
+            info.Size = (uint)buffer.Length;
+            info.Offset = (uint)offset;
+            offset = offset + info.Size;
+
             bundle.AssetInfos.Add(info);
             assetCount = assetCount + 1;
             file.Write(buffer, 0, buffer.Length);
@@ -78,6 +77,10 @@ namespace KStudio
                 if (info.Extension == ".glsl")
                 {
                     builder.Push(AssetType.Shader, file);
+                }
+                else if (info.Extension == ".fbx")
+                {
+                    builder.Push(AssetType.Mesh, file);
                 }
             }
 

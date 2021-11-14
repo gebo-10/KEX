@@ -2,10 +2,10 @@ include "common.fbs";
 namespace kserialize;
 table Mesh{
 	asset_common:AssetCommon;
-	indices:[ubyte];
-	position:[ubyte];
-	color:[ubyte];
-	normal:[ubyte];
-	uv:[ubyte];
+	indices:[ushort];
+	position:[Vec3];
+	color:[RGB];
+	normal:[Vec3];
+	uv:[Vec2];
 }
 root_type Mesh;

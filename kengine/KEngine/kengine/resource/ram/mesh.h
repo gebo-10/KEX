@@ -1,13 +1,20 @@
 #pragma once
 #include "../../core/graphics/graphics.h"
 #include "kengine/resource/gpu/gpu_object.h"
-
+#include"resource.h"
 namespace kengine {
-    class Mesh {
+    class Mesh: public Resource {
     public:
         GPUObjectPtr gpu_object;
         PrimitiveType primitive = PRIMITIVE_TRIANGLES;
         std::map<MeshBufferType,MeshBuffer> mesh_buffer;
+
+        void gpucache() {
+            gpu_object = std::make_shared<GPUObject>(mesh_buffer);
+        }
+        void uncache() {
+            gpu_object = nullptr;
+        }
 
         void add_buffer(MeshBuffer&& mbuffer) {
             mesh_buffer[mbuffer.type] = mbuffer;

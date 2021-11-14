@@ -20,46 +20,22 @@ public struct Mesh : IFlatbufferObject
   public Mesh __assign(int _i, ByteBuffer _bb) { __init(_i, _bb); return this; }
 
   public kserialize.AssetCommon? AssetCommon { get { int o = __p.__offset(4); return o != 0 ? (kserialize.AssetCommon?)(new kserialize.AssetCommon()).__assign(o + __p.bb_pos, __p.bb) : null; } }
-  public byte Indices(int j) { int o = __p.__offset(6); return o != 0 ? __p.bb.Get(__p.__vector(o) + j * 1) : (byte)0; }
+  public ushort Indices(int j) { int o = __p.__offset(6); return o != 0 ? __p.bb.GetUshort(__p.__vector(o) + j * 2) : (ushort)0; }
   public int IndicesLength { get { int o = __p.__offset(6); return o != 0 ? __p.__vector_len(o) : 0; } }
 #if ENABLE_SPAN_T
-  public Span<byte> GetIndicesBytes() { return __p.__vector_as_span<byte>(6, 1); }
+  public Span<ushort> GetIndicesBytes() { return __p.__vector_as_span<ushort>(6, 2); }
 #else
   public ArraySegment<byte>? GetIndicesBytes() { return __p.__vector_as_arraysegment(6); }
 #endif
-  public byte[] GetIndicesArray() { return __p.__vector_as_array<byte>(6); }
-  public byte Position(int j) { int o = __p.__offset(8); return o != 0 ? __p.bb.Get(__p.__vector(o) + j * 1) : (byte)0; }
+  public ushort[] GetIndicesArray() { return __p.__vector_as_array<ushort>(6); }
+  public kserialize.Vec3? Position(int j) { int o = __p.__offset(8); return o != 0 ? (kserialize.Vec3?)(new kserialize.Vec3()).__assign(__p.__vector(o) + j * 12, __p.bb) : null; }
   public int PositionLength { get { int o = __p.__offset(8); return o != 0 ? __p.__vector_len(o) : 0; } }
-#if ENABLE_SPAN_T
-  public Span<byte> GetPositionBytes() { return __p.__vector_as_span<byte>(8, 1); }
-#else
-  public ArraySegment<byte>? GetPositionBytes() { return __p.__vector_as_arraysegment(8); }
-#endif
-  public byte[] GetPositionArray() { return __p.__vector_as_array<byte>(8); }
-  public byte Color(int j) { int o = __p.__offset(10); return o != 0 ? __p.bb.Get(__p.__vector(o) + j * 1) : (byte)0; }
+  public kserialize.RGB? Color(int j) { int o = __p.__offset(10); return o != 0 ? (kserialize.RGB?)(new kserialize.RGB()).__assign(__p.__vector(o) + j * 3, __p.bb) : null; }
   public int ColorLength { get { int o = __p.__offset(10); return o != 0 ? __p.__vector_len(o) : 0; } }
-#if ENABLE_SPAN_T
-  public Span<byte> GetColorBytes() { return __p.__vector_as_span<byte>(10, 1); }
-#else
-  public ArraySegment<byte>? GetColorBytes() { return __p.__vector_as_arraysegment(10); }
-#endif
-  public byte[] GetColorArray() { return __p.__vector_as_array<byte>(10); }
-  public byte Normal(int j) { int o = __p.__offset(12); return o != 0 ? __p.bb.Get(__p.__vector(o) + j * 1) : (byte)0; }
+  public kserialize.Vec3? Normal(int j) { int o = __p.__offset(12); return o != 0 ? (kserialize.Vec3?)(new kserialize.Vec3()).__assign(__p.__vector(o) + j * 12, __p.bb) : null; }
   public int NormalLength { get { int o = __p.__offset(12); return o != 0 ? __p.__vector_len(o) : 0; } }
-#if ENABLE_SPAN_T
-  public Span<byte> GetNormalBytes() { return __p.__vector_as_span<byte>(12, 1); }
-#else
-  public ArraySegment<byte>? GetNormalBytes() { return __p.__vector_as_arraysegment(12); }
-#endif
-  public byte[] GetNormalArray() { return __p.__vector_as_array<byte>(12); }
-  public byte Uv(int j) { int o = __p.__offset(14); return o != 0 ? __p.bb.Get(__p.__vector(o) + j * 1) : (byte)0; }
+  public kserialize.Vec2? Uv(int j) { int o = __p.__offset(14); return o != 0 ? (kserialize.Vec2?)(new kserialize.Vec2()).__assign(__p.__vector(o) + j * 8, __p.bb) : null; }
   public int UvLength { get { int o = __p.__offset(14); return o != 0 ? __p.__vector_len(o) : 0; } }
-#if ENABLE_SPAN_T
-  public Span<byte> GetUvBytes() { return __p.__vector_as_span<byte>(14, 1); }
-#else
-  public ArraySegment<byte>? GetUvBytes() { return __p.__vector_as_arraysegment(14); }
-#endif
-  public byte[] GetUvArray() { return __p.__vector_as_array<byte>(14); }
 
   public static Offset<kserialize.Mesh> CreateMesh(FlatBufferBuilder builder,
       kserialize.AssetCommonT asset_common = null,
@@ -81,25 +57,17 @@ public struct Mesh : IFlatbufferObject
   public static void StartMesh(FlatBufferBuilder builder) { builder.StartTable(6); }
   public static void AddAssetCommon(FlatBufferBuilder builder, Offset<kserialize.AssetCommon> assetCommonOffset) { builder.AddStruct(0, assetCommonOffset.Value, 0); }
   public static void AddIndices(FlatBufferBuilder builder, VectorOffset indicesOffset) { builder.AddOffset(1, indicesOffset.Value, 0); }
-  public static VectorOffset CreateIndicesVector(FlatBufferBuilder builder, byte[] data) { builder.StartVector(1, data.Length, 1); for (int i = data.Length - 1; i >= 0; i--) builder.AddByte(data[i]); return builder.EndVector(); }
-  public static VectorOffset CreateIndicesVectorBlock(FlatBufferBuilder builder, byte[] data) { builder.StartVector(1, data.Length, 1); builder.Add(data); return builder.EndVector(); }
-  public static void StartIndicesVector(FlatBufferBuilder builder, int numElems) { builder.StartVector(1, numElems, 1); }
+  public static VectorOffset CreateIndicesVector(FlatBufferBuilder builder, ushort[] data) { builder.StartVector(2, data.Length, 2); for (int i = data.Length - 1; i >= 0; i--) builder.AddUshort(data[i]); return builder.EndVector(); }
+  public static VectorOffset CreateIndicesVectorBlock(FlatBufferBuilder builder, ushort[] data) { builder.StartVector(2, data.Length, 2); builder.Add(data); return builder.EndVector(); }
+  public static void StartIndicesVector(FlatBufferBuilder builder, int numElems) { builder.StartVector(2, numElems, 2); }
   public static void AddPosition(FlatBufferBuilder builder, VectorOffset positionOffset) { builder.AddOffset(2, positionOffset.Value, 0); }
-  public static VectorOffset CreatePositionVector(FlatBufferBuilder builder, byte[] data) { builder.StartVector(1, data.Length, 1); for (int i = data.Length - 1; i >= 0; i--) builder.AddByte(data[i]); return builder.EndVector(); }
-  public static VectorOffset CreatePositionVectorBlock(FlatBufferBuilder builder, byte[] data) { builder.StartVector(1, data.Length, 1); builder.Add(data); return builder.EndVector(); }
-  public static void StartPositionVector(FlatBufferBuilder builder, int numElems) { builder.StartVector(1, numElems, 1); }
+  public static void StartPositionVector(FlatBufferBuilder builder, int numElems) { builder.StartVector(12, numElems, 4); }
   public static void AddColor(FlatBufferBuilder builder, VectorOffset colorOffset) { builder.AddOffset(3, colorOffset.Value, 0); }
-  public static VectorOffset CreateColorVector(FlatBufferBuilder builder, byte[] data) { builder.StartVector(1, data.Length, 1); for (int i = data.Length - 1; i >= 0; i--) builder.AddByte(data[i]); return builder.EndVector(); }
-  public static VectorOffset CreateColorVectorBlock(FlatBufferBuilder builder, byte[] data) { builder.StartVector(1, data.Length, 1); builder.Add(data); return builder.EndVector(); }
-  public static void StartColorVector(FlatBufferBuilder builder, int numElems) { builder.StartVector(1, numElems, 1); }
+  public static void StartColorVector(FlatBufferBuilder builder, int numElems) { builder.StartVector(3, numElems, 1); }
   public static void AddNormal(FlatBufferBuilder builder, VectorOffset normalOffset) { builder.AddOffset(4, normalOffset.Value, 0); }
-  public static VectorOffset CreateNormalVector(FlatBufferBuilder builder, byte[] data) { builder.StartVector(1, data.Length, 1); for (int i = data.Length - 1; i >= 0; i--) builder.AddByte(data[i]); return builder.EndVector(); }
-  public static VectorOffset CreateNormalVectorBlock(FlatBufferBuilder builder, byte[] data) { builder.StartVector(1, data.Length, 1); builder.Add(data); return builder.EndVector(); }
-  public static void StartNormalVector(FlatBufferBuilder builder, int numElems) { builder.StartVector(1, numElems, 1); }
+  public static void StartNormalVector(FlatBufferBuilder builder, int numElems) { builder.StartVector(12, numElems, 4); }
   public static void AddUv(FlatBufferBuilder builder, VectorOffset uvOffset) { builder.AddOffset(5, uvOffset.Value, 0); }
-  public static VectorOffset CreateUvVector(FlatBufferBuilder builder, byte[] data) { builder.StartVector(1, data.Length, 1); for (int i = data.Length - 1; i >= 0; i--) builder.AddByte(data[i]); return builder.EndVector(); }
-  public static VectorOffset CreateUvVectorBlock(FlatBufferBuilder builder, byte[] data) { builder.StartVector(1, data.Length, 1); builder.Add(data); return builder.EndVector(); }
-  public static void StartUvVector(FlatBufferBuilder builder, int numElems) { builder.StartVector(1, numElems, 1); }
+  public static void StartUvVector(FlatBufferBuilder builder, int numElems) { builder.StartVector(8, numElems, 4); }
   public static Offset<kserialize.Mesh> EndMesh(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<kserialize.Mesh>(o);
@@ -113,16 +81,16 @@ public struct Mesh : IFlatbufferObject
   }
   public void UnPackTo(MeshT _o) {
     _o.AssetCommon = this.AssetCommon.HasValue ? this.AssetCommon.Value.UnPack() : null;
-    _o.Indices = new List<byte>();
+    _o.Indices = new List<ushort>();
     for (var _j = 0; _j < this.IndicesLength; ++_j) {_o.Indices.Add(this.Indices(_j));}
-    _o.Position = new List<byte>();
-    for (var _j = 0; _j < this.PositionLength; ++_j) {_o.Position.Add(this.Position(_j));}
-    _o.Color = new List<byte>();
-    for (var _j = 0; _j < this.ColorLength; ++_j) {_o.Color.Add(this.Color(_j));}
-    _o.Normal = new List<byte>();
-    for (var _j = 0; _j < this.NormalLength; ++_j) {_o.Normal.Add(this.Normal(_j));}
-    _o.Uv = new List<byte>();
-    for (var _j = 0; _j < this.UvLength; ++_j) {_o.Uv.Add(this.Uv(_j));}
+    _o.Position = new List<kserialize.Vec3T>();
+    for (var _j = 0; _j < this.PositionLength; ++_j) {_o.Position.Add(this.Position(_j).HasValue ? this.Position(_j).Value.UnPack() : null);}
+    _o.Color = new List<kserialize.RGBT>();
+    for (var _j = 0; _j < this.ColorLength; ++_j) {_o.Color.Add(this.Color(_j).HasValue ? this.Color(_j).Value.UnPack() : null);}
+    _o.Normal = new List<kserialize.Vec3T>();
+    for (var _j = 0; _j < this.NormalLength; ++_j) {_o.Normal.Add(this.Normal(_j).HasValue ? this.Normal(_j).Value.UnPack() : null);}
+    _o.Uv = new List<kserialize.Vec2T>();
+    for (var _j = 0; _j < this.UvLength; ++_j) {_o.Uv.Add(this.Uv(_j).HasValue ? this.Uv(_j).Value.UnPack() : null);}
   }
   public static Offset<kserialize.Mesh> Pack(FlatBufferBuilder builder, MeshT _o) {
     if (_o == null) return default(Offset<kserialize.Mesh>);
@@ -133,23 +101,27 @@ public struct Mesh : IFlatbufferObject
     }
     var _position = default(VectorOffset);
     if (_o.Position != null) {
-      var __position = _o.Position.ToArray();
-      _position = CreatePositionVector(builder, __position);
+      StartPositionVector(builder, _o.Position.Count);
+      for (var _j = _o.Position.Count - 1; _j >= 0; --_j) { kserialize.Vec3.Pack(builder, _o.Position[_j]); }
+      _position = builder.EndVector();
     }
     var _color = default(VectorOffset);
     if (_o.Color != null) {
-      var __color = _o.Color.ToArray();
-      _color = CreateColorVector(builder, __color);
+      StartColorVector(builder, _o.Color.Count);
+      for (var _j = _o.Color.Count - 1; _j >= 0; --_j) { kserialize.RGB.Pack(builder, _o.Color[_j]); }
+      _color = builder.EndVector();
     }
     var _normal = default(VectorOffset);
     if (_o.Normal != null) {
-      var __normal = _o.Normal.ToArray();
-      _normal = CreateNormalVector(builder, __normal);
+      StartNormalVector(builder, _o.Normal.Count);
+      for (var _j = _o.Normal.Count - 1; _j >= 0; --_j) { kserialize.Vec3.Pack(builder, _o.Normal[_j]); }
+      _normal = builder.EndVector();
     }
     var _uv = default(VectorOffset);
     if (_o.Uv != null) {
-      var __uv = _o.Uv.ToArray();
-      _uv = CreateUvVector(builder, __uv);
+      StartUvVector(builder, _o.Uv.Count);
+      for (var _j = _o.Uv.Count - 1; _j >= 0; --_j) { kserialize.Vec2.Pack(builder, _o.Uv[_j]); }
+      _uv = builder.EndVector();
     }
     return CreateMesh(
       builder,
@@ -165,11 +137,11 @@ public struct Mesh : IFlatbufferObject
 public class MeshT
 {
   public kserialize.AssetCommonT AssetCommon { get; set; }
-  public List<byte> Indices { get; set; }
-  public List<byte> Position { get; set; }
-  public List<byte> Color { get; set; }
-  public List<byte> Normal { get; set; }
-  public List<byte> Uv { get; set; }
+  public List<ushort> Indices { get; set; }
+  public List<kserialize.Vec3T> Position { get; set; }
+  public List<kserialize.RGBT> Color { get; set; }
+  public List<kserialize.Vec3T> Normal { get; set; }
+  public List<kserialize.Vec2T> Uv { get; set; }
 
   public MeshT() {
     this.AssetCommon = new kserialize.AssetCommonT();

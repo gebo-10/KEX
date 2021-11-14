@@ -1,4 +1,5 @@
-﻿using System;
+﻿using kserialize;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +9,18 @@ namespace KStudio
 {
     abstract class Asset
     {
-        public abstract void InitCommon(kserialize.AssetType type, uint id);
+        public virtual void InitCommon(kserialize.AssetType type, uint id) { }
+        public virtual byte[] Serialize() { return null; }
+        public static Asset CreateAsset(AssetType type, string path)
+        {
+            switch (type)
+            {
+                case AssetType.Shader:
+                    return new ShaderAsset(path);
+                case AssetType.Mesh:
+                    return new MeshAsset(path);
+            }
+            return null;
+        }
     }
 }

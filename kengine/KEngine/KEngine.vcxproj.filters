@@ -300,6 +300,9 @@
     <ClInclude Include="kengine\kserialize\shader_generated.h">
       <Filter>kengine\kserialize</Filter>
     </ClInclude>
+    <ClInclude Include="kengine\kserialize\mesh_generated.h">
+      <Filter>kengine\kserialize</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="kengine\CMakeLists.txt">
