@@ -100,7 +100,7 @@ namespace kengine
 			mesh->set_indices(indices_buf);
 
 			BufferPtr position_buf = std::make_shared<Buffer>(flatbuffer_asset->position.data(), flatbuffer_asset->position.size()*3*4);
-			mesh->set_indices(position_buf);
+			mesh->set_position(position_buf);
 
 			//BufferPtr indices_buf = std::make_shared<Buffer>(flatbuffer_asset->indices.data(), flatbuffer_asset->indices.size());
 			//mesh->set_indices(indices_buf);
