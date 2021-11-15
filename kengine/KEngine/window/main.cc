@@ -30,11 +30,11 @@
 #pragma comment(lib , "flatbuffers.lib")
 //#pragma comment(lib, "freetype.lib")
 
-kengine::KEngine* engine;
+kengine::KEngine* engine=nullptr;
 int main()
 {
     GLFWwindow* window;
-    //engine = &GetKEngineInstance();
+    engine = &GetKEngineInstance();
     /* Initialize the library */
     if (!glfwInit())
         return -1;

@@ -15,6 +15,7 @@ namespace kengine
 		//Environment env;
 		//RenderSystem render_system;
 		//ResourceManager resource_manager;
+
 		KEngine() {}
 		Application* app;
 	

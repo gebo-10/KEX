@@ -92,6 +92,9 @@
     <Filter Include="kengine\kserialize">
       <UniqueIdentifier>{dee51341-8461-475c-8ba8-a4e3f5307381}</UniqueIdentifier>
     </Filter>
+    <Filter Include="kengine\eps">
+      <UniqueIdentifier>{adc819ba-359b-434a-b383-add0cff7be17}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="window\main.cc">
@@ -302,6 +305,15 @@
     </ClInclude>
     <ClInclude Include="kengine\kserialize\mesh_generated.h">
       <Filter>kengine\kserialize</Filter>
+    </ClInclude>
+    <ClInclude Include="kengine\core\base\ctree.h">
+      <Filter>kengine\core\base</Filter>
+    </ClInclude>
+    <ClInclude Include="kengine\core\base\link_object_alloc.h">
+      <Filter>kengine\core\base</Filter>
+    </ClInclude>
+    <ClInclude Include="kengine\core\base\object_alloc.h">
+      <Filter>kengine\core\base</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -183,6 +183,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="kengine\application.h" />
+    <ClInclude Include="kengine\core\base\ctree.h" />
+    <ClInclude Include="kengine\core\base\link_object_alloc.h" />
+    <ClInclude Include="kengine\core\base\object_alloc.h" />
     <ClInclude Include="kengine\environment.h" />
     <ClInclude Include="kengine\core\base\base.h" />
     <ClInclude Include="kengine\core\base\buffer.h" />

@@ -24,7 +24,6 @@ void KEngine::init() {
     //ResourceManager.load_resource();
     //Platform::instance().init_platform();
     Env.init();
-
     auto name_buff = Env.io->read_file("name.db");
     Env.name_service.init(name_buff);
 
@@ -78,7 +77,7 @@ void KEngine::on_view_size(int width, int height)
 //    }
 
 //}
-
+//
 kengine::KEngine& GetKEngineInstance()
 {
     auto e= new KEngine();
