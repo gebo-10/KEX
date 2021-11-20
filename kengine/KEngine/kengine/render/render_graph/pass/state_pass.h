@@ -13,7 +13,9 @@ namespace kengine {
 		{
 		}
 
-		virtual void exec(ScenePtr scene) {}
+		virtual void exec(ScenePtr scene) {
+			
+		}
 
 	};
 
