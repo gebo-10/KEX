@@ -1,12 +1,12 @@
 #pragma once
-#include "../../core/graphics/graphics.h"
+#include "../../core/graphics/gpu_type.h"
 #include "kengine/resource/gpu/gpu_object.h"
 #include"resource.h"
 namespace kengine {
     class Mesh: public Resource {
     public:
         GPUObjectPtr gpu_object;
-        PrimitiveType primitive = PRIMITIVE_TRIANGLES;
+        PrimitiveType primitive = PrimitiveType::TRIANGLE_STRIP;
         std::map<MeshBufferType,MeshBuffer> mesh_buffer;
 
         void gpucache() {
@@ -98,4 +98,5 @@ namespace kengine {
             add_buffer(std::move(mbuf));
         }
     };
+    typedef shared_ptr<Mesh> MeshPtr;
 }

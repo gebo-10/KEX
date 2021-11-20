@@ -4,6 +4,7 @@ namespace kengine {
 	class CTree
 	{
 		struct Node {
+			void* data;
 			Node* father;
 			std::vector<Node*> children;
 		};

@@ -1,5 +1,5 @@
 #pragma once
-#include "../../core/graphics/graphics.h"
+
 #include "kengine/resource/gpu/gpu_shader.h"
 #include"resource.h"
 namespace kengine {

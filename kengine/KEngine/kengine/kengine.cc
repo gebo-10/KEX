@@ -43,13 +43,18 @@ void KEngine::init() {
     //res = Env.assets_database.get_resource<Shader>(0);
     //info(res->vert_source);
     
-    
+    glDisable(GL_SCISSOR_TEST);
+    glColorMask(GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE);
+    glDepthMask(GL_TRUE);
+    glStencilMask(0xFFFFFFFF);
 }
 
 void KEngine::update()
 {
-    static int a = 0;
-    a++;
+    
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
+    //static int a = 0;
+    //a++;
     Env.time.update();
     info("fps:{}", Env.time.fps);
 
