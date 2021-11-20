@@ -63,11 +63,9 @@ int main()
 
     glfwSetWindowSizeCallback(window, [](GLFWwindow* window, int width, int height)->void {engine->on_view_size(width,height); });
     engine->init();
-    glClearColor(1.0, 1.0, 0, 1);
     while (!glfwWindowShouldClose(window))
     {
         /* Render here */
-        glClear(GL_COLOR_BUFFER_BIT);
         engine->update();
         /* Swap front and back buffers */
         glfwSwapBuffers(window);

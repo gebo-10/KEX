@@ -53,8 +53,6 @@ void KEngine::init() {
 
 void KEngine::update()
 {
-    
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
     //static int a = 0;
     //a++;
     Env.time.update();
