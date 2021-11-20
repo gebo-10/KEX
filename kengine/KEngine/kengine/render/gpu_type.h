@@ -1,8 +1,19 @@
 #pragma once
 //#include <stdexcept>
 //#include<map>
-#include "../base/base.h"
+#include <kengine/core/base/base.h>
+#include "graphics_api.h"
 namespace kengine{
+    enum class GPUType {
+        BYTE = GL_BYTE,
+        UNSIGNED_BYTE = GL_UNSIGNED_BYTE,
+        SHORT = GL_SHORT,
+        UNSIGNED_SHORT = GL_UNSIGNED_SHORT,
+        INT = GL_INT,
+        UNSIGNED_INT = GL_UNSIGNED_INT,
+        FLOAT = GL_FLOAT,
+    };
+
     enum class PrimitiveType {
         POINTS,
         LINES,
@@ -13,7 +24,7 @@ namespace kengine{
         QUAD_STRIP,
         PRIMITIVE_MAX,
     };
-    enum class GPUDataType {
+    enum class ShaderDataType {
         INT,
         UINT,
         FLOAT,
@@ -26,9 +37,9 @@ namespace kengine{
         MAT4,
         SAMPLE2D,
     };
-    struct GPUDataTypeInfo
+    struct ShaderDataTypeInfo
     {
-        GPUDataType type;
+        ShaderDataType type;
         int num;
         int size;
         //GPUDataTypeInfo() {}
@@ -36,9 +47,5 @@ namespace kengine{
     };
     //extern std::map < GPUDataType, GPUDataTypeInfo > gpu_data_type_info;
 
-    enum class Face {
-        FRONT,
-        BACK,
-        FRONT_AND_BACK,
-    };
+    
 }

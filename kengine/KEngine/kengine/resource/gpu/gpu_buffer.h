@@ -1,8 +1,6 @@
 #pragma once
-
-#include "../../render/render_api.h"
 #include <kengine/core/base/base.h>
-
+#include <kengine/render/gpu_type.h>
 namespace kengine
 {
     enum class GPUBufferHit {

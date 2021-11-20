@@ -1,5 +1,5 @@
 #pragma once
-#include "../../core/graphics/gpu_type.h"
+
 #include "kengine/resource/gpu/gpu_object.h"
 #include"resource.h"
 namespace kengine {
@@ -10,7 +10,7 @@ namespace kengine {
         std::map<MeshBufferType,MeshBuffer> mesh_buffer;
 
         void gpucache() {
-            gpu_object = std::make_shared<GPUObject>(mesh_buffer);
+            gpu_object = std::make_shared<GPUObject>(primitive,mesh_buffer);
         }
         void uncache() {
             gpu_object = nullptr;
@@ -19,6 +19,7 @@ namespace kengine {
         void add_buffer(MeshBuffer&& mbuffer) {
             mesh_buffer[mbuffer.type] = mbuffer;
         }
+        
         void add_buffer(BufferPtr buffer, MeshBufferType type) {}
 
         void set_indices(BufferPtr buffer) {
@@ -96,6 +97,13 @@ namespace kengine {
             mbuf.component_num = 2;
             mbuf.buffer = buffer;
             add_buffer(std::move(mbuf));
+        }
+    
+        void draw() {
+            if (gpu_object == nullptr) {
+                gpucache();
+            }
+            gpu_object->draw();
         }
     };
     typedef shared_ptr<Mesh> MeshPtr;

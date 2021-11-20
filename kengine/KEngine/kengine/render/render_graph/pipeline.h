@@ -1,7 +1,7 @@
 #pragma once
 #include "../gpu_type.h"
-#include "../pipeline_state/pipeline_state.h"
-
+#include "../pipeline_state/all_state.h"
+#include "target.h"
 #include <kengine/resource/ram/mesh.h>
 #include <kengine/resource/ram/material.h>
 
@@ -11,24 +11,39 @@ namespace kengine {
 		float time;
 		Matrix v;
 		Matrix p;
-		//light
 	};
 	class Pipeline
 	{
 	public:
-		CommonUniform uniform;
+		CommonUniform common_uniform;
 		PipelineStatePtr states[(int)PipelineStateType::PIPELINE_STATE_TYPE_NUM];
-		//RenderTargetPtr target = nullptr;
+		RenderTargetPtr target = nullptr;
 		MaterialPtr material;
-		void init();
-		void destory();
 
-		void set_viewport(Rect rect) {}
+		Pipeline() {
+			states[(int)PipelineStateType::CLEAR_VALUE] = std::make_shared<ClearValue>(color_black,0,0);
+		}
 
-		void clear();
-		void draw(Matrix m, MeshPtr mesh);
-		void use_material(MaterialPtr material);
-		void set_state(PipelineStateType type, std::any state);
+		void draw(Matrix m, MeshPtr mesh) {
+			material->set_model_matrix(m);
+			mesh->draw();
+		}
+
+		void use_material(MaterialPtr m) {
+			if (m == material) {
+				return;
+			}
+			material = m;
+			m->bind();
+		}
+
+		void set_state(PipelineStatePtr state) {
+			PipelineStatePtr origon = states[(int)state->type];
+			//if (origon == state) {
+			//	return;
+			//}
+			origon->set(state);
+		}
 		//void update_common_uniform(CommonUniform uniform) {}
 	};
 	typedef shared_ptr<Pipeline> PipelinePtr;

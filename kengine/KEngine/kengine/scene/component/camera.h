@@ -17,5 +17,5 @@ namespace kengine {
 	private:
 
 	};
-
+	typedef shared_ptr<Camera> CameraPtr;
 }

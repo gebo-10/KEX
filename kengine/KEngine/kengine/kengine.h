@@ -7,7 +7,7 @@
 #include "application.h"
 
 #include "environment.h"
-
+#include "render/render.h"
 namespace kengine
 {
 	class KEngine {
@@ -18,7 +18,8 @@ namespace kengine
 
 		KEngine() {}
 		Application* app;
-	
+		
+		Render render;
 		void init();
 		void update();
 		void quit();

@@ -43,10 +43,12 @@ void KEngine::init() {
     //res = Env.assets_database.get_resource<Shader>(0);
     //info(res->vert_source);
     
-    glDisable(GL_SCISSOR_TEST);
+    /*glDisable(GL_SCISSOR_TEST);
     glColorMask(GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE);
     glDepthMask(GL_TRUE);
-    glStencilMask(0xFFFFFFFF);
+    glStencilMask(0xFFFFFFFF);*/
+
+    render.init();
 }
 
 void KEngine::update()
@@ -61,6 +63,7 @@ void KEngine::update()
     //Env.profiler.fps_limit();
     //info("hello{}",a);
 
+    render.update();
 }
 
 void KEngine::quit()

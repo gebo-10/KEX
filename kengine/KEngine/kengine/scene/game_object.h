@@ -5,8 +5,8 @@ namespace kengine {
 	class GameObject
 	{
 	public:
-		GameObjectWptr father;
-		std::vector<GameObjectPtr> children;
+		weak_ptr<GameObject> father;
+		std::vector< shared_ptr<GameObject> > children;
 		std::vector<ComponentPtr> components;
 		GameObject()
 		{

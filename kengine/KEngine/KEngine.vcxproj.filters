@@ -23,9 +23,6 @@
     <Filter Include="kengine\core\base">
       <UniqueIdentifier>{20cde189-b05d-49a9-900f-934d18460050}</UniqueIdentifier>
     </Filter>
-    <Filter Include="kengine\core\graphics">
-      <UniqueIdentifier>{673f834b-804e-49e0-b7c7-7811896b858f}</UniqueIdentifier>
-    </Filter>
     <Filter Include="kengine\core\io">
       <UniqueIdentifier>{3785a8a3-bac2-4fc8-b859-af87e769244b}</UniqueIdentifier>
     </Filter>
@@ -98,6 +95,21 @@
     <Filter Include="kengine\scene\component">
       <UniqueIdentifier>{880ba638-9f32-4366-a288-6dc0ac52f8dd}</UniqueIdentifier>
     </Filter>
+    <Filter Include="kengine\system">
+      <UniqueIdentifier>{b4cf5f1d-6867-4218-88b6-e3f39919c5af}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="kengine\system\render">
+      <UniqueIdentifier>{2a7dce90-256c-43e5-be30-0d96646d11ab}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="kengine\render\render_graph">
+      <UniqueIdentifier>{f4ba42e3-36a9-48dc-885e-8f7b3b8382ce}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="kengine\render\render_graph\pass">
+      <UniqueIdentifier>{86a48a2a-9220-4876-960b-542b084e2f1c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="kengine\render\pipeline_state">
+      <UniqueIdentifier>{708972c9-2238-40b1-b3b1-533948f9c731}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="window\main.cc">
@@ -152,12 +164,6 @@
     </ClInclude>
     <ClInclude Include="kengine\core\io\kengine_io.h">
       <Filter>kengine\core\io</Filter>
-    </ClInclude>
-    <ClInclude Include="kengine\core\graphics\gpu_type.h">
-      <Filter>kengine\core\graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="kengine\core\graphics\graphics.h">
-      <Filter>kengine\core\graphics</Filter>
     </ClInclude>
     <ClInclude Include="kengine\platform\window\io_window.h">
       <Filter>kengine\platform\window</Filter>
@@ -225,7 +231,7 @@
     <ClInclude Include="kengine\render\render.h">
       <Filter>kengine\render</Filter>
     </ClInclude>
-    <ClInclude Include="kengine\render\render_api.h">
+    <ClInclude Include="kengine\render\graphics_api.h">
       <Filter>kengine\render</Filter>
     </ClInclude>
     <ClInclude Include="kengine\resource\asset\loader\asset_loader.h">
@@ -341,6 +347,81 @@
     </ClInclude>
     <ClInclude Include="kengine\core\math\transform.h">
       <Filter>kengine\core\math</Filter>
+    </ClInclude>
+    <ClInclude Include="kengine\core\math\glm_math.h">
+      <Filter>kengine\core\math</Filter>
+    </ClInclude>
+    <ClInclude Include="kengine\system\render\render_system.h">
+      <Filter>kengine\system\render</Filter>
+    </ClInclude>
+    <ClInclude Include="kengine\system\system.h">
+      <Filter>kengine\system</Filter>
+    </ClInclude>
+    <ClInclude Include="kengine\core\math\rect.h">
+      <Filter>kengine\core\math</Filter>
+    </ClInclude>
+    <ClInclude Include="kengine\render\render_graph\target.h">
+      <Filter>kengine\render\render_graph</Filter>
+    </ClInclude>
+    <ClInclude Include="kengine\render\render_graph\attachment.h">
+      <Filter>kengine\render\render_graph</Filter>
+    </ClInclude>
+    <ClInclude Include="kengine\render\render_graph\render_graph.h">
+      <Filter>kengine\render\render_graph</Filter>
+    </ClInclude>
+    <ClInclude Include="kengine\render\render_graph\object_filter.h">
+      <Filter>kengine\render\render_graph</Filter>
+    </ClInclude>
+    <ClInclude Include="kengine\scene\scene.h">
+      <Filter>kengine\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="kengine\render\render_graph\pass\clear_pass.h">
+      <Filter>kengine\render\render_graph\pass</Filter>
+    </ClInclude>
+    <ClInclude Include="kengine\render\render_graph\pass\blit_pass.h">
+      <Filter>kengine\render\render_graph\pass</Filter>
+    </ClInclude>
+    <ClInclude Include="kengine\render\render_graph\pass\post_pass.h">
+      <Filter>kengine\render\render_graph\pass</Filter>
+    </ClInclude>
+    <ClInclude Include="kengine\render\render_graph\pass\state_pass.h">
+      <Filter>kengine\render\render_graph\pass</Filter>
+    </ClInclude>
+    <ClInclude Include="kengine\render\gpu_type.h">
+      <Filter>kengine\render</Filter>
+    </ClInclude>
+    <ClInclude Include="kengine\render\graphics.h">
+      <Filter>kengine\render</Filter>
+    </ClInclude>
+    <ClInclude Include="kengine\render\unifrom_buffer_manager.h">
+      <Filter>kengine\render</Filter>
+    </ClInclude>
+    <ClInclude Include="kengine\render\pipeline_state\blend_mode.h">
+      <Filter>kengine\render\pipeline_state</Filter>
+    </ClInclude>
+    <ClInclude Include="kengine\render\pipeline_state\clear_value.h">
+      <Filter>kengine\render\pipeline_state</Filter>
+    </ClInclude>
+    <ClInclude Include="kengine\render\pipeline_state\cull_face.h">
+      <Filter>kengine\render\pipeline_state</Filter>
+    </ClInclude>
+    <ClInclude Include="kengine\render\pipeline_state\pipeline_state.h">
+      <Filter>kengine\render\pipeline_state</Filter>
+    </ClInclude>
+    <ClInclude Include="kengine\render\pipeline_state\depth_test.h">
+      <Filter>kengine\render\pipeline_state</Filter>
+    </ClInclude>
+    <ClInclude Include="kengine\render\pipeline_state\stencil_test.h">
+      <Filter>kengine\render\pipeline_state</Filter>
+    </ClInclude>
+    <ClInclude Include="kengine\render\render_graph\pass\pass.h">
+      <Filter>kengine\render\render_graph\pass</Filter>
+    </ClInclude>
+    <ClInclude Include="kengine\render\render_graph\pipeline.h">
+      <Filter>kengine\render\render_graph</Filter>
+    </ClInclude>
+    <ClInclude Include="kengine\render\pipeline_state\all_state.h">
+      <Filter>kengine\render\pipeline_state</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

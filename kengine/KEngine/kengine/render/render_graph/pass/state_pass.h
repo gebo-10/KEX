@@ -1,5 +1,6 @@
 #pragma once
-#include "../pass.h"
+#include "pass.h"
+
 namespace kengine {
 	class StatePass :public Pass
 	{
@@ -9,14 +10,10 @@ namespace kengine {
 		{
 		}
 
-		~StatePass()
-		{
+		virtual void exec(Scene& scene, Pipeline& pipeline) {
+			for (auto state : states) {
+				pipeline.set_state(state);
+			}
 		}
-
-		virtual void exec(ScenePtr scene) {
-			
-		}
-
 	};
-
 }

@@ -2,16 +2,6 @@
 #include "gpu_resource.h"
 #include "gpu_buffer.h"
 namespace kengine{
-	enum class GPUType {
-		BYTE = GL_BYTE,
-		UNSIGNED_BYTE = GL_UNSIGNED_BYTE,
-		SHORT = GL_SHORT,
-		UNSIGNED_SHORT = GL_UNSIGNED_SHORT,
-		INT = GL_INT,
-		UNSIGNED_INT = GL_UNSIGNED_INT,
-		FLOAT = GL_FLOAT,
-	};
-
 	enum class MeshBufferType {
 		POSITION,
 		COLOR,
@@ -38,19 +28,24 @@ namespace kengine{
 		uint8 component_num = 1;
 		BufferPtr buffer;
 	};
-	class GPUObject:public GPUResource
+	
+	class GPUObject
 	{
 	public:
 		GPUID gpu_id;
+		PrimitiveType primitive;
 		std::vector<GPUBufferPtr> gpu_buffers;
-		GPUObject(std::map<MeshBufferType, MeshBuffer>& buffers)
+		int indices_size;
+		GPUType indices_type;
+		GPUObject(PrimitiveType primitive_type,std::map<MeshBufferType, MeshBuffer>& buffers):primitive(primitive_type)
 		{
 			create(buffers);
 		}
 
 		~GPUObject()
 		{
-			destroy();
+			unbind();
+			glDeleteVertexArrays(1, &gpu_id);
 		}
 
 		void create(std::map<MeshBufferType, MeshBuffer>& buffers) {
@@ -65,6 +60,8 @@ namespace kengine{
 				gpu_buffers.push_back(gpu_buffer);
 				if(buffer_type== MeshBufferType::INDICES)
 				{
+					indices_type = buffer.data_type;
+					indices_size = buffer.buffer->size / (indices_type == GPUType::UNSIGNED_SHORT ? 2 : 4);
 					gpu_buffer->create(buffer.buffer, GL_ELEMENT_ARRAY_BUFFER,(int) buffer.hit);
 				}else
 				{
@@ -81,6 +78,7 @@ namespace kengine{
 			}
 			glBindVertexArray(0);
 		}
+		
 		void bind() {
 			assert(gpu_id != 0);
 			glBindVertexArray(gpu_id);
@@ -89,11 +87,11 @@ namespace kengine{
 		void unbind(void) {
 			glBindVertexArray(0);
 		}
-		void destroy() {
-			unbind();
-			glDeleteVertexArrays(1, &gpu_id);
-		}
 
+		void draw() {
+			bind();
+			glDrawElements((GLenum)primitive, indices_size, (GLenum)indices_type, 0);
+		}
 	};
 	typedef shared_ptr<GPUObject> GPUObjectPtr;
 }

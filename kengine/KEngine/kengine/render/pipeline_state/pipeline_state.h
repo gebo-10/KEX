@@ -17,8 +17,8 @@ namespace kengine {
 		DITHER,
 
 		//Framebuffer
-		CLEAR_STATE,
-		MASK_STATE,
+		CLEAR_VALUE,
+		FRAMEBUFFER_MASK,
 
 		//Camera
 		DEPTH_RANGE,
@@ -27,23 +27,13 @@ namespace kengine {
 		PIPELINE_STATE_TYPE_NUM,
 	};
 	
-
-
-	
-
-	enum class DepthTest{
-		NONE,
-		NEVER,
-		ALWAYS,
-		LESS,
-		GREATER,
-		EQUAL,
-		LEQUAL,
-		GEQUAL,
-		NOTEQUAL
+	enum class Face {
+		FRONT,
+		BACK,
+		FRONT_AND_BACK,
 	};
 
-	enum class StencilTest {
+	enum class CompareFun{
 		NONE,
 		NEVER,
 		ALWAYS,
@@ -58,10 +48,12 @@ namespace kengine {
 	class PipelineState {
 	public:
 		PipelineStateType type;
+		PipelineState() = delete;
+		PipelineState(PipelineStateType t):type(t){}
 		virtual ~PipelineState(){}
 		//virtual PipelineState& operator=(const PipelineState& rhs) {}
 		//virtual bool operator==(const PipelineState& rhs){}
-		virtual void set(PipelineStatePtr state) {}
+		virtual void set(shared_ptr<PipelineState> state) {}
 	};
 	typedef shared_ptr<PipelineState> PipelineStatePtr;	
 }
