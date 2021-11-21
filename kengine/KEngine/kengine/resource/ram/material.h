@@ -10,13 +10,13 @@ namespace kengine {
         ShaderDataType data_type;
         std::any value;
         void set(std::any a) {
-            if (compare(a)) return;
+            //if (compare(a)) return;
             value = a;
             dirt = true;
         }
 
         void sync() {
-            if (dirt) return;
+            //if (dirt) return;
             dirt = false;
 
             switch (data_type)
@@ -143,7 +143,7 @@ namespace kengine {
 
         void set_model_matrix(Matrix M) {
             //int location = glGetUniformLocation(shader->gpu_id, "M");
-            //glUniformMatrix4fv(location, 1, false, &M[0][0]);
+            glUniformMatrix4fv(4, 1, false, &M[0][0]);
         }
 
         bool set_uniform(int location, std::any value) {

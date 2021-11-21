@@ -57,7 +57,7 @@ void KEngine::update()
     //static int a = 0;
     //a++;
     Env.time.update();
-    info("fps:{}", Env.time.fps);
+    //info("fps:{}", Env.time.fps);
 
     //Env.profiler.fps_limit();
     //info("hello{}",a);
