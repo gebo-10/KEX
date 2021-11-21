@@ -1,30 +1,24 @@
 #pragma once
-//#include "../../core/graphics/graphics.h"
 #include"resource.h"
+#include "../gpu/gpu_texture.h"
 namespace kengine {
-	enum WarpMode
-	{
-		REPEAT,
-		CLAMP,
-		MIRROR,
-	};
-
-	enum FilterMode
-	{
-		POINT,
-		BILINEAR,
-		TRLINEAR,
-	};
 	class Texture : public Resource
 	{
 	public:
-		//GPUImagePtr gpu_image;
-		//int type = GL_TEXTURE_2D;
-		int format;
-		int width;
-		int height;
-		bool ReadWriteEnabled;
-
+		GPUTexturePtr gpu_texture=nullptr;
+		TextureDesc desc;
+		bool read_enable = false;
+		bool write_enable = false;
+		std::vector<BufferPtr> buffers;
+		Texture() {
+			buffers.clear();
+		}
+		void gpucache() {
+			gpu_texture = std::make_shared<GPUTexture>(desc, buffers);
+		}
+		void uncache() {
+			gpu_texture = nullptr;
+		}
 	};
 	typedef shared_ptr<Texture> TexturePtr;
 }

@@ -233,8 +233,9 @@
     <ClInclude Include="kengine\render\render_graph\pass\post_pass.h" />
     <ClInclude Include="kengine\render\render_graph\pass\state_pass.h" />
     <ClInclude Include="kengine\render\render_graph\pipeline.h" />
+    <ClInclude Include="kengine\render\render_graph\render_buffer.h" />
     <ClInclude Include="kengine\render\render_graph\render_graph.h" />
-    <ClInclude Include="kengine\render\render_graph\target.h" />
+    <ClInclude Include="kengine\render\render_graph\render_target.h" />
     <ClInclude Include="kengine\render\unifrom_buffer_manager.h" />
     <ClInclude Include="kengine\resource\asset\asset.h" />
     <ClInclude Include="kengine\resource\asset\asset_common.h" />
@@ -252,7 +253,7 @@
     <ClInclude Include="kengine\resource\asset\parser\asset_parser.h" />
     <ClInclude Include="kengine\resource\asset\parser\kbf_parser.h" />
     <ClInclude Include="kengine\resource\gpu\gpu_buffer.h" />
-    <ClInclude Include="kengine\resource\gpu\gpu_image.h" />
+    <ClInclude Include="kengine\resource\gpu\gpu_texture.h" />
     <ClInclude Include="kengine\resource\gpu\gpu_object.h" />
     <ClInclude Include="kengine\resource\gpu\gpu_resource.h" />
     <ClInclude Include="kengine\resource\gpu\gpu_shader.h" />
@@ -262,7 +263,6 @@
     <ClInclude Include="kengine\resource\ram\mesh.h" />
     <ClInclude Include="kengine\resource\ram\model.h" />
     <ClInclude Include="kengine\resource\ram\prefab.h" />
-    <ClInclude Include="kengine\resource\ram\render_target.h" />
     <ClInclude Include="kengine\resource\ram\resource.h" />
     <ClInclude Include="kengine\resource\ram\script.h" />
     <ClInclude Include="kengine\resource\ram\shader.h" />

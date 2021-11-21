@@ -1,7 +1,7 @@
 #pragma once
 #include "../gpu_type.h"
 #include "../pipeline_state/all_state.h"
-#include "target.h"
+#include "render_target.h"
 #include <kengine/resource/ram/mesh.h>
 #include <kengine/resource/ram/material.h>
 
@@ -27,6 +27,14 @@ namespace kengine {
 		void draw(Matrix m, MeshPtr mesh) {
 			material->set_model_matrix(m);
 			mesh->draw();
+		}
+
+		void set_target(RenderTargetPtr t) {
+			if (t == target) {
+				return;
+			}
+			target = t;
+			t->bind();
 		}
 
 		void use_material(MaterialPtr m) {

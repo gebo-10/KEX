@@ -56,16 +56,16 @@ namespace kengine{
 			{
 				auto buffer = item.second;
 				auto buffer_type = item.first;
-				GPUBufferPtr gpu_buffer = std::make_shared<GPUBuffer>();
-				gpu_buffers.push_back(gpu_buffer);
+				GPUBufferPtr gpu_buffer;
+				
 				if(buffer_type== MeshBufferType::INDICES)
 				{
 					indices_type = buffer.data_type;
 					indices_size = buffer.buffer->size / (indices_type == GPUType::UNSIGNED_SHORT ? 2 : 4);
-					gpu_buffer->create(buffer.buffer, GL_ELEMENT_ARRAY_BUFFER,(int) buffer.hit);
+					gpu_buffer = std::make_shared<GPUBuffer>(buffer.buffer, GL_ELEMENT_ARRAY_BUFFER, (int)buffer.hit);
 				}else
 				{
-					gpu_buffer->create(buffer.buffer, GL_ARRAY_BUFFER, (int)buffer.hit);
+					gpu_buffer = std::make_shared<GPUBuffer>(buffer.buffer, GL_ARRAY_BUFFER, (int)buffer.hit);
 					glEnableVertexAttribArray((int) buffer_type);
 					if (buffer.data_type == GPUType::FLOAT)
 					{
@@ -75,6 +75,7 @@ namespace kengine{
 						glVertexAttribIPointer((GLuint)buffer_type, buffer.component_num, (GLenum)buffer.data_type, 0, (const GLvoid*)0);
 					}
 				}
+				gpu_buffers.push_back(gpu_buffer);
 			}
 			glBindVertexArray(0);
 		}

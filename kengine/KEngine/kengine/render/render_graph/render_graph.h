@@ -1,9 +1,11 @@
 #pragma once
 #include "pass/pass.h"
-#include "target.h"
-
 #include "pass/clear_pass.h"
 #include "pass/state_pass.h"
+
+#include "render_target.h"
+
+
 namespace kengine {
 	class RenderGraph
 	{
