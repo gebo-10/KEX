@@ -6,7 +6,7 @@ namespace kengine {
 	public:
 		//viewport
 		//depth range
-		Camera()
+		Camera():Component(ComponentType::CAMERA)
 		{
 		}
 

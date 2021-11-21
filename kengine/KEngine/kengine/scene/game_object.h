@@ -1,6 +1,8 @@
 #pragma once
 #include<kengine/core/base/base.h>
 #include"component.h"
+#include "component/transform_component.h"
+#include "component/mesh_render.h"
 namespace kengine {
 	class GameObject
 	{
@@ -14,6 +16,17 @@ namespace kengine {
 
 		virtual ~GameObject()
 		{
+		}
+		void add_component(ComponentPtr component) {
+			components.push_back(component);
+		}
+
+		ComponentPtr get_component(ComponentType type) {
+			for (auto comp : components) {
+				if (comp->type == type) {
+					return comp;
+				}
+			}
 		}
 
 	private:

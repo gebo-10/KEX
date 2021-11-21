@@ -26,6 +26,14 @@ namespace kengine {
 			}
 		}
 
+		void bind() {
+			glUseProgram(program_id);
+		}
+
+		void unbind() {
+			glUseProgram(0);
+		}
+	private:
 		GPUID build_shader(int shader_type, string_view source) {
 			if (source.empty())
 			{

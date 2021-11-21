@@ -1,10 +1,16 @@
 #pragma once
 #include <kengine/core/base/base.h>
 namespace kengine {
+	enum class ComponentType {
+		TRANSFORM,
+		MESH_RENDER,
+		CAMERA,
+	};
 	class Component
 	{
 	public:
-		Component()
+		ComponentType type;
+		Component(ComponentType t):type(t)
 		{
 		}
 

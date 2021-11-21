@@ -8,7 +8,7 @@ namespace kengine {
 	public:
 		MeshPtr mesh;
 		MaterialPtr material;
-		MeshRender()
+		MeshRender() :Component(ComponentType::MESH_RENDER)
 		{
 		}
 
@@ -19,5 +19,5 @@ namespace kengine {
 	private:
 
 	};
-
+	typedef shared_ptr<MeshRender> MeshRenderPtr;
 }

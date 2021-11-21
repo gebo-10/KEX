@@ -20,6 +20,8 @@ namespace kengine
 		Application* app;
 		
 		Render render;
+		Scene scene;
+
 		void init();
 		void update();
 		void quit();

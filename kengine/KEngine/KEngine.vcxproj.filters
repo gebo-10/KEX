@@ -423,6 +423,15 @@
     <ClInclude Include="kengine\render\render_graph\render_buffer.h">
       <Filter>kengine\render\render_graph</Filter>
     </ClInclude>
+    <ClInclude Include="kengine\render\render_graph\pass\opacity_pass.h">
+      <Filter>kengine\render\render_graph\pass</Filter>
+    </ClInclude>
+    <ClInclude Include="kengine\render\render_graph\pass\draw_pass.h">
+      <Filter>kengine\render\render_graph\pass</Filter>
+    </ClInclude>
+    <ClInclude Include="kengine\scene\component\transform_component.h">
+      <Filter>kengine\scene\component</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="kengine\CMakeLists.txt">

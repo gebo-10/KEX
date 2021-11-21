@@ -4,54 +4,21 @@
 #include <kengine/core/math/kmath.h>
 #include <kengine/resource/ram/texture.h>
 namespace kengine {
-    class Uniform {
+    struct Uniform {
         bool dirt;
         int location;
         ShaderDataType data_type;
-        std::any data;
-    };
-
-    class Material : public Resource {
-    public:
-        ShaderPtr shader;
-        std::vector<Uniform> uniforms;
-
-        Material(ShaderPtr pshader)
-        {
-            shader = pshader;
+        std::any value;
+        void set(std::any a) {
+            if (compare(a)) return;
+            value = a;
+            dirt = true;
         }
 
-        ~Material() {
-            unbind();
-            uncache();
-        }
+        void sync() {
+            if (dirt) return;
+            dirt = false;
 
-        void gpucache() {
-           
-        }
-        void uncache() {
-
-        }
-
-        void bind() {
-            
-        }
-
-        void unbind() {
-
-        }
-
-        void set_shader(ShaderPtr  shader) {
-            this->shader = shader;
-        }
-
-        void set_model_matrix(Matrix M) {
-            //int location = glGetUniformLocation(shader->gpu_id, "M");
-            //glUniformMatrix4fv(location, 1, false, &M[0][0]);
-        }
-
-        void set_uniform(int location, ShaderDataType data_type, std::any value) {
-            //shader->bind();
             switch (data_type)
             {
             case ShaderDataType::INT:
@@ -97,6 +64,108 @@ namespace kengine {
             default:
                 break;
             }
+        }
+    
+        bool compare(std::any& other) {
+            switch (data_type)
+            {
+            case ShaderDataType::INT:
+                return std::any_cast<int>(value) == std::any_cast<int>(other);
+                break;
+            case ShaderDataType::UINT:
+                return std::any_cast<uint32>(value) == std::any_cast<uint32>(other);
+                break;
+            case ShaderDataType::FLOAT:
+                return std::any_cast<float>(value) == std::any_cast<float>(other);
+                break;
+            case ShaderDataType::VEC2: {
+                return std::any_cast<vec2>(value) == std::any_cast<vec2>(other);
+                break;
+            }
+            case ShaderDataType::VEC3: {
+                return std::any_cast<vec3>(value) == std::any_cast<vec3>(other);
+                break;
+            }
+            case ShaderDataType::VEC4: {
+                return std::any_cast<vec4>(value) == std::any_cast<vec4>(other);
+                break;
+            }
+            case ShaderDataType::MAT3:
+                return std::any_cast<mat3>(value) == std::any_cast<mat3>(other);
+                break;
+            case ShaderDataType::MAT4: {
+                return std::any_cast<mat4>(value) == std::any_cast<mat4>(other);
+                break;
+            }
+            case ShaderDataType::SAMPLE2D: {
+                return std::any_cast<int>(value) == std::any_cast<int>(other);
+                break;
+            }
+            default:
+                error("data_type error");
+                break;
+            }
+        }
+    };
+
+    class Material : public Resource {
+    public:
+        ShaderPtr shader;
+        std::vector<Uniform> uniforms;
+
+        Material(ShaderPtr pshader)
+        {
+            shader = pshader;
+        }
+
+        ~Material() {
+            unbind();
+        }
+
+        void bind() {
+            sync_uniform();
+        }
+
+        void unbind() {
+            shader->unbind();
+        }
+
+        void sync_uniform() {
+            shader->bind();
+            for (Uniform& uniform : uniforms) {
+                uniform.sync();
+            }
+        }
+
+        void set_shader(ShaderPtr  shader) {
+            this->shader = shader;
+        }
+
+        void set_model_matrix(Matrix M) {
+            //int location = glGetUniformLocation(shader->gpu_id, "M");
+            //glUniformMatrix4fv(location, 1, false, &M[0][0]);
+        }
+
+        bool set_uniform(int location, std::any value) {
+            auto uniform = find_uniform(location);
+            if (uniform != nullptr) {
+                uniform->value = value;
+                return true;
+            }
+            return false;
+        }
+
+        void add_uniform(int location, ShaderDataType data_type,std::any value) {
+            uniforms.push_back(Uniform{ true, location,data_type,value });
+        }
+
+        Uniform* find_uniform(int location) {
+            for (Uniform& uniform : uniforms) {
+                if (uniform.location == location) {
+                    return &uniform;
+                }
+            }
+            return nullptr;
         }
     };
     typedef shared_ptr<Material> MaterialPtr;

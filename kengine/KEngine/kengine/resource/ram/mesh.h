@@ -10,6 +10,7 @@ namespace kengine {
         std::map<MeshBufferType,MeshBuffer> mesh_buffer;
 
         void gpucache() {
+            //if gpu_object ~= nullptr  return
             gpu_object = std::make_shared<GPUObject>(primitive,mesh_buffer);
         }
         void uncache() {

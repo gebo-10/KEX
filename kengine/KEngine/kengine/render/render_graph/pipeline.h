@@ -34,6 +34,10 @@ namespace kengine {
 				return;
 			}
 			target = t;
+			if (t == nullptr) {
+				glBindFramebuffer(GL_FRAMEBUFFER, 0);
+				return;
+			}
 			t->bind();
 		}
 

@@ -24,6 +24,12 @@ namespace kengine {
 				}
 			}
 			glDrawBuffers(draw_buffers.size(), draw_buffers.data());
+
+			assert(glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE);
+			//if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE) {
+			//	error("create framebuffer failed");
+			//	return;
+			//}
 		}
 
 		~RenderTarget()

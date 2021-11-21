@@ -21,10 +21,11 @@ namespace kengine {
 
 			render_graph->passes.push_back(state_pass);
 			render_graph->passes.push_back(std::make_shared<ClearPass>(true, true, true));
+
+			render_graph->passes.push_back(std::make_shared<DrawPass>());
 		}
 
-		void update() {
-			Scene scene;
+		void update(Scene &scene) {
 			render_graph->exec(scene);
 		}
 	private:

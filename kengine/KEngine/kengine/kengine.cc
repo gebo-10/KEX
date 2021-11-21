@@ -49,6 +49,7 @@ void KEngine::init() {
     glStencilMask(0xFFFFFFFF);*/
 
     render.init();
+    scene.init();
 }
 
 void KEngine::update()
@@ -61,7 +62,7 @@ void KEngine::update()
     //Env.profiler.fps_limit();
     //info("hello{}",a);
 
-    render.update();
+    render.update(scene);
 }
 
 void KEngine::quit()

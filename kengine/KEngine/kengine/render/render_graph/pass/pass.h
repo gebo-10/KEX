@@ -19,7 +19,7 @@ namespace kengine {
 		{
 		}
 
-		~Pass()
+		virtual ~Pass()
 		{
 		}
 		//virtual Matrix get_view_matrix() {}

@@ -229,6 +229,8 @@
     <ClInclude Include="kengine\render\render_graph\object_filter.h" />
     <ClInclude Include="kengine\render\render_graph\pass\blit_pass.h" />
     <ClInclude Include="kengine\render\render_graph\pass\clear_pass.h" />
+    <ClInclude Include="kengine\render\render_graph\pass\draw_pass.h" />
+    <ClInclude Include="kengine\render\render_graph\pass\opacity_pass.h" />
     <ClInclude Include="kengine\render\render_graph\pass\pass.h" />
     <ClInclude Include="kengine\render\render_graph\pass\post_pass.h" />
     <ClInclude Include="kengine\render\render_graph\pass\state_pass.h" />
@@ -271,6 +273,7 @@
     <ClInclude Include="kengine\scene\component\camera.h" />
     <ClInclude Include="kengine\scene\component\light.h" />
     <ClInclude Include="kengine\scene\component\mesh_render.h" />
+    <ClInclude Include="kengine\scene\component\transform_component.h" />
     <ClInclude Include="kengine\scene\game_object.h" />
     <ClInclude Include="kengine\scene\scene.h" />
     <ClInclude Include="kengine\scene\scene_manager.h" />
