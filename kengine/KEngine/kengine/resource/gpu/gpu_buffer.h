@@ -33,6 +33,10 @@ namespace kengine
             glBufferData(type, buffer->size, buffer->data, hint);
         }
 
+        ~GPUBuffer() {
+            glDeleteBuffers(1, &gpu_id);
+        }
+
         bool set_data(BufferPtr buffer)
         {
             if (buffer->size != size) {
@@ -45,9 +49,6 @@ namespace kengine
         }
         void bind() {
             glBindBuffer(type, gpu_id);
-        }
-        void destroy() {
-            glDeleteBuffers(1, &gpu_id);
         }
     };
     typedef shared_ptr<GPUBuffer> GPUBufferPtr;

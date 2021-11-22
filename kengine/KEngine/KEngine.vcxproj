@@ -104,6 +104,7 @@
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <UndefineAllPreprocessorDefinitions>true</UndefineAllPreprocessorDefinitions>
+      <StructMemberAlignment>Default</StructMemberAlignment>
     </ClCompile>
     <Link>
       <SubSystem>NotSet</SubSystem>
@@ -123,6 +124,7 @@
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <UndefineAllPreprocessorDefinitions>true</UndefineAllPreprocessorDefinitions>
+      <StructMemberAlignment>Default</StructMemberAlignment>
     </ClCompile>
     <Link>
       <SubSystem>NotSet</SubSystem>
@@ -144,6 +146,7 @@
       <UndefineAllPreprocessorDefinitions>false</UndefineAllPreprocessorDefinitions>
       <PrecompiledHeaderFile />
       <PrecompiledHeaderOutputFile />
+      <StructMemberAlignment>Default</StructMemberAlignment>
     </ClCompile>
     <Link>
       <SubSystem>NotSet</SubSystem>
@@ -163,6 +166,7 @@
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <UndefineAllPreprocessorDefinitions>true</UndefineAllPreprocessorDefinitions>
+      <StructMemberAlignment>Default</StructMemberAlignment>
     </ClCompile>
     <Link>
       <SubSystem>NotSet</SubSystem>
@@ -260,6 +264,7 @@
     <ClInclude Include="kengine\resource\gpu\gpu_resource.h" />
     <ClInclude Include="kengine\resource\gpu\gpu_shader.h" />
     <ClInclude Include="kengine\resource\gpu\gpu_target.h" />
+    <ClInclude Include="kengine\resource\gpu\uniform_buffer.h" />
     <ClInclude Include="kengine\resource\ram\animation.h" />
     <ClInclude Include="kengine\resource\ram\material.h" />
     <ClInclude Include="kengine\resource\ram\mesh.h" />

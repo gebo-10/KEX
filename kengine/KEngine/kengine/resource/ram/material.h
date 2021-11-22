@@ -5,20 +5,24 @@
 #include <kengine/resource/ram/texture.h>
 namespace kengine {
     struct Uniform {
-        bool dirt;
-        int location;
+        bool dirt=false;
         ShaderDataType data_type;
+        int location=-1;
         std::any value;
         void set(std::any a) {
-            //if (compare(a)) return;
+            if (compare(a)) return;
             value = a;
             dirt = true;
         }
 
-        void sync() {
-            //if (dirt) return;
+        void sync(ShaderPtr shader) {
+            if (!dirt) return;
             dirt = false;
-
+            //if (location == -1) {
+            //    auto str = Env.name_service.get_str(name);
+            //    uint program = shader->gpu_shader->program_id;
+            //    location = glGetUniformLocation(program, str.c_str());
+            //}
             switch (data_type)
             {
             case ShaderDataType::INT:
@@ -112,7 +116,7 @@ namespace kengine {
     public:
         ShaderPtr shader;
         std::vector<Uniform> uniforms;
-
+        //std::unordered_map<std::string, Uniform> uniforms;
         Material(ShaderPtr pshader)
         {
             shader = pshader;
@@ -133,7 +137,7 @@ namespace kengine {
         void sync_uniform() {
             shader->bind();
             for (Uniform& uniform : uniforms) {
-                uniform.sync();
+                uniform.sync(shader);
             }
         }
 
@@ -143,20 +147,20 @@ namespace kengine {
 
         void set_model_matrix(Matrix M) {
             //int location = glGetUniformLocation(shader->gpu_id, "M");
-            glUniformMatrix4fv(4, 1, false, &M[0][0]);
+            glUniformMatrix4fv(0, 1, false, &M[0][0]);
         }
 
-        bool set_uniform(int location, std::any value) {
-            auto uniform = find_uniform(location);
+        bool set_uniform(Name name, std::any value) {
+            auto uniform = find_uniform(name);
             if (uniform != nullptr) {
-                uniform->value = value;
+                uniform->set(value);
                 return true;
             }
             return false;
         }
 
         void add_uniform(int location, ShaderDataType data_type,std::any value) {
-            uniforms.push_back(Uniform{ true, location,data_type,value });
+            uniforms.push_back(Uniform{ true,data_type, location,value });
         }
 
         Uniform* find_uniform(int location) {

@@ -5,6 +5,7 @@ namespace kengine {
 	class NameService
 	{
 	public:
+		
 		NameService()
 		{
 		}
@@ -16,12 +17,14 @@ namespace kengine {
 		void init(BufferPtr buffer) {
 			kserialize::NameDatabaseT database;
 			kserialize::GetNameDatabase(buffer->data)->UnPackTo(&database);
+			db.resize(database.names.size() + 1);
 			for (auto name : database.names) {
 				add(name->id, name->str);
 			}
 		}
 
 		void add(uint32 id, const string& str) {
+			db[id] = str;
 			name_to_id[str] = id;
 		}
 
@@ -34,8 +37,13 @@ namespace kengine {
 				return itr->second;
 			}
 		}
+
+		std::string& get_str(uint32 id) {
+			return db[id];
+		}
 	private:
-		std::unordered_map<string, uint32> name_to_id;
+		std::vector<std::string> db;
+		std::unordered_map<std::string, uint32> name_to_id;
 	};
 
 }

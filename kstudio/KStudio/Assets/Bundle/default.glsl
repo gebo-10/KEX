@@ -2,14 +2,21 @@
 
 
 #vert
-#version 330
-#extension GL_ARB_explicit_uniform_location : enable
+#version 310 es
+precision highp float;
+
+layout(std140, binding = 0) uniform Common
+{
+    //float time;
+    mat4 V;
+    mat4 P;
+    mat4 PV;
+};
+
 layout (location = 0) in vec3 position;
 layout (location = 1) in vec3 color;
 
-layout (location = 4) uniform mat4 M;
-layout (location = 5) uniform mat4 V;
-layout (location = 6) uniform mat4 P;
+layout (location = 0) uniform mat4 M;
 
 out vec3 ourColor;
 
@@ -20,7 +27,8 @@ void main()
 }
 
 #frag
-#version 330
+#version 300 es
+precision highp float;
 in vec3 ourColor;
 out vec4 color;
 

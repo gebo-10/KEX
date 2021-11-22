@@ -432,6 +432,9 @@
     <ClInclude Include="kengine\scene\component\transform_component.h">
       <Filter>kengine\scene\component</Filter>
     </ClInclude>
+    <ClInclude Include="kengine\resource\gpu\uniform_buffer.h">
+      <Filter>kengine\resource\gpu</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="kengine\CMakeLists.txt">

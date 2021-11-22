@@ -63,7 +63,7 @@ namespace kengine {
 		COMPRESSED_SRGB8_ALPHA8_ETC2_EAC
 	};
 
-	enum TextureWarpMode
+	enum class TextureWarpMode
 	{
 		REPEAT=GL_REPEAT,
 		MIRRORED_REPEAT=GL_MIRRORED_REPEAT,
@@ -71,7 +71,7 @@ namespace kengine {
 		CLAMP_TO_BORDER = GL_CLAMP_TO_BORDER,
 	};
 
-	enum TextureFilterMode
+	enum class TextureFilterMode
 	{
 		POINT,
 		LINEAR,
