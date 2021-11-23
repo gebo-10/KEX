@@ -1,0 +1,27 @@
+local ShaderDataType ={
+	INT=0,
+	UINT=1,
+	FLOAT=2,
+	VEC2=3,
+	VEC3=4,
+	VEC4=5,
+	RGB=6,
+	RGBA=7,
+	MAT3=8,
+	MAT4=9,
+	SAMPLE2D=10,
+	Color=11,
+};
+
+return{
+	shader="Assets/Bundle/default.glsl",
+	name="default",
+	uniforms={
+		{
+			location = 1,
+			name="c",
+			type=ShaderDataType.Color,
+			value={0.4,0.8,0.1,1}
+		}
+	}
+}

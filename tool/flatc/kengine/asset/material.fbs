@@ -1,0 +1,21 @@
+include "common.fbs";
+namespace kserialize;
+enum ShaderDataType:byte {
+	RAM = 0,
+	GPU = 1,
+	RAMGPU = 2,
+}
+
+table Uniform{
+	location:int;
+	data_type:int;
+	name:string;
+	xxx:any;
+}
+
+table Material{
+	asset_common:AssetCommon;
+	vert:string;
+	frag:string;
+}
+root_type Shader;

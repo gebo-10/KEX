@@ -435,6 +435,9 @@
     <ClInclude Include="kengine\resource\gpu\uniform_buffer.h">
       <Filter>kengine\resource\gpu</Filter>
     </ClInclude>
+    <ClInclude Include="kengine\render\render_graph\common_uniform.h">
+      <Filter>kengine\render\render_graph</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="kengine\CMakeLists.txt">

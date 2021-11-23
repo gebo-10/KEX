@@ -9,5 +9,6 @@ namespace kengine {
 		int size;
 		BufferPtr buffer;
 		AssetPtr assets;
+		std::vector<uint32> depends;
 	};
 }

@@ -19,37 +19,33 @@ public struct Shader : IFlatbufferObject
   public void __init(int _i, ByteBuffer _bb) { __p = new Table(_i, _bb); }
   public Shader __assign(int _i, ByteBuffer _bb) { __init(_i, _bb); return this; }
 
-  public kserialize.AssetCommon? AssetCommon { get { int o = __p.__offset(4); return o != 0 ? (kserialize.AssetCommon?)(new kserialize.AssetCommon()).__assign(o + __p.bb_pos, __p.bb) : null; } }
-  public string Vert { get { int o = __p.__offset(6); return o != 0 ? __p.__string(o + __p.bb_pos) : null; } }
+  public string Vert { get { int o = __p.__offset(4); return o != 0 ? __p.__string(o + __p.bb_pos) : null; } }
 #if ENABLE_SPAN_T
-  public Span<byte> GetVertBytes() { return __p.__vector_as_span<byte>(6, 1); }
+  public Span<byte> GetVertBytes() { return __p.__vector_as_span<byte>(4, 1); }
 #else
-  public ArraySegment<byte>? GetVertBytes() { return __p.__vector_as_arraysegment(6); }
+  public ArraySegment<byte>? GetVertBytes() { return __p.__vector_as_arraysegment(4); }
 #endif
-  public byte[] GetVertArray() { return __p.__vector_as_array<byte>(6); }
-  public string Frag { get { int o = __p.__offset(8); return o != 0 ? __p.__string(o + __p.bb_pos) : null; } }
+  public byte[] GetVertArray() { return __p.__vector_as_array<byte>(4); }
+  public string Frag { get { int o = __p.__offset(6); return o != 0 ? __p.__string(o + __p.bb_pos) : null; } }
 #if ENABLE_SPAN_T
-  public Span<byte> GetFragBytes() { return __p.__vector_as_span<byte>(8, 1); }
+  public Span<byte> GetFragBytes() { return __p.__vector_as_span<byte>(6, 1); }
 #else
-  public ArraySegment<byte>? GetFragBytes() { return __p.__vector_as_arraysegment(8); }
+  public ArraySegment<byte>? GetFragBytes() { return __p.__vector_as_arraysegment(6); }
 #endif
-  public byte[] GetFragArray() { return __p.__vector_as_array<byte>(8); }
+  public byte[] GetFragArray() { return __p.__vector_as_array<byte>(6); }
 
   public static Offset<kserialize.Shader> CreateShader(FlatBufferBuilder builder,
-      kserialize.AssetCommonT asset_common = null,
       StringOffset vertOffset = default(StringOffset),
       StringOffset fragOffset = default(StringOffset)) {
-    builder.StartTable(3);
+    builder.StartTable(2);
     Shader.AddFrag(builder, fragOffset);
     Shader.AddVert(builder, vertOffset);
-    Shader.AddAssetCommon(builder, kserialize.AssetCommon.Pack(builder, asset_common));
     return Shader.EndShader(builder);
   }
 
-  public static void StartShader(FlatBufferBuilder builder) { builder.StartTable(3); }
-  public static void AddAssetCommon(FlatBufferBuilder builder, Offset<kserialize.AssetCommon> assetCommonOffset) { builder.AddStruct(0, assetCommonOffset.Value, 0); }
-  public static void AddVert(FlatBufferBuilder builder, StringOffset vertOffset) { builder.AddOffset(1, vertOffset.Value, 0); }
-  public static void AddFrag(FlatBufferBuilder builder, StringOffset fragOffset) { builder.AddOffset(2, fragOffset.Value, 0); }
+  public static void StartShader(FlatBufferBuilder builder) { builder.StartTable(2); }
+  public static void AddVert(FlatBufferBuilder builder, StringOffset vertOffset) { builder.AddOffset(0, vertOffset.Value, 0); }
+  public static void AddFrag(FlatBufferBuilder builder, StringOffset fragOffset) { builder.AddOffset(1, fragOffset.Value, 0); }
   public static Offset<kserialize.Shader> EndShader(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<kserialize.Shader>(o);
@@ -62,7 +58,6 @@ public struct Shader : IFlatbufferObject
     return _o;
   }
   public void UnPackTo(ShaderT _o) {
-    _o.AssetCommon = this.AssetCommon.HasValue ? this.AssetCommon.Value.UnPack() : null;
     _o.Vert = this.Vert;
     _o.Frag = this.Frag;
   }
@@ -72,7 +67,6 @@ public struct Shader : IFlatbufferObject
     var _frag = _o.Frag == null ? default(StringOffset) : builder.CreateString(_o.Frag);
     return CreateShader(
       builder,
-      _o.AssetCommon,
       _vert,
       _frag);
   }
@@ -80,12 +74,10 @@ public struct Shader : IFlatbufferObject
 
 public class ShaderT
 {
-  public kserialize.AssetCommonT AssetCommon { get; set; }
   public string Vert { get; set; }
   public string Frag { get; set; }
 
   public ShaderT() {
-    this.AssetCommon = new kserialize.AssetCommonT();
     this.Vert = null;
     this.Frag = null;
   }

@@ -1,7 +1,6 @@
 include "common.fbs";
 namespace kserialize;
 table Mesh{
-	asset_common:AssetCommon;
 	indices:[ushort];
 	position:[Vec3];
 	color:[RGB];

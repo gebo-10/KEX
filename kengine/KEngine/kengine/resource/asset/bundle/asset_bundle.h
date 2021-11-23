@@ -1,6 +1,7 @@
 #pragma once
 #include "../asset.h"
-#include "asset_info_item.h"
+//#include "asset_info_item.h"
+#include "../asset_common.h"
 #include "access_loader.h"
 #include "file_access_loader.h"
 #include "memery_access_loader.h"
@@ -70,13 +71,19 @@ namespace kengine
 			for (size_t i = 0; i < fbundle.asset_infos.size(); i++)
 			{
 				auto info = std::move(fbundle.asset_infos[i]);
-				AssetItem item{ info->id, (AssetType)info->type, info->offset, info->size, nullptr };
+				AssetItem item{ info->id, (AssetType)info->type, info->offset, info->size, nullptr,nullptr,info->depends };
 				asset_items[item.id] = std::move(item);
 			}
 		}
 		///////////////////////////////////////////////////////////////////////////////////////////////////////
 		AssetPtr load_asset(AssetItem & item) {
-			auto asset=access_loader->load_asset(item);
+			std::vector<AssetPtr> depends;
+			for (auto depend : item.depends) {
+				auto dep_asset = asset_items.find(depend);
+
+				depends.push_back(dep_asset->second.assets);
+			}
+			auto asset=access_loader->load_asset(asset_items,item);
 			//AssetsDatabase::instance().add(asset);
 			return asset;
 		}

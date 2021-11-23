@@ -33,6 +33,7 @@ namespace kengine {
 
 			auto comp_mesh = std::make_shared<MeshRender>();
 			comp_mesh->material = std::make_shared<Material>(shader);
+			comp_mesh->material->add_uniform(1, ShaderDataType::Color, color_hotpink);
 			//comp_mesh->material->add_uniform(1, ShaderDataType::MAT4, camera->get_v());
 			//comp_mesh->material->add_uniform(2, ShaderDataType::MAT4, camera->get_p());
 			comp_mesh->mesh = mesh;

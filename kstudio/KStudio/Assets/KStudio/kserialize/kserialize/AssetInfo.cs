@@ -23,13 +23,23 @@ public struct AssetInfo : IFlatbufferObject
   public uint Id { get { int o = __p.__offset(6); return o != 0 ? __p.bb.GetUint(o + __p.bb_pos) : (uint)0; } }
   public uint Offset { get { int o = __p.__offset(8); return o != 0 ? __p.bb.GetUint(o + __p.bb_pos) : (uint)0; } }
   public uint Size { get { int o = __p.__offset(10); return o != 0 ? __p.bb.GetUint(o + __p.bb_pos) : (uint)0; } }
+  public uint Depends(int j) { int o = __p.__offset(12); return o != 0 ? __p.bb.GetUint(__p.__vector(o) + j * 4) : (uint)0; }
+  public int DependsLength { get { int o = __p.__offset(12); return o != 0 ? __p.__vector_len(o) : 0; } }
+#if ENABLE_SPAN_T
+  public Span<uint> GetDependsBytes() { return __p.__vector_as_span<uint>(12, 4); }
+#else
+  public ArraySegment<byte>? GetDependsBytes() { return __p.__vector_as_arraysegment(12); }
+#endif
+  public uint[] GetDependsArray() { return __p.__vector_as_array<uint>(12); }
 
   public static Offset<kserialize.AssetInfo> CreateAssetInfo(FlatBufferBuilder builder,
       kserialize.AssetType type = kserialize.AssetType.Texture,
       uint id = 0,
       uint offset = 0,
-      uint size = 0) {
-    builder.StartTable(4);
+      uint size = 0,
+      VectorOffset dependsOffset = default(VectorOffset)) {
+    builder.StartTable(5);
+    AssetInfo.AddDepends(builder, dependsOffset);
     AssetInfo.AddSize(builder, size);
     AssetInfo.AddOffset(builder, offset);
     AssetInfo.AddId(builder, id);
@@ -37,11 +47,15 @@ public struct AssetInfo : IFlatbufferObject
     return AssetInfo.EndAssetInfo(builder);
   }
 
-  public static void StartAssetInfo(FlatBufferBuilder builder) { builder.StartTable(4); }
+  public static void StartAssetInfo(FlatBufferBuilder builder) { builder.StartTable(5); }
   public static void AddType(FlatBufferBuilder builder, kserialize.AssetType type) { builder.AddSbyte(0, (sbyte)type, 0); }
   public static void AddId(FlatBufferBuilder builder, uint id) { builder.AddUint(1, id, 0); }
   public static void AddOffset(FlatBufferBuilder builder, uint offset) { builder.AddUint(2, offset, 0); }
   public static void AddSize(FlatBufferBuilder builder, uint size) { builder.AddUint(3, size, 0); }
+  public static void AddDepends(FlatBufferBuilder builder, VectorOffset dependsOffset) { builder.AddOffset(4, dependsOffset.Value, 0); }
+  public static VectorOffset CreateDependsVector(FlatBufferBuilder builder, uint[] data) { builder.StartVector(4, data.Length, 4); for (int i = data.Length - 1; i >= 0; i--) builder.AddUint(data[i]); return builder.EndVector(); }
+  public static VectorOffset CreateDependsVectorBlock(FlatBufferBuilder builder, uint[] data) { builder.StartVector(4, data.Length, 4); builder.Add(data); return builder.EndVector(); }
+  public static void StartDependsVector(FlatBufferBuilder builder, int numElems) { builder.StartVector(4, numElems, 4); }
   public static Offset<kserialize.AssetInfo> EndAssetInfo(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<kserialize.AssetInfo>(o);
@@ -56,15 +70,23 @@ public struct AssetInfo : IFlatbufferObject
     _o.Id = this.Id;
     _o.Offset = this.Offset;
     _o.Size = this.Size;
+    _o.Depends = new List<uint>();
+    for (var _j = 0; _j < this.DependsLength; ++_j) {_o.Depends.Add(this.Depends(_j));}
   }
   public static Offset<kserialize.AssetInfo> Pack(FlatBufferBuilder builder, AssetInfoT _o) {
     if (_o == null) return default(Offset<kserialize.AssetInfo>);
+    var _depends = default(VectorOffset);
+    if (_o.Depends != null) {
+      var __depends = _o.Depends.ToArray();
+      _depends = CreateDependsVector(builder, __depends);
+    }
     return CreateAssetInfo(
       builder,
       _o.Type,
       _o.Id,
       _o.Offset,
-      _o.Size);
+      _o.Size,
+      _depends);
   }
 };
 
@@ -74,12 +96,14 @@ public class AssetInfoT
   public uint Id { get; set; }
   public uint Offset { get; set; }
   public uint Size { get; set; }
+  public List<uint> Depends { get; set; }
 
   public AssetInfoT() {
     this.Type = kserialize.AssetType.Texture;
     this.Id = 0;
     this.Offset = 0;
     this.Size = 0;
+    this.Depends = null;
   }
 }
 

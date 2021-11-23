@@ -35,12 +35,14 @@ namespace KStudio
             }
             var info = new AssetInfoT();
             info.Type = type;
+            info.Depends = asset.GetDepends();
+
 
             var assetPath = path.Replace("\\", "/");
             var id = NameDatabase.Instance.add(assetPath);
             info.Id = id;
 
-            asset.InitCommon(type, id);
+            //asset.InitCommon(type, id);
             byte[] buffer = asset.Serialize();
             info.Size = (uint)buffer.Length;
             info.Offset = (uint)offset;
@@ -81,6 +83,10 @@ namespace KStudio
                 else if (info.Extension == ".fbx")
                 {
                     builder.Push(AssetType.Mesh, file);
+                }
+                else if (info.Extension == ".material")
+                {
+                    builder.Push(AssetType.Material, file);
                 }
             }
 

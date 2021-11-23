@@ -9,6 +9,7 @@ namespace kengine {
         ShaderDataType data_type;
         int location=-1;
         std::any value;
+
         void set(std::any a) {
             if (compare(a)) return;
             value = a;
@@ -65,6 +66,11 @@ namespace kengine {
                 //glUniform1i(location, texture_index);
                 break;
             }
+            case ShaderDataType::Color: {
+                Color c= std::any_cast<Color>(value);
+                glUniform4f(location, c.r, c.g, c.b, c.a);
+                break;
+            }
             default:
                 break;
             }
@@ -104,6 +110,9 @@ namespace kengine {
             case ShaderDataType::SAMPLE2D: {
                 return std::any_cast<int>(value) == std::any_cast<int>(other);
                 break;
+            }
+            case ShaderDataType::Color: {
+                return std::any_cast<Color>(value) == std::any_cast<Color>(other);
             }
             default:
                 error("data_type error");

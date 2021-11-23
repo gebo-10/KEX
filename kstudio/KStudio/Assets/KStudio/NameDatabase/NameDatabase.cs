@@ -47,6 +47,11 @@ public class NameDatabase
         return id;
     }
 
+    public uint get_id(string name)
+    {
+        return names[name];
+    }
+
     public byte[] Serialize()
     {
         kserialize.NameDatabaseT database = new kserialize.NameDatabaseT();

@@ -28,6 +28,7 @@ struct AssetInfoT : public flatbuffers::NativeTable {
   uint32_t id = 0;
   uint32_t offset = 0;
   uint32_t size = 0;
+  std::vector<uint32_t> depends{};
 };
 
 struct AssetInfo FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
@@ -41,7 +42,8 @@ struct AssetInfo FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
     VT_TYPE = 4,
     VT_ID = 6,
     VT_OFFSET = 8,
-    VT_SIZE = 10
+    VT_SIZE = 10,
+    VT_DEPENDS = 12
   };
   kserialize::AssetType type() const {
     return static_cast<kserialize::AssetType>(GetField<int8_t>(VT_TYPE, 0));
@@ -55,12 +57,17 @@ struct AssetInfo FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
   uint32_t size() const {
     return GetField<uint32_t>(VT_SIZE, 0);
   }
+  const flatbuffers::Vector<uint32_t> *depends() const {
+    return GetPointer<const flatbuffers::Vector<uint32_t> *>(VT_DEPENDS);
+  }
   bool Verify(flatbuffers::Verifier &verifier) const {
     return VerifyTableStart(verifier) &&
            VerifyField<int8_t>(verifier, VT_TYPE) &&
            VerifyField<uint32_t>(verifier, VT_ID) &&
            VerifyField<uint32_t>(verifier, VT_OFFSET) &&
            VerifyField<uint32_t>(verifier, VT_SIZE) &&
+           VerifyOffset(verifier, VT_DEPENDS) &&
+           verifier.VerifyVector(depends()) &&
            verifier.EndTable();
   }
   AssetInfoT *UnPack(const flatbuffers::resolver_function_t *_resolver = nullptr) const;
@@ -84,6 +91,9 @@ struct AssetInfoBuilder {
   void add_size(uint32_t size) {
     fbb_.AddElement<uint32_t>(AssetInfo::VT_SIZE, size, 0);
   }
+  void add_depends(flatbuffers::Offset<flatbuffers::Vector<uint32_t>> depends) {
+    fbb_.AddOffset(AssetInfo::VT_DEPENDS, depends);
+  }
   explicit AssetInfoBuilder(flatbuffers::FlatBufferBuilder &_fbb)
         : fbb_(_fbb) {
     start_ = fbb_.StartTable();
@@ -100,8 +110,10 @@ inline flatbuffers::Offset<AssetInfo> CreateAssetInfo(
     kserialize::AssetType type = kserialize::AssetType::Texture,
     uint32_t id = 0,
     uint32_t offset = 0,
-    uint32_t size = 0) {
+    uint32_t size = 0,
+    flatbuffers::Offset<flatbuffers::Vector<uint32_t>> depends = 0) {
   AssetInfoBuilder builder_(_fbb);
+  builder_.add_depends(depends);
   builder_.add_size(size);
   builder_.add_offset(offset);
   builder_.add_id(id);
@@ -113,6 +125,23 @@ struct AssetInfo::Traits {
   using type = AssetInfo;
   static auto constexpr Create = CreateAssetInfo;
 };
+
+inline flatbuffers::Offset<AssetInfo> CreateAssetInfoDirect(
+    flatbuffers::FlatBufferBuilder &_fbb,
+    kserialize::AssetType type = kserialize::AssetType::Texture,
+    uint32_t id = 0,
+    uint32_t offset = 0,
+    uint32_t size = 0,
+    const std::vector<uint32_t> *depends = nullptr) {
+  auto depends__ = depends ? _fbb.CreateVector<uint32_t>(*depends) : 0;
+  return kserialize::CreateAssetInfo(
+      _fbb,
+      type,
+      id,
+      offset,
+      size,
+      depends__);
+}
 
 flatbuffers::Offset<AssetInfo> CreateAssetInfo(flatbuffers::FlatBufferBuilder &_fbb, const AssetInfoT *_o, const flatbuffers::rehasher_function_t *_rehasher = nullptr);
 
@@ -214,6 +243,7 @@ inline void AssetInfo::UnPackTo(AssetInfoT *_o, const flatbuffers::resolver_func
   { auto _e = id(); _o->id = _e; }
   { auto _e = offset(); _o->offset = _e; }
   { auto _e = size(); _o->size = _e; }
+  { auto _e = depends(); if (_e) { _o->depends.resize(_e->size()); for (flatbuffers::uoffset_t _i = 0; _i < _e->size(); _i++) { _o->depends[_i] = _e->Get(_i); } } }
 }
 
 inline flatbuffers::Offset<AssetInfo> AssetInfo::Pack(flatbuffers::FlatBufferBuilder &_fbb, const AssetInfoT* _o, const flatbuffers::rehasher_function_t *_rehasher) {
@@ -228,12 +258,14 @@ inline flatbuffers::Offset<AssetInfo> CreateAssetInfo(flatbuffers::FlatBufferBui
   auto _id = _o->id;
   auto _offset = _o->offset;
   auto _size = _o->size;
+  auto _depends = _o->depends.size() ? _fbb.CreateVector(_o->depends) : 0;
   return kserialize::CreateAssetInfo(
       _fbb,
       _type,
       _id,
       _offset,
-      _size);
+      _size,
+      _depends);
 }
 
 inline AssetBundleT *AssetBundle::UnPack(const flatbuffers::resolver_function_t *_resolver) const {
@@ -270,7 +302,8 @@ inline const flatbuffers::TypeTable *AssetInfoTypeTable() {
     { flatbuffers::ET_CHAR, 0, 0 },
     { flatbuffers::ET_UINT, 0, -1 },
     { flatbuffers::ET_UINT, 0, -1 },
-    { flatbuffers::ET_UINT, 0, -1 }
+    { flatbuffers::ET_UINT, 0, -1 },
+    { flatbuffers::ET_UINT, 1, -1 }
   };
   static const flatbuffers::TypeFunction type_refs[] = {
     kserialize::AssetTypeTypeTable
@@ -279,10 +312,11 @@ inline const flatbuffers::TypeTable *AssetInfoTypeTable() {
     "type",
     "id",
     "offset",
-    "size"
+    "size",
+    "depends"
   };
   static const flatbuffers::TypeTable tt = {
-    flatbuffers::ST_TABLE, 4, type_codes, type_refs, nullptr, nullptr, names
+    flatbuffers::ST_TABLE, 5, type_codes, type_refs, nullptr, nullptr, names
   };
   return &tt;
 }

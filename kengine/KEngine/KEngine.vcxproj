@@ -230,6 +230,7 @@
     <ClInclude Include="kengine\render\render.h" />
     <ClInclude Include="kengine\render\graphics_api.h" />
     <ClInclude Include="kengine\render\render_graph\attachment.h" />
+    <ClInclude Include="kengine\render\render_graph\common_uniform.h" />
     <ClInclude Include="kengine\render\render_graph\object_filter.h" />
     <ClInclude Include="kengine\render\render_graph\pass\blit_pass.h" />
     <ClInclude Include="kengine\render\render_graph\pass\clear_pass.h" />

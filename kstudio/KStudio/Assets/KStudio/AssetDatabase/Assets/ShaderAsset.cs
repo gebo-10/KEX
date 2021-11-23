@@ -60,12 +60,12 @@ namespace KStudio
             }
         }
 
-        public override void InitCommon(AssetType type, uint id)
-        {
-            shader.AssetCommon = new kserialize.AssetCommonT();
-            shader.AssetCommon.AssetType = type;
-            shader.AssetCommon.Id = id;
-        }
+        //public override void InitCommon(AssetType type, uint id)
+        //{
+        //    shader.AssetCommon = new kserialize.AssetCommonT();
+        //    shader.AssetCommon.AssetType = type;
+        //    shader.AssetCommon.Id = id;
+        //}
 
         public override byte[] Serialize()
         {

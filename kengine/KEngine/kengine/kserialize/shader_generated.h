@@ -18,7 +18,6 @@ inline const flatbuffers::TypeTable *ShaderTypeTable();
 
 struct ShaderT : public flatbuffers::NativeTable {
   typedef Shader TableType;
-  std::shared_ptr<kserialize::AssetCommon> asset_common{};
   std::string vert{};
   std::string frag{};
 };
@@ -31,13 +30,9 @@ struct Shader FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
     return ShaderTypeTable();
   }
   enum FlatBuffersVTableOffset FLATBUFFERS_VTABLE_UNDERLYING_TYPE {
-    VT_ASSET_COMMON = 4,
-    VT_VERT = 6,
-    VT_FRAG = 8
+    VT_VERT = 4,
+    VT_FRAG = 6
   };
-  const kserialize::AssetCommon *asset_common() const {
-    return GetStruct<const kserialize::AssetCommon *>(VT_ASSET_COMMON);
-  }
   const flatbuffers::String *vert() const {
     return GetPointer<const flatbuffers::String *>(VT_VERT);
   }
@@ -46,7 +41,6 @@ struct Shader FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
   }
   bool Verify(flatbuffers::Verifier &verifier) const {
     return VerifyTableStart(verifier) &&
-           VerifyField<kserialize::AssetCommon>(verifier, VT_ASSET_COMMON) &&
            VerifyOffset(verifier, VT_VERT) &&
            verifier.VerifyString(vert()) &&
            VerifyOffset(verifier, VT_FRAG) &&
@@ -62,9 +56,6 @@ struct ShaderBuilder {
   typedef Shader Table;
   flatbuffers::FlatBufferBuilder &fbb_;
   flatbuffers::uoffset_t start_;
-  void add_asset_common(const kserialize::AssetCommon *asset_common) {
-    fbb_.AddStruct(Shader::VT_ASSET_COMMON, asset_common);
-  }
   void add_vert(flatbuffers::Offset<flatbuffers::String> vert) {
     fbb_.AddOffset(Shader::VT_VERT, vert);
   }
@@ -84,13 +75,11 @@ struct ShaderBuilder {
 
 inline flatbuffers::Offset<Shader> CreateShader(
     flatbuffers::FlatBufferBuilder &_fbb,
-    const kserialize::AssetCommon *asset_common = 0,
     flatbuffers::Offset<flatbuffers::String> vert = 0,
     flatbuffers::Offset<flatbuffers::String> frag = 0) {
   ShaderBuilder builder_(_fbb);
   builder_.add_frag(frag);
   builder_.add_vert(vert);
-  builder_.add_asset_common(asset_common);
   return builder_.Finish();
 }
 
@@ -101,14 +90,12 @@ struct Shader::Traits {
 
 inline flatbuffers::Offset<Shader> CreateShaderDirect(
     flatbuffers::FlatBufferBuilder &_fbb,
-    const kserialize::AssetCommon *asset_common = 0,
     const char *vert = nullptr,
     const char *frag = nullptr) {
   auto vert__ = vert ? _fbb.CreateString(vert) : 0;
   auto frag__ = frag ? _fbb.CreateString(frag) : 0;
   return kserialize::CreateShader(
       _fbb,
-      asset_common,
       vert__,
       frag__);
 }
@@ -124,7 +111,6 @@ inline ShaderT *Shader::UnPack(const flatbuffers::resolver_function_t *_resolver
 inline void Shader::UnPackTo(ShaderT *_o, const flatbuffers::resolver_function_t *_resolver) const {
   (void)_o;
   (void)_resolver;
-  { auto _e = asset_common(); if (_e) _o->asset_common = std::shared_ptr<kserialize::AssetCommon>(new kserialize::AssetCommon(*_e)); }
   { auto _e = vert(); if (_e) _o->vert = _e->str(); }
   { auto _e = frag(); if (_e) _o->frag = _e->str(); }
 }
@@ -137,32 +123,25 @@ inline flatbuffers::Offset<Shader> CreateShader(flatbuffers::FlatBufferBuilder &
   (void)_rehasher;
   (void)_o;
   struct _VectorArgs { flatbuffers::FlatBufferBuilder *__fbb; const ShaderT* __o; const flatbuffers::rehasher_function_t *__rehasher; } _va = { &_fbb, _o, _rehasher}; (void)_va;
-  auto _asset_common = _o->asset_common ? _o->asset_common.get() : 0;
   auto _vert = _o->vert.empty() ? 0 : _fbb.CreateString(_o->vert);
   auto _frag = _o->frag.empty() ? 0 : _fbb.CreateString(_o->frag);
   return kserialize::CreateShader(
       _fbb,
-      _asset_common,
       _vert,
       _frag);
 }
 
 inline const flatbuffers::TypeTable *ShaderTypeTable() {
   static const flatbuffers::TypeCode type_codes[] = {
-    { flatbuffers::ET_SEQUENCE, 0, 0 },
     { flatbuffers::ET_STRING, 0, -1 },
     { flatbuffers::ET_STRING, 0, -1 }
   };
-  static const flatbuffers::TypeFunction type_refs[] = {
-    kserialize::AssetCommonTypeTable
-  };
   static const char * const names[] = {
-    "asset_common",
     "vert",
     "frag"
   };
   static const flatbuffers::TypeTable tt = {
-    flatbuffers::ST_TABLE, 3, type_codes, type_refs, nullptr, nullptr, names
+    flatbuffers::ST_TABLE, 2, type_codes, nullptr, nullptr, nullptr, names
   };
   return &tt;
 }

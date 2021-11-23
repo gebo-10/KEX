@@ -33,12 +33,12 @@ namespace KStudio
             }
         }
 
-        public override void InitCommon(AssetType type, uint id)
-        {
-            mesh.AssetCommon = new kserialize.AssetCommonT();
-            mesh.AssetCommon.AssetType = type;
-            mesh.AssetCommon.Id = id;
-        }
+        //public override void InitCommon(AssetType type, uint id)
+        //{
+        //    mesh.AssetCommon = new kserialize.AssetCommonT();
+        //    mesh.AssetCommon.AssetType = type;
+        //    mesh.AssetCommon.Id = id;
+        //}
 
         public override byte[] Serialize()
         {

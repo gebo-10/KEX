@@ -18,7 +18,6 @@ inline const flatbuffers::TypeTable *MeshTypeTable();
 
 struct MeshT : public flatbuffers::NativeTable {
   typedef Mesh TableType;
-  std::shared_ptr<kserialize::AssetCommon> asset_common{};
   std::vector<uint16_t> indices{};
   std::vector<kserialize::Vec3> position{};
   std::vector<kserialize::RGB> color{};
@@ -34,16 +33,12 @@ struct Mesh FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
     return MeshTypeTable();
   }
   enum FlatBuffersVTableOffset FLATBUFFERS_VTABLE_UNDERLYING_TYPE {
-    VT_ASSET_COMMON = 4,
-    VT_INDICES = 6,
-    VT_POSITION = 8,
-    VT_COLOR = 10,
-    VT_NORMAL = 12,
-    VT_UV = 14
+    VT_INDICES = 4,
+    VT_POSITION = 6,
+    VT_COLOR = 8,
+    VT_NORMAL = 10,
+    VT_UV = 12
   };
-  const kserialize::AssetCommon *asset_common() const {
-    return GetStruct<const kserialize::AssetCommon *>(VT_ASSET_COMMON);
-  }
   const flatbuffers::Vector<uint16_t> *indices() const {
     return GetPointer<const flatbuffers::Vector<uint16_t> *>(VT_INDICES);
   }
@@ -61,7 +56,6 @@ struct Mesh FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
   }
   bool Verify(flatbuffers::Verifier &verifier) const {
     return VerifyTableStart(verifier) &&
-           VerifyField<kserialize::AssetCommon>(verifier, VT_ASSET_COMMON) &&
            VerifyOffset(verifier, VT_INDICES) &&
            verifier.VerifyVector(indices()) &&
            VerifyOffset(verifier, VT_POSITION) &&
@@ -83,9 +77,6 @@ struct MeshBuilder {
   typedef Mesh Table;
   flatbuffers::FlatBufferBuilder &fbb_;
   flatbuffers::uoffset_t start_;
-  void add_asset_common(const kserialize::AssetCommon *asset_common) {
-    fbb_.AddStruct(Mesh::VT_ASSET_COMMON, asset_common);
-  }
   void add_indices(flatbuffers::Offset<flatbuffers::Vector<uint16_t>> indices) {
     fbb_.AddOffset(Mesh::VT_INDICES, indices);
   }
@@ -114,7 +105,6 @@ struct MeshBuilder {
 
 inline flatbuffers::Offset<Mesh> CreateMesh(
     flatbuffers::FlatBufferBuilder &_fbb,
-    const kserialize::AssetCommon *asset_common = 0,
     flatbuffers::Offset<flatbuffers::Vector<uint16_t>> indices = 0,
     flatbuffers::Offset<flatbuffers::Vector<const kserialize::Vec3 *>> position = 0,
     flatbuffers::Offset<flatbuffers::Vector<const kserialize::RGB *>> color = 0,
@@ -126,7 +116,6 @@ inline flatbuffers::Offset<Mesh> CreateMesh(
   builder_.add_color(color);
   builder_.add_position(position);
   builder_.add_indices(indices);
-  builder_.add_asset_common(asset_common);
   return builder_.Finish();
 }
 
@@ -137,7 +126,6 @@ struct Mesh::Traits {
 
 inline flatbuffers::Offset<Mesh> CreateMeshDirect(
     flatbuffers::FlatBufferBuilder &_fbb,
-    const kserialize::AssetCommon *asset_common = 0,
     const std::vector<uint16_t> *indices = nullptr,
     const std::vector<kserialize::Vec3> *position = nullptr,
     const std::vector<kserialize::RGB> *color = nullptr,
@@ -150,7 +138,6 @@ inline flatbuffers::Offset<Mesh> CreateMeshDirect(
   auto uv__ = uv ? _fbb.CreateVectorOfStructs<kserialize::Vec2>(*uv) : 0;
   return kserialize::CreateMesh(
       _fbb,
-      asset_common,
       indices__,
       position__,
       color__,
@@ -169,7 +156,6 @@ inline MeshT *Mesh::UnPack(const flatbuffers::resolver_function_t *_resolver) co
 inline void Mesh::UnPackTo(MeshT *_o, const flatbuffers::resolver_function_t *_resolver) const {
   (void)_o;
   (void)_resolver;
-  { auto _e = asset_common(); if (_e) _o->asset_common = std::shared_ptr<kserialize::AssetCommon>(new kserialize::AssetCommon(*_e)); }
   { auto _e = indices(); if (_e) { _o->indices.resize(_e->size()); for (flatbuffers::uoffset_t _i = 0; _i < _e->size(); _i++) { _o->indices[_i] = _e->Get(_i); } } }
   { auto _e = position(); if (_e) { _o->position.resize(_e->size()); for (flatbuffers::uoffset_t _i = 0; _i < _e->size(); _i++) { _o->position[_i] = *_e->Get(_i); } } }
   { auto _e = color(); if (_e) { _o->color.resize(_e->size()); for (flatbuffers::uoffset_t _i = 0; _i < _e->size(); _i++) { _o->color[_i] = *_e->Get(_i); } } }
@@ -185,7 +171,6 @@ inline flatbuffers::Offset<Mesh> CreateMesh(flatbuffers::FlatBufferBuilder &_fbb
   (void)_rehasher;
   (void)_o;
   struct _VectorArgs { flatbuffers::FlatBufferBuilder *__fbb; const MeshT* __o; const flatbuffers::rehasher_function_t *__rehasher; } _va = { &_fbb, _o, _rehasher}; (void)_va;
-  auto _asset_common = _o->asset_common ? _o->asset_common.get() : 0;
   auto _indices = _o->indices.size() ? _fbb.CreateVector(_o->indices) : 0;
   auto _position = _o->position.size() ? _fbb.CreateVectorOfStructs(_o->position) : 0;
   auto _color = _o->color.size() ? _fbb.CreateVectorOfStructs(_o->color) : 0;
@@ -193,7 +178,6 @@ inline flatbuffers::Offset<Mesh> CreateMesh(flatbuffers::FlatBufferBuilder &_fbb
   auto _uv = _o->uv.size() ? _fbb.CreateVectorOfStructs(_o->uv) : 0;
   return kserialize::CreateMesh(
       _fbb,
-      _asset_common,
       _indices,
       _position,
       _color,
@@ -203,21 +187,18 @@ inline flatbuffers::Offset<Mesh> CreateMesh(flatbuffers::FlatBufferBuilder &_fbb
 
 inline const flatbuffers::TypeTable *MeshTypeTable() {
   static const flatbuffers::TypeCode type_codes[] = {
-    { flatbuffers::ET_SEQUENCE, 0, 0 },
     { flatbuffers::ET_USHORT, 1, -1 },
+    { flatbuffers::ET_SEQUENCE, 1, 0 },
     { flatbuffers::ET_SEQUENCE, 1, 1 },
-    { flatbuffers::ET_SEQUENCE, 1, 2 },
-    { flatbuffers::ET_SEQUENCE, 1, 1 },
-    { flatbuffers::ET_SEQUENCE, 1, 3 }
+    { flatbuffers::ET_SEQUENCE, 1, 0 },
+    { flatbuffers::ET_SEQUENCE, 1, 2 }
   };
   static const flatbuffers::TypeFunction type_refs[] = {
-    kserialize::AssetCommonTypeTable,
     kserialize::Vec3TypeTable,
     kserialize::RGBTypeTable,
     kserialize::Vec2TypeTable
   };
   static const char * const names[] = {
-    "asset_common",
     "indices",
     "position",
     "color",
@@ -225,7 +206,7 @@ inline const flatbuffers::TypeTable *MeshTypeTable() {
     "uv"
   };
   static const flatbuffers::TypeTable tt = {
-    flatbuffers::ST_TABLE, 6, type_codes, type_refs, nullptr, nullptr, names
+    flatbuffers::ST_TABLE, 5, type_codes, type_refs, nullptr, nullptr, names
   };
   return &tt;
 }

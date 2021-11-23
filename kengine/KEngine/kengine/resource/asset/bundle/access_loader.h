@@ -11,7 +11,7 @@ namespace kengine {
 
 		virtual BufferPtr get_info_buffer() = 0;
 
-		virtual AssetPtr load_asset(AssetItem &item) = 0;
+		virtual AssetPtr load_asset(const std::unordered_map<PathID, AssetItem>& items, AssetItem &item) = 0;
 
 		virtual void unload_asset(AssetItem& item) = 0;
 	};

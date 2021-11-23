@@ -36,6 +36,7 @@ namespace kengine{
         MAT3,
         MAT4,
         SAMPLE2D,
+        Color,
     };
     struct ShaderDataTypeInfo
     {

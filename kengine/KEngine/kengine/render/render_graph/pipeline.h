@@ -1,29 +1,12 @@
 #pragma once
+#include <kengine/resource/ram/mesh.h>
+#include <kengine/resource/ram/material.h>
 #include "../gpu_type.h"
 #include "../pipeline_state/all_state.h"
 #include "render_target.h"
-#include <kengine/resource/ram/mesh.h>
-#include <kengine/resource/ram/material.h>
-#include <kengine/resource/gpu/uniform_buffer.h>
+#include "common_uniform.h"
 
 namespace kengine {
-	//#pragma pack(4)
-	struct CommonUniform { //alignas
-	public:
-		//float time;
-		Matrix v;
-		Matrix p;
-		Matrix pv;
-
-		UniformBufferPtr uniform_buffer=nullptr;
-		void sync() {
-			if (uniform_buffer == nullptr) {
-				uniform_buffer = std::make_shared<UniformBuffer>(sizeof(CommonUniform) - sizeof(UniformBufferPtr));
-			}
-			memcpy(uniform_buffer->data,this, sizeof(CommonUniform)-sizeof(int));
-		}
-	};
-	//#pragma pack()
 	class Pipeline
 	{
 	public:

@@ -28,13 +28,16 @@ namespace kengine {
 			return buf;
 		}
 
-		AssetPtr load_asset(AssetItem& item) {
+		AssetPtr load_asset(AssetItem& item, const std::vector<AssetPtr>& depends) {
 			AssetPtr asset = std::make_shared<Asset>();
+			asset->type = item.type;
+			asset->id = item.id;
+
 			item.assets = asset;
 			uint32 offset = item.offset;
 			uint32 size = item.size;
 			item.buffer = buffer->view(offset, size);
-			asset->deserialize(item.type, item.buffer);
+			asset->deserialize(item.type, item.buffer, depends);
 			//AssetsDatabase::instance().add(asset);
 			return asset;
 		}

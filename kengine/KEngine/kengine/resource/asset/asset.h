@@ -15,7 +15,7 @@
 #include"../ram/shader.h"
 #include"../ram/mesh.h"
 
-
+#include <sol.hpp>
 
 namespace kengine
 {
@@ -49,7 +49,7 @@ namespace kengine
 		ResourcePtr instaniate() {}
 
 		void serialize(){}
-		void deserialize(AssetType type,BufferPtr buffer){
+		void deserialize(AssetType type,BufferPtr buffer, const std::vector<shared_ptr<Asset> >& depends){
 			switch (type)
 			{
 			case AssetType::TEXTURE:
@@ -58,6 +58,7 @@ namespace kengine
 				deserialize_shader(buffer);
 				break;
 			case AssetType::MATERIAL:
+				deserialize_material(buffer, depends);
 				break;
 			case AssetType::MESH:
 				deserialize_mesh(buffer);
@@ -71,17 +72,17 @@ namespace kengine
 			}
 		}
 
-		void deserialize_conmmon(std::shared_ptr<kserialize::AssetCommon>& common) {
-			type =(AssetType) common->asset_type();
-			memery_type = (MemeryType)common->memery_type();
-			id = common->id();
-		}
+		//void deserialize_conmmon(std::shared_ptr<kserialize::AssetCommon>& common) {
+		//	type =(AssetType) common->asset_type();
+		//	memery_type = (MemeryType)common->memery_type();
+		//	id = common->id();
+		//}
 
 		void deserialize_shader(BufferPtr buffer) {
 			auto flatbuffer_asset = std::make_shared<kserialize::ShaderT>();
 			kserialize::GetShader(buffer->data)->UnPackTo(flatbuffer_asset.get());
 			flat_object = flatbuffer_asset;
-			deserialize_conmmon(flatbuffer_asset->asset_common);
+			//deserialize_conmmon(flatbuffer_asset->asset_common);
 			auto shader = std::make_shared<Shader>();
 			default_resource =std::dynamic_pointer_cast<Resource>( shader);
 			shader->vert_source = flatbuffer_asset->vert;
@@ -92,7 +93,7 @@ namespace kengine
 			auto flatbuffer_asset = std::make_shared<kserialize::MeshT>();
 			kserialize::GetMesh(buffer->data)->UnPackTo(flatbuffer_asset.get());
 			flat_object = flatbuffer_asset;
-			deserialize_conmmon(flatbuffer_asset->asset_common);
+			//deserialize_conmmon(flatbuffer_asset->asset_common);
 			auto mesh = std::make_shared<Mesh>();
 			default_resource = std::dynamic_pointer_cast<Resource>(mesh);
 
@@ -107,6 +108,36 @@ namespace kengine
 
 			//BufferPtr indices_buf = std::make_shared<Buffer>(flatbuffer_asset->indices.data(), flatbuffer_asset->indices.size());
 			//mesh->set_indices(indices_buf);
+		}
+	
+		void deserialize_material(BufferPtr buffer, const std::vector<shared_ptr<Asset> >& depends) {
+			sol::state lua;
+			auto result=lua.load_buffer(buffer->data,buffer->size);
+			sol::table data = result.call();
+
+			ShaderPtr shader = std::dynamic_pointer_cast<Shader>(depends[0]->default_resource);
+			auto material = std::make_shared<Material>(shader);
+			
+			sol::table uniforms = data["uniforms"];
+			for (auto item : uniforms)
+			{
+				sol::table uniform = item.second;
+				int location=uniform["location"];
+				ShaderDataType type = uniform["type"];
+				material->add_uniform(location, type, uniform_value(type, uniform["value"]));
+			}
+		}
+
+		std::any uniform_value(ShaderDataType type, sol::table vec) {
+			switch (type)
+			{
+			case ShaderDataType::FLOAT:
+				return (float)vec[0];
+			case ShaderDataType::Color:
+				return Color((float)vec[0], (float)vec[1], (float)vec[2], (float)vec[3] );
+			default:
+				break;
+			}
 		}
 	};
 	typedef shared_ptr<Asset> AssetPtr;

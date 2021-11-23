@@ -1,7 +1,6 @@
 include "common.fbs";
 namespace kserialize;
 table Shader{
-	asset_common:AssetCommon;
 	vert:string;
 	frag:string;
 }

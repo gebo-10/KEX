@@ -9,7 +9,7 @@ namespace KStudio
 {
     abstract class Asset
     {
-        public virtual void InitCommon(kserialize.AssetType type, uint id) { }
+        public virtual List<uint> GetDepends() { return null; }
         public virtual byte[] Serialize() { return null; }
         public static Asset CreateAsset(AssetType type, string path)
         {
@@ -19,6 +19,8 @@ namespace KStudio
                     return new ShaderAsset(path);
                 case AssetType.Mesh:
                     return new MeshAsset(path);
+                case AssetType.Material:
+                    return new MaterialAsset(path);
             }
             return null;
         }

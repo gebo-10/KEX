@@ -8,6 +8,7 @@ table AssetInfo{
 	id:uint;
 	offset:uint;
 	size:uint;
+	depends:[uint];
 }
 
 table AssetBundle{

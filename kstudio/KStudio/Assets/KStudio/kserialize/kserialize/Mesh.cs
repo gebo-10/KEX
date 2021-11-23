@@ -19,54 +19,50 @@ public struct Mesh : IFlatbufferObject
   public void __init(int _i, ByteBuffer _bb) { __p = new Table(_i, _bb); }
   public Mesh __assign(int _i, ByteBuffer _bb) { __init(_i, _bb); return this; }
 
-  public kserialize.AssetCommon? AssetCommon { get { int o = __p.__offset(4); return o != 0 ? (kserialize.AssetCommon?)(new kserialize.AssetCommon()).__assign(o + __p.bb_pos, __p.bb) : null; } }
-  public ushort Indices(int j) { int o = __p.__offset(6); return o != 0 ? __p.bb.GetUshort(__p.__vector(o) + j * 2) : (ushort)0; }
-  public int IndicesLength { get { int o = __p.__offset(6); return o != 0 ? __p.__vector_len(o) : 0; } }
+  public ushort Indices(int j) { int o = __p.__offset(4); return o != 0 ? __p.bb.GetUshort(__p.__vector(o) + j * 2) : (ushort)0; }
+  public int IndicesLength { get { int o = __p.__offset(4); return o != 0 ? __p.__vector_len(o) : 0; } }
 #if ENABLE_SPAN_T
-  public Span<ushort> GetIndicesBytes() { return __p.__vector_as_span<ushort>(6, 2); }
+  public Span<ushort> GetIndicesBytes() { return __p.__vector_as_span<ushort>(4, 2); }
 #else
-  public ArraySegment<byte>? GetIndicesBytes() { return __p.__vector_as_arraysegment(6); }
+  public ArraySegment<byte>? GetIndicesBytes() { return __p.__vector_as_arraysegment(4); }
 #endif
-  public ushort[] GetIndicesArray() { return __p.__vector_as_array<ushort>(6); }
-  public kserialize.Vec3? Position(int j) { int o = __p.__offset(8); return o != 0 ? (kserialize.Vec3?)(new kserialize.Vec3()).__assign(__p.__vector(o) + j * 12, __p.bb) : null; }
-  public int PositionLength { get { int o = __p.__offset(8); return o != 0 ? __p.__vector_len(o) : 0; } }
-  public kserialize.RGB? Color(int j) { int o = __p.__offset(10); return o != 0 ? (kserialize.RGB?)(new kserialize.RGB()).__assign(__p.__vector(o) + j * 3, __p.bb) : null; }
-  public int ColorLength { get { int o = __p.__offset(10); return o != 0 ? __p.__vector_len(o) : 0; } }
-  public kserialize.Vec3? Normal(int j) { int o = __p.__offset(12); return o != 0 ? (kserialize.Vec3?)(new kserialize.Vec3()).__assign(__p.__vector(o) + j * 12, __p.bb) : null; }
-  public int NormalLength { get { int o = __p.__offset(12); return o != 0 ? __p.__vector_len(o) : 0; } }
-  public kserialize.Vec2? Uv(int j) { int o = __p.__offset(14); return o != 0 ? (kserialize.Vec2?)(new kserialize.Vec2()).__assign(__p.__vector(o) + j * 8, __p.bb) : null; }
-  public int UvLength { get { int o = __p.__offset(14); return o != 0 ? __p.__vector_len(o) : 0; } }
+  public ushort[] GetIndicesArray() { return __p.__vector_as_array<ushort>(4); }
+  public kserialize.Vec3? Position(int j) { int o = __p.__offset(6); return o != 0 ? (kserialize.Vec3?)(new kserialize.Vec3()).__assign(__p.__vector(o) + j * 12, __p.bb) : null; }
+  public int PositionLength { get { int o = __p.__offset(6); return o != 0 ? __p.__vector_len(o) : 0; } }
+  public kserialize.RGB? Color(int j) { int o = __p.__offset(8); return o != 0 ? (kserialize.RGB?)(new kserialize.RGB()).__assign(__p.__vector(o) + j * 3, __p.bb) : null; }
+  public int ColorLength { get { int o = __p.__offset(8); return o != 0 ? __p.__vector_len(o) : 0; } }
+  public kserialize.Vec3? Normal(int j) { int o = __p.__offset(10); return o != 0 ? (kserialize.Vec3?)(new kserialize.Vec3()).__assign(__p.__vector(o) + j * 12, __p.bb) : null; }
+  public int NormalLength { get { int o = __p.__offset(10); return o != 0 ? __p.__vector_len(o) : 0; } }
+  public kserialize.Vec2? Uv(int j) { int o = __p.__offset(12); return o != 0 ? (kserialize.Vec2?)(new kserialize.Vec2()).__assign(__p.__vector(o) + j * 8, __p.bb) : null; }
+  public int UvLength { get { int o = __p.__offset(12); return o != 0 ? __p.__vector_len(o) : 0; } }
 
   public static Offset<kserialize.Mesh> CreateMesh(FlatBufferBuilder builder,
-      kserialize.AssetCommonT asset_common = null,
       VectorOffset indicesOffset = default(VectorOffset),
       VectorOffset positionOffset = default(VectorOffset),
       VectorOffset colorOffset = default(VectorOffset),
       VectorOffset normalOffset = default(VectorOffset),
       VectorOffset uvOffset = default(VectorOffset)) {
-    builder.StartTable(6);
+    builder.StartTable(5);
     Mesh.AddUv(builder, uvOffset);
     Mesh.AddNormal(builder, normalOffset);
     Mesh.AddColor(builder, colorOffset);
     Mesh.AddPosition(builder, positionOffset);
     Mesh.AddIndices(builder, indicesOffset);
-    Mesh.AddAssetCommon(builder, kserialize.AssetCommon.Pack(builder, asset_common));
     return Mesh.EndMesh(builder);
   }
 
-  public static void StartMesh(FlatBufferBuilder builder) { builder.StartTable(6); }
-  public static void AddAssetCommon(FlatBufferBuilder builder, Offset<kserialize.AssetCommon> assetCommonOffset) { builder.AddStruct(0, assetCommonOffset.Value, 0); }
-  public static void AddIndices(FlatBufferBuilder builder, VectorOffset indicesOffset) { builder.AddOffset(1, indicesOffset.Value, 0); }
+  public static void StartMesh(FlatBufferBuilder builder) { builder.StartTable(5); }
+  public static void AddIndices(FlatBufferBuilder builder, VectorOffset indicesOffset) { builder.AddOffset(0, indicesOffset.Value, 0); }
   public static VectorOffset CreateIndicesVector(FlatBufferBuilder builder, ushort[] data) { builder.StartVector(2, data.Length, 2); for (int i = data.Length - 1; i >= 0; i--) builder.AddUshort(data[i]); return builder.EndVector(); }
   public static VectorOffset CreateIndicesVectorBlock(FlatBufferBuilder builder, ushort[] data) { builder.StartVector(2, data.Length, 2); builder.Add(data); return builder.EndVector(); }
   public static void StartIndicesVector(FlatBufferBuilder builder, int numElems) { builder.StartVector(2, numElems, 2); }
-  public static void AddPosition(FlatBufferBuilder builder, VectorOffset positionOffset) { builder.AddOffset(2, positionOffset.Value, 0); }
+  public static void AddPosition(FlatBufferBuilder builder, VectorOffset positionOffset) { builder.AddOffset(1, positionOffset.Value, 0); }
   public static void StartPositionVector(FlatBufferBuilder builder, int numElems) { builder.StartVector(12, numElems, 4); }
-  public static void AddColor(FlatBufferBuilder builder, VectorOffset colorOffset) { builder.AddOffset(3, colorOffset.Value, 0); }
+  public static void AddColor(FlatBufferBuilder builder, VectorOffset colorOffset) { builder.AddOffset(2, colorOffset.Value, 0); }
   public static void StartColorVector(FlatBufferBuilder builder, int numElems) { builder.StartVector(3, numElems, 1); }
-  public static void AddNormal(FlatBufferBuilder builder, VectorOffset normalOffset) { builder.AddOffset(4, normalOffset.Value, 0); }
+  public static void AddNormal(FlatBufferBuilder builder, VectorOffset normalOffset) { builder.AddOffset(3, normalOffset.Value, 0); }
   public static void StartNormalVector(FlatBufferBuilder builder, int numElems) { builder.StartVector(12, numElems, 4); }
-  public static void AddUv(FlatBufferBuilder builder, VectorOffset uvOffset) { builder.AddOffset(5, uvOffset.Value, 0); }
+  public static void AddUv(FlatBufferBuilder builder, VectorOffset uvOffset) { builder.AddOffset(4, uvOffset.Value, 0); }
   public static void StartUvVector(FlatBufferBuilder builder, int numElems) { builder.StartVector(8, numElems, 4); }
   public static Offset<kserialize.Mesh> EndMesh(FlatBufferBuilder builder) {
     int o = builder.EndTable();
@@ -80,7 +76,6 @@ public struct Mesh : IFlatbufferObject
     return _o;
   }
   public void UnPackTo(MeshT _o) {
-    _o.AssetCommon = this.AssetCommon.HasValue ? this.AssetCommon.Value.UnPack() : null;
     _o.Indices = new List<ushort>();
     for (var _j = 0; _j < this.IndicesLength; ++_j) {_o.Indices.Add(this.Indices(_j));}
     _o.Position = new List<kserialize.Vec3T>();
@@ -125,7 +120,6 @@ public struct Mesh : IFlatbufferObject
     }
     return CreateMesh(
       builder,
-      _o.AssetCommon,
       _indices,
       _position,
       _color,
@@ -136,7 +130,6 @@ public struct Mesh : IFlatbufferObject
 
 public class MeshT
 {
-  public kserialize.AssetCommonT AssetCommon { get; set; }
   public List<ushort> Indices { get; set; }
   public List<kserialize.Vec3T> Position { get; set; }
   public List<kserialize.RGBT> Color { get; set; }
@@ -144,7 +137,6 @@ public class MeshT
   public List<kserialize.Vec2T> Uv { get; set; }
 
   public MeshT() {
-    this.AssetCommon = new kserialize.AssetCommonT();
     this.Indices = null;
     this.Position = null;
     this.Color = null;
