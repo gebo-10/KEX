@@ -35,6 +35,8 @@ namespace kengine {
 		AssetPtr load_asset( AssetItem& item, const std::vector<AssetPtr>& depends) {
 			AssetPtr asset = std::make_shared<Asset>();
 			item.assets = asset;
+			asset->type = item.type;
+			asset->id = item.id;
 			uint32 offset = item.offset;
 			uint32 size = item.size;
 

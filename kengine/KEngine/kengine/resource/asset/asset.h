@@ -14,6 +14,7 @@
 #include"asset_common.h"
 #include"../ram/shader.h"
 #include"../ram/mesh.h"
+#include "../ram/material.h"
 
 #include <sol.hpp>
 
@@ -117,7 +118,8 @@ namespace kengine
 
 			ShaderPtr shader = std::dynamic_pointer_cast<Shader>(depends[0]->default_resource);
 			auto material = std::make_shared<Material>(shader);
-			
+			default_resource = std::dynamic_pointer_cast<Resource>(material);
+
 			sol::table uniforms = data["uniforms"];
 			for (auto item : uniforms)
 			{
@@ -132,9 +134,11 @@ namespace kengine
 			switch (type)
 			{
 			case ShaderDataType::FLOAT:
-				return (float)vec[0];
-			case ShaderDataType::Color:
-				return Color((float)vec[0], (float)vec[1], (float)vec[2], (float)vec[3] );
+				return (float)vec[1];
+			case ShaderDataType::Color:{
+				auto color=Color((float)vec[1], (float)vec[2], (float)vec[3], (float)vec[4] );
+				return color;
+			}
 			default:
 				break;
 			}

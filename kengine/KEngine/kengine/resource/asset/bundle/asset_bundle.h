@@ -83,7 +83,7 @@ namespace kengine
 
 				depends.push_back(dep_asset->second.assets);
 			}
-			auto asset=access_loader->load_asset(asset_items,item);
+			auto asset=access_loader->load_asset(item, depends);
 			//AssetsDatabase::instance().add(asset);
 			return asset;
 		}
@@ -102,7 +102,7 @@ namespace kengine
 
 		std::vector<AssetPtr> load_all_asset() {
 			std::vector<AssetPtr> assets;
-			for (auto info : asset_items) {
+			for (auto &info : asset_items) {
 				assets.push_back(load_asset(info.second));
 			}
 			return assets;
