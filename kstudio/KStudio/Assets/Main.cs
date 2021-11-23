@@ -15,6 +15,9 @@ public class Main : MonoBehaviour
     public string dir;
     public string bundleName;
     // Start is called before the first frame update
+
+    public ScriptableObject s;
+    public MonoScript m;
     void Start()
     {
         
