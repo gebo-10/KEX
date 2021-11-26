@@ -438,6 +438,9 @@
     <ClInclude Include="kengine\render\render_graph\common_uniform.h">
       <Filter>kengine\render\render_graph</Filter>
     </ClInclude>
+    <ClInclude Include="kengine\scene\component\uniform_component.h">
+      <Filter>kengine\scene\component</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="kengine\CMakeLists.txt">

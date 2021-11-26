@@ -18,6 +18,7 @@ public class Main : MonoBehaviour
 
     public ScriptableObject s;
     public MonoScript m;
+    Material mat;
     void Start()
     {
         

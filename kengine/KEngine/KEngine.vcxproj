@@ -280,6 +280,7 @@
     <ClInclude Include="kengine\scene\component\light.h" />
     <ClInclude Include="kengine\scene\component\mesh_render.h" />
     <ClInclude Include="kengine\scene\component\transform_component.h" />
+    <ClInclude Include="kengine\scene\component\uniform_component.h" />
     <ClInclude Include="kengine\scene\game_object.h" />
     <ClInclude Include="kengine\scene\scene.h" />
     <ClInclude Include="kengine\scene\scene_manager.h" />
