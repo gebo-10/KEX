@@ -29,7 +29,7 @@
 #pragma comment(lib, "odbccp32.lib")
 #pragma comment(lib , "flatbuffers.lib")
 //#pragma comment(lib, "freetype.lib")
-
+#pragma comment(lib, "libzmq-v142-mt-sgd-4_3_4.lib")
 kengine::KEngine* engine=nullptr;
 int main()
 {
@@ -50,7 +50,7 @@ int main()
         glfwTerminate();
         return -1;
     }
-
+    //glfwSetWindowAttrib(window, GLFW_DECORATED, GLFW_FALSE);
     /* Make the window's context current */
     glfwMakeContextCurrent(window);
 

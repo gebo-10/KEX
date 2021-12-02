@@ -110,6 +110,9 @@
     <Filter Include="kengine\render\pipeline_state">
       <UniqueIdentifier>{708972c9-2238-40b1-b3b1-533948f9c731}</UniqueIdentifier>
     </Filter>
+    <Filter Include="kengine\system\monitor">
+      <UniqueIdentifier>{6a634b96-b473-49d6-b722-8a79b633be02}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="window\main.cc">
@@ -440,6 +443,19 @@
     </ClInclude>
     <ClInclude Include="kengine\scene\component\uniform_component.h">
       <Filter>kengine\scene\component</Filter>
+    </ClInclude>
+    <ClInclude Include="kengine\system\monitor\monitor.h">
+      <Filter>kengine\system\monitor</Filter>
+    </ClInclude>
+    <ClInclude Include="kengine\system\monitor\command.h" />
+    <ClInclude Include="kengine\service\async_service.h">
+      <Filter>kengine\service</Filter>
+    </ClInclude>
+    <ClInclude Include="kengine\system\monitor\monitor_processor.h">
+      <Filter>kengine\system\monitor</Filter>
+    </ClInclude>
+    <ClInclude Include="kengine\system\monitor\test_processor.h">
+      <Filter>kengine\system\monitor</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

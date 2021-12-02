@@ -27,19 +27,30 @@ void KEngine::init() {
     auto name_buff = Env.io->read_file("name.db");
     Env.name_service.init(name_buff);
 
+    //Env.async_service.work(nullptr, 
+    //    [](void* data) {
+    //        info("work.............");
+    //        uv_sleep(3000);
+    //    }, 
+    //    [](int status, void* data) {
+    //        info("complete.............");
+    //    });
+
     //auto vert_buff = Env.io->read_file("main/shader/default.vert.glsl");
     //string file("main/shader/default.vert.glsl");
     //auto b = Env.io->mmap_file(file);
     //info(b->data());
+
     auto bundle = Env.assets_database.load_bundle("test.bundle");
     Env.assets_database.load_all_bundle_asset(bundle);
-    auto id = NAME("Assets/Bundle/default.glsl");
-    auto shader = Env.assets_database.get_resource<Shader>(id);
-    info(shader->vert_source);
-    shader->gpucache();
+    //auto id = NAME("Assets/Bundle/default.glsl");
+    //auto shader = Env.assets_database.get_resource<Shader>(id);
+    //info(shader->vert_source);
+    //shader->gpucache();
 
-    auto mesh = Env.assets_database.get_resource<Mesh>(NAME("Assets/Bundle/box.fbx"));
-    mesh->gpucache();
+    //auto mesh = Env.assets_database.get_resource<Mesh>(NAME("Assets/Bundle/box.fbx"));
+    //mesh->gpucache();
+
     //res = Env.assets_database.get_resource<Shader>(0);
     //info(res->vert_source);
     
@@ -56,8 +67,8 @@ void KEngine::update()
 {
     //static int a = 0;
     //a++;
-    Env.time.update();
-    info("fps:{}", Env.time.fps);
+    Env.update();
+    //info("fps:{}", Env.time.fps);
 
     //Env.profiler.fps_limit();
     //info("hello{}",a);

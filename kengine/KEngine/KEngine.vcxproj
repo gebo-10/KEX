@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -86,7 +86,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(SolutionDir)KEngine\kengine\external;$(SolutionDir)KEngine\kengine\external\flatbuffers\include;$(SolutionDir)KEngine\kengine\external\mio\single_include\mio;$(SolutionDir)KEngine\kengine\external\rapidjson\include;$(SolutionDir)KEngine\kengine\external\glm;$(SolutionDir)KEngine\kengine\external\spdlog\include;$(SolutionDir)KEngine;$(SolutionDir)KEngine\window\extern\glfw\include;$(SolutionDir)KEngine\window\extern\glew\include;$(SolutionDir)KEngine\kengine\external\libuv\include;$(SolutionDir)KEngine\kengine\external\sol;$(SolutionDir)KEngine\kengine\external\lua-5.1.5\src;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)KEngine\kengine\external;$(SolutionDir)KEngine\kengine\external\flatbuffers\include;$(SolutionDir)KEngine\kengine\external\mio\single_include\mio;$(SolutionDir)KEngine\kengine\external\rapidjson\include;$(SolutionDir)KEngine\kengine\external\glm;$(SolutionDir)KEngine\kengine\external\spdlog\include;$(SolutionDir)KEngine;$(SolutionDir)KEngine\window\extern\glfw\include;$(SolutionDir)KEngine\window\extern\glew\include;$(SolutionDir)KEngine\kengine\external\libuv\include;$(SolutionDir)KEngine\kengine\external\sol;$(SolutionDir)KEngine\kengine\external\lua-5.1.5\src;$(SolutionDir)KEngine\kengine\external\zmq\include;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)$(Platform)\$(Configuration)\;$(LibraryPath)</LibraryPath>
     <IntDir>$(SolutionDir)$(Platform)\$(Configuration)\</IntDir>
   </PropertyGroup>
@@ -284,9 +284,14 @@
     <ClInclude Include="kengine\scene\game_object.h" />
     <ClInclude Include="kengine\scene\scene.h" />
     <ClInclude Include="kengine\scene\scene_manager.h" />
+    <ClInclude Include="kengine\service\async_service.h" />
     <ClInclude Include="kengine\service\name_service.h" />
     <ClInclude Include="kengine\support\config.h" />
     <ClInclude Include="kengine\support\ktime.h" />
+    <ClInclude Include="kengine\system\monitor\command.h" />
+    <ClInclude Include="kengine\system\monitor\monitor.h" />
+    <ClInclude Include="kengine\system\monitor\monitor_processor.h" />
+    <ClInclude Include="kengine\system\monitor\test_processor.h" />
     <ClInclude Include="kengine\system\render\render_system.h" />
     <ClInclude Include="kengine\system\system.h" />
     <ClInclude Include="window\test_app.h" />

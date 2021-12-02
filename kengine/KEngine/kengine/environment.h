@@ -7,6 +7,7 @@
 #include"resource/asset/asset_database.h"
 
 #include "service/name_service.h"
+#include "service/async_service.h"
 #define Env Environment::instance()
 #define NAME(str) Env.name_service.get_id(str) 
 namespace kengine
@@ -25,7 +26,10 @@ namespace kengine
 			profiler.init(config.fps_limit);
 			platform.init();
 		}
-		
+		void update() {
+			time.update();
+			async_service.update();
+		}
 		Config config;
 		Time time;
 		Profiler profiler;
@@ -33,6 +37,7 @@ namespace kengine
 		IO* io;
 
 		NameService name_service;
+		AsyncService async_service;
 		AssetsDatabase assets_database;
 	};
 }

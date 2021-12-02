@@ -172,10 +172,10 @@ namespace kengine {
             uniforms.push_back(Uniform{ true,data_type, location,value });
         }
 
-        Uniform& find_uniform(int location) {
-            for (Uniform& uniform : uniforms) {
+        Uniform* find_uniform(int location) {
+            for (auto & uniform : uniforms) {
                 if (uniform.location == location) {
-                    return uniform;
+                    return &uniform;
                 }
             }
             return nullptr;

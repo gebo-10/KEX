@@ -8,6 +8,7 @@
 
 #include "environment.h"
 #include "render/render.h"
+#include "system/monitor/monitor.h"
 namespace kengine
 {
 	class KEngine {
@@ -21,6 +22,7 @@ namespace kengine
 		
 		Render render;
 		Scene scene;
+		Monitor monitor;
 
 		void init();
 		void update();

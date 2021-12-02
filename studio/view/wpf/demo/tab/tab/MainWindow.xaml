@@ -1,0 +1,33 @@
+﻿<Window x:Class="tab.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:tab"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Grid >
+        <Menu>
+            <MenuItem Header="文件">
+                <MenuItem Header="新建窗口" Click="MenuItem_Click_1"></MenuItem>
+                <MenuItem Header="关闭" Click="MenuItem_Click_2"></MenuItem>
+            </MenuItem>
+            <MenuItem Header="帮助" Click="MenuItem_Click">
+            </MenuItem>
+
+
+        </Menu>
+        <TabControl Name="aaa" HorizontalAlignment="Left" Width="331" Margin="0,26,0,235">
+            <TabItem Header="窗口" >
+                <ScrollViewer  HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Visible">
+                    <Frame Content="Frame" Source="/Page1.xaml" NavigationUIVisibility="Hidden" />
+                </ScrollViewer>
+            </TabItem>
+        </TabControl>
+
+
+        <ScrollViewer x:Name="sc" Margin="356,80,-3,0" HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Visible">
+            <Frame x:Name="f2" Source="/Page2.xaml" NavigationUIVisibility="Hidden" />
+        </ScrollViewer>
+    </Grid>
+</Window>
