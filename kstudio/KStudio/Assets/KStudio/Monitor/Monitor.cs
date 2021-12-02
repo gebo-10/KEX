@@ -6,6 +6,11 @@ using System;
 
 public class Monitor : MonoBehaviour
 {
+	enum MonitorCommandType
+	{
+		Test,
+		Num,
+	};
 	ZSocket requester;
     void Start()
     {
@@ -22,20 +27,19 @@ public class Monitor : MonoBehaviour
     [EditorButton]
 	void Test()
     {
-		
-		var bytes = FlexBufferBuilder.Vector(root =>
+		var bytes = FlexBufferBuilder.Map(root =>
 		{
-			root.Add((ushort)0);
-			root.Add("hello");
-			
+			root.Add("type",(ushort)MonitorCommandType.Test);
+			root.Add("content","hello");
 		});
 		
 		requester.Send(new ZFrame(bytes));
 
-		// Receive
 		using (ZFrame reply = requester.ReceiveFrame())
 		{
-			Debug.Log(" Received: " + reply.ReadString());
+			var result=FlxValue.FromBytes(reply.Read()).AsMap;
+			var str=result["content"].AsString;
+			Debug.Log(str);
 		}
 	}
 }

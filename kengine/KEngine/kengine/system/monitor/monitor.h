@@ -17,7 +17,6 @@ namespace kengine {
 		void* zmq_responder;
 
 		BufferPtr recv_buffer;
-		BufferPtr result_buffer;
 		BufferPtr recv_buffer_view=nullptr;
 
 		MonitorProcessor * processor[(int)MonitorCommandType::Num];
@@ -34,7 +33,6 @@ namespace kengine {
 			assert(rc == 0);
 
 			recv_buffer = std::make_shared<Buffer>(64 * 1024);
-			result_buffer = std::make_shared<Buffer>(1 * 1024);
 
 			init_processor();
 
@@ -62,13 +60,15 @@ namespace kengine {
 			Monitor* monitor = (Monitor*)data;
 
 			auto root = flexbuffers::GetRoot((uint8_t *)monitor->recv_buffer_view->data, monitor->recv_buffer_view->size);
-			auto v = root.AsVector();
-			uint16 type = v[0].AsUInt16();
+			auto map = root.AsMap();
+			uint16 type = map["type"].AsUInt16();
 
-			BufferPtr result_buffer_view = monitor->result_buffer->view(0, 0);
-			monitor->processor[type]->process(monitor->recv_buffer_view,result_buffer_view);
+			flexbuffers::Builder fbb;
+			monitor->processor[type]->process(map, fbb);
+			fbb.Finish();
 
-			zmq_send(monitor->zmq_responder, result_buffer_view->data, result_buffer_view ->size, 0);
+			auto buf = fbb.GetBuffer();
+			zmq_send(monitor->zmq_responder, buf.data(), buf.size(), 0);
 			Env.async_service.work(&monitor->async_work);
 		}
 

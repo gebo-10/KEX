@@ -1,4 +1,5 @@
 #pragma once
+#include <flatbuffers/flexbuffers.h>
 namespace kengine {
 	enum class MonitorCommandType
 	{
@@ -15,6 +16,6 @@ namespace kengine {
 		virtual ~MonitorProcessor()
 		{
 		}
-		virtual void process(BufferPtr recv, BufferPtr result) = 0;
+		virtual void process(flexbuffers::Map revc, flexbuffers::Builder& result) = 0;
 	};
 }

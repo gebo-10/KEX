@@ -12,15 +12,13 @@ namespace kengine {
 		virtual ~TestProcessor()
 		{
 		}
-		virtual void process(BufferPtr recv, BufferPtr result) {
-			auto root = flexbuffers::GetRoot((uint8_t*)recv->data, recv->size);
-			auto v = root.AsVector();
-			uint16 type = v[0].AsUInt16();
-			auto s = v[1].AsString();
+		virtual void process(flexbuffers::Map revc, flexbuffers::Builder& result) {
+			auto s = revc["content"].AsString();
 
 			info("recv {}", s.c_str());
-			int count=sprintf_s(result->data,1000, "woroldddddd");
-			result->size = count;
+			result.StartMap();
+			result.Add("content", "adsfjladsjfla");
+			result.EndMap(0);
 		}
 	};
 }
