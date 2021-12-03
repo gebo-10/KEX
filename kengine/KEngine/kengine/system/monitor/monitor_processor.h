@@ -9,13 +9,8 @@ namespace kengine {
 	class MonitorProcessor
 	{
 	public:
-		MonitorProcessor()
-		{
-		}
-
-		virtual ~MonitorProcessor()
-		{
-		}
+		MonitorProcessor(){}
+		virtual ~MonitorProcessor(){}
 		virtual void process(flexbuffers::Map revc, flexbuffers::Builder& result) = 0;
 	};
 }

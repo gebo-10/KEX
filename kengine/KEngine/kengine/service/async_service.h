@@ -1,7 +1,7 @@
 #pragma once
 #include<uv.h>
 namespace kengine {
-	struct Work {
+	struct AsyncWork {
 		bool clear=true;
 		void* data=nullptr;
 		std::function<void(void*)> work = [](void * data) {};
@@ -26,7 +26,7 @@ namespace kengine {
 		}
 
 		void work(void * data, std::function<void(void*)> w, std::function<void(int,void*)> complete) {
-			Work* work = new Work();
+			AsyncWork* work = new AsyncWork();
 			work->data = data;
 			work->work = w;
 			work->complete = complete;
@@ -35,18 +35,18 @@ namespace kengine {
 			uv_queue_work(&loop, req, work_cb, after_work_cb);
 		}
 
-		void work(Work *work) {
+		void work(AsyncWork *work) {
 			uv_work_t* req = new uv_work_t();
 			req->data = work;
 			uv_queue_work(&loop, req, work_cb, after_work_cb);
 		}
 
 		static void  work_cb(uv_work_t* req) {
-			Work* work =(Work*) req->data;
+			AsyncWork* work =(AsyncWork*) req->data;
 			work->work(work->data);
 		}
 		static void  after_work_cb(uv_work_t* req,int status) {
-			Work* work = (Work*)req->data;
+			AsyncWork* work = (AsyncWork*)req->data;
 			work->complete(status, work->data);
 			if (work->clear) {
 				delete work;

@@ -345,7 +345,7 @@
     <ClInclude Include="kengine\core\math\kmath.h">
       <Filter>kengine\core\math</Filter>
     </ClInclude>
-    <ClInclude Include="kengine\core\math\transform.h">
+    <ClInclude Include="kengine\core\math\srt.h">
       <Filter>kengine\core\math</Filter>
     </ClInclude>
     <ClInclude Include="kengine\core\math\glm_math.h">
@@ -432,7 +432,7 @@
     <ClInclude Include="kengine\render\render_graph\pass\draw_pass.h">
       <Filter>kengine\render\render_graph\pass</Filter>
     </ClInclude>
-    <ClInclude Include="kengine\scene\component\transform_component.h">
+    <ClInclude Include="kengine\scene\component\transform.h">
       <Filter>kengine\scene\component</Filter>
     </ClInclude>
     <ClInclude Include="kengine\resource\gpu\uniform_buffer.h">

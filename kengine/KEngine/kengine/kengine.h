@@ -9,6 +9,7 @@
 #include "environment.h"
 #include "render/render.h"
 #include "system/monitor/monitor.h"
+#include <kengine/scene/scene_manager.h>
 namespace kengine
 {
 	class KEngine {
@@ -21,7 +22,7 @@ namespace kengine
 		Application* app;
 		
 		Render render;
-		Scene scene;
+		SceneManager scene_manager;
 		Monitor monitor;
 
 		void init();

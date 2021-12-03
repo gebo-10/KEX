@@ -4,7 +4,6 @@ namespace kengine {
 	class Render
 	{
 	public:
-		RenderGraphPtr render_graph;
 		Render()
 		{
 		}
@@ -14,7 +13,11 @@ namespace kengine {
 		}
 
 		void init() {
-			render_graph = std::make_shared<RenderGraph>();
+
+		}
+
+		RenderGraphPtr default_rg() {
+			RenderGraphPtr render_graph = std::make_shared<RenderGraph>();
 			auto state_pass = std::make_shared<StatePass>();
 			auto clear_value = std::make_shared<ClearValue>(color_antiquewhite, 0, 0);
 			state_pass->states.push_back(clear_value);
@@ -23,10 +26,11 @@ namespace kengine {
 			render_graph->passes.push_back(std::make_shared<ClearPass>(true, true, true));
 
 			render_graph->passes.push_back(std::make_shared<DrawPass>());
+			return render_graph;
 		}
 
 		void update(Scene &scene) {
-			render_graph->exec(scene);
+			scene.render_graph->exec(scene);
 		}
 	private:
 

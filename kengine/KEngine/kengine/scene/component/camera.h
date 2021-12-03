@@ -1,13 +1,14 @@
 #pragma once
 #include"../component.h"
 namespace kengine {
+	enum class CameraType {
+		ORTHO,
+		PERSPECTIVE,
+	};
 	class Camera :public Component {
 	public:
-		enum CameraType {
-			ORTHO,
-			PERSPECTIVE,
-		};
-		CameraType type = PERSPECTIVE;
+		
+		CameraType type = CameraType::PERSPECTIVE;
 		//int width = 100;
 		//int height = 100;
 		//Rectf ortho_rect;
@@ -16,28 +17,27 @@ namespace kengine {
 		float znear = 0.1f;
 		float zfar = 100.f;
 
-		vec3 position{ 0.f };
-		vec3 target{ 0.f };
+		//vec3 position{ 0.f };
+		//vec3 target{ 0.f };
 		mat4 projection{ 1.f };
-		mat4 view_matrix{ 1.f };
+		//mat4 view_matrix{ 1.f };
 
 		bool dirty = true;
 
 		Camera() :Component(ComponentType::CAMERA) {}
 
-		void lookat(vec3 position, vec3 target, vec3 up) {
-			position = position;
-			target = target;
-			view_matrix = glm::lookAt(position, target, up);
+		//void lookat(vec3 position, vec3 target, vec3 up) {
+		//	position = position;
+		//	target = target;
+		//	view_matrix = glm::lookAt(position, target, up);
+		//}
 
-		}
-
-		mat4 matrix() {
-			if (dirty) {
-				update_matrix();
-			}
-			return projection * view_matrix;
-		}
+		//mat4 matrix() {
+		//	if (dirty) {
+		//		update_matrix();
+		//	}
+		//	return projection * view_matrix;
+		//}
 
 		mat4 get_p() {
 			if (dirty) {
@@ -46,18 +46,18 @@ namespace kengine {
 			return projection;
 		}
 
-		mat4 get_v() {
-			return view_matrix;
-		}
+		//mat4 get_v() {
+		//	return view_matrix;
+		//}
 
 		void update_matrix() {
 			switch (type)
 			{
-			case Camera::ORTHO: {
+			case CameraType::ORTHO: {
 				projection = glm::ortho(ortho_rect.x, ortho_rect.y, ortho_rect.z, ortho_rect.w, znear, zfar);
 				break;
 			}
-			case Camera::PERSPECTIVE:
+			case CameraType::PERSPECTIVE:
 				projection = glm::perspective(glm::radians(fov), (ortho_rect.y - ortho_rect.x) / (ortho_rect.w - ortho_rect.z), znear, zfar);
 				break;
 			default:

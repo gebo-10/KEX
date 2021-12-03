@@ -16,7 +16,6 @@ public class Monitor : MonoBehaviour
     {
 		requester = new ZSocket(ZSocketType.REQ);
 		requester.ReceiveTimeout = new TimeSpan(0,0,10);
-		
 	}
 
     [EditorButton]
@@ -32,9 +31,7 @@ public class Monitor : MonoBehaviour
 			root.Add("type",(ushort)MonitorCommandType.Test);
 			root.Add("content","hello");
 		});
-		
 		requester.Send(new ZFrame(bytes));
-
 		using (ZFrame reply = requester.ReceiveFrame())
 		{
 			var result=FlxValue.FromBytes(reply.Read()).AsMap;

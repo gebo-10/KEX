@@ -21,7 +21,7 @@ layout (location = 0) uniform mat4 M;
 out vec3 ourColor;
 void main()
 {
-    gl_Position = P*V*M*vec4(position, 1.0f);
+    gl_Position = PV*M*vec4(position, 1.0f);
     ourColor = color;
 }
 

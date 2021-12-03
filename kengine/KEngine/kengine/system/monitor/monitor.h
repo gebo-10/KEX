@@ -11,7 +11,7 @@ namespace kengine {
 	class Monitor
 	{
 	public:
-		Work async_work;
+		AsyncWork async_work;
 		
 		void* zmq_context;
 		void* zmq_responder;
@@ -43,6 +43,8 @@ namespace kengine {
 		{
 			zmq_close(zmq_responder);
 			zmq_ctx_destroy(zmq_context);
+			
+			for (auto p : processor){delete p;}
 		}
 
 		void init_processor() {

@@ -1,13 +1,14 @@
 #pragma once
 #include<kengine/core/base/base.h>
 #include"component.h"
-#include "component/transform_component.h"
+#include "component/transform.h"
 #include "component/mesh_render.h"
 namespace kengine {
 	class GameObject
 	{
 	public:
-		weak_ptr<GameObject> father;
+		//uint32 id;
+		GameObject * parent;
 		std::vector< shared_ptr<GameObject> > children;
 		std::vector<ComponentPtr> components;
 		GameObject()
@@ -17,8 +18,13 @@ namespace kengine {
 		virtual ~GameObject()
 		{
 		}
-		void add_component(ComponentPtr component) {
+
+		bool add_component(ComponentPtr component) {
+			if (get_component(component->type) != nullptr) {
+				return false;
+			}
 			components.push_back(component);
+			return true;
 		}
 
 		ComponentPtr get_component(ComponentType type) {
@@ -27,6 +33,16 @@ namespace kengine {
 					return comp;
 				}
 			}
+			return nullptr;
+		}
+
+		shared_ptr<GameObject> get_child(int index) {
+			return children[index];
+		}
+
+		void add_child(shared_ptr<GameObject> child) {
+			child->parent = this;
+			children.push_back(child);
 		}
 
 	private:

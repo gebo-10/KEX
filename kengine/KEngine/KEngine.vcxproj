@@ -193,7 +193,7 @@
     <ClInclude Include="kengine\core\math\glm_math.h" />
     <ClInclude Include="kengine\core\math\kmath.h" />
     <ClInclude Include="kengine\core\math\rect.h" />
-    <ClInclude Include="kengine\core\math\transform.h" />
+    <ClInclude Include="kengine\core\math\srt.h" />
     <ClInclude Include="kengine\environment.h" />
     <ClInclude Include="kengine\core\base\base.h" />
     <ClInclude Include="kengine\core\base\buffer.h" />
@@ -279,7 +279,7 @@
     <ClInclude Include="kengine\scene\component\camera.h" />
     <ClInclude Include="kengine\scene\component\light.h" />
     <ClInclude Include="kengine\scene\component\mesh_render.h" />
-    <ClInclude Include="kengine\scene\component\transform_component.h" />
+    <ClInclude Include="kengine\scene\component\transform.h" />
     <ClInclude Include="kengine\scene\component\uniform_component.h" />
     <ClInclude Include="kengine\scene\game_object.h" />
     <ClInclude Include="kengine\scene\scene.h" />

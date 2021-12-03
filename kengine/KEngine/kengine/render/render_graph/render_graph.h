@@ -13,7 +13,9 @@ namespace kengine {
 		std::vector<RenderBufferPtr> render_buffers;
 		std::vector<TexturePtr> textures;
 		std::vector<RenderTargetPtr> targets;
+
 		std::vector<PassPtr> passes;
+		
 		RenderGraph()
 		{
 		}
