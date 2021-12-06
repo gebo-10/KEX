@@ -113,6 +113,9 @@
     <Filter Include="kengine\system\monitor">
       <UniqueIdentifier>{6a634b96-b473-49d6-b722-8a79b633be02}</UniqueIdentifier>
     </Filter>
+    <Filter Include="kengine\geometry">
+      <UniqueIdentifier>{c8a0ec27-60d6-4272-9c0b-5c90af87b576}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="window\main.cc">
@@ -129,6 +132,9 @@
     </ClCompile>
     <ClCompile Include="kengine\external\mio\single_include\mio\mio.cc">
       <Filter>kengine\external\mio</Filter>
+    </ClCompile>
+    <ClCompile Include="kengine\support\screen.cc">
+      <Filter>kengine\support</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -456,6 +462,30 @@
     </ClInclude>
     <ClInclude Include="kengine\system\monitor\test_processor.h">
       <Filter>kengine\system\monitor</Filter>
+    </ClInclude>
+    <ClInclude Include="kengine\geometry\cube.h">
+      <Filter>kengine\geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="kengine\geometry\plane.h">
+      <Filter>kengine\geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="kengine\util\mesh_importer.h">
+      <Filter>kengine\utiil</Filter>
+    </ClInclude>
+    <ClInclude Include="kengine\service\event_service.h">
+      <Filter>kengine\service</Filter>
+    </ClInclude>
+    <ClInclude Include="kengine\render\pipeline_state\view_port_state.h">
+      <Filter>kengine\render\pipeline_state</Filter>
+    </ClInclude>
+    <ClInclude Include="kengine\render\pipeline_state\scissor_state.h">
+      <Filter>kengine\render\pipeline_state</Filter>
+    </ClInclude>
+    <ClInclude Include="kengine\support\screen.h">
+      <Filter>kengine\support</Filter>
+    </ClInclude>
+    <ClInclude Include="kengine\render\render_graph\pass\fence_pass.h">
+      <Filter>kengine\render\render_graph\pass</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

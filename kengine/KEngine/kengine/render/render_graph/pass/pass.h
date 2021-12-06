@@ -10,21 +10,8 @@ namespace kengine {
 	class Pass
 	{
 	public:
-		//std::vector<TexturePtr> input;
-		//RenderTargetPtr target;
-		//CameraPtr camera;
-		//std::function<std::vector<GameObject>()> cull;
-		//std::function<std::vector<GameObject>()> filter;
-		Pass()
-		{
-		}
-
-		virtual ~Pass()
-		{
-		}
-		//virtual Matrix get_view_matrix() {}
-		//virtual Matrix get_project_matrix() {}
-		//virtual GameObject cull(){}
+		Pass(){}
+		virtual ~Pass(){}
 		virtual void exec(Scene& scene, Pipeline& pipeline) = 0;
 	private:
 

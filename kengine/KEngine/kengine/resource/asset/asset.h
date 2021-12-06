@@ -104,6 +104,8 @@ namespace kengine
 			BufferPtr position_buf = std::make_shared<Buffer>(flatbuffer_asset->position.data(), flatbuffer_asset->position.size()*3*4);
 			mesh->set_position(position_buf);
 
+			BufferPtr normal_buf = std::make_shared<Buffer>(flatbuffer_asset->normal.data(), flatbuffer_asset->normal.size() * 3 * 4);
+			mesh->set_normal(normal_buf);
 			//BufferPtr indices_buf = std::make_shared<Buffer>(flatbuffer_asset->indices.data(), flatbuffer_asset->indices.size());
 			//mesh->set_indices(indices_buf);
 

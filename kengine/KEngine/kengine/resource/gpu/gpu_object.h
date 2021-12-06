@@ -66,6 +66,7 @@ namespace kengine{
 				}else
 				{
 					gpu_buffer = std::make_shared<GPUBuffer>(buffer.buffer, GL_ARRAY_BUFFER, (int)buffer.hit);
+					//glEnableVertexAttribArray((int)MeshBufferType::COLOR);
 					glEnableVertexAttribArray((int) buffer_type);
 					if (buffer.data_type == GPUType::FLOAT)
 					{
@@ -80,16 +81,16 @@ namespace kengine{
 			glBindVertexArray(0);
 		}
 		
-		void bind() {
+		inline void bind() {
 			assert(gpu_id != 0);
 			glBindVertexArray(gpu_id);
 		}
 
-		void unbind(void) {
+		inline void unbind(void) {
 			glBindVertexArray(0);
 		}
 
-		void draw() {
+		inline void draw() {
 			bind();
 			glDrawElements((GLenum)primitive, indices_size, (GLenum)indices_type, 0);
 		}

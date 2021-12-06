@@ -25,7 +25,7 @@ namespace kengine
 		SceneManager scene_manager;
 		Monitor monitor;
 
-		void init();
+		void init(int width, int height);
 		void update();
 		void quit();
 		void on_view_size(int width, int height);

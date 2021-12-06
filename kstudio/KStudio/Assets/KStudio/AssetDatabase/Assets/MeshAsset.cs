@@ -31,6 +31,26 @@ namespace KStudio
                 vec3.Z = pos.z * 100f;
                 mesh.Position.Add(vec3);
             }
+
+            //mesh.Color = new List<Vec3T>();
+            //foreach (var n in m.normals)
+            //{
+            //    var vec3 = new Vec3T();
+            //    vec3.X = n.x;
+            //    vec3.Y = n.y;
+            //    vec3.Z = n.z;
+            //    mesh.Normal.Add(vec3);
+            //}
+
+            mesh.Normal = new List<Vec3T>();
+            foreach (var n in m.normals)
+            {
+                var vec3 = new Vec3T();
+                vec3.X = n.x;
+                vec3.Y = n.y;
+                vec3.Z = n.z;
+                mesh.Normal.Add(vec3);
+            }
         }
 
         //public override void InitCommon(AssetType type, uint id)

@@ -18,8 +18,7 @@ namespace kengine {
 		{
 		}
 
-	private:
-
+		virtual void on_attach() {}
 	};
 	typedef shared_ptr<Component> ComponentPtr;
 }

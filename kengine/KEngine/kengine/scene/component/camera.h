@@ -7,37 +7,33 @@ namespace kengine {
 	};
 	class Camera :public Component {
 	public:
-		
 		CameraType type = CameraType::PERSPECTIVE;
-		//int width = 100;
-		//int height = 100;
-		//Rectf ortho_rect;
-		vec4 ortho_rect = vec4(-1, 1, -1, 1);
+		int width = 100;
+		int height = 100;
+
+		Rectf view_rect;
 		float fov = 60.f;
 		float znear = 0.1f;
-		float zfar = 100.f;
+		float zfar = 1000.f;
 
-		//vec3 position{ 0.f };
-		//vec3 target{ 0.f };
 		mat4 projection{ 1.f };
-		//mat4 view_matrix{ 1.f };
-
 		bool dirty = true;
 
-		Camera() :Component(ComponentType::CAMERA) {}
+		Color clear_color;
 
-		//void lookat(vec3 position, vec3 target, vec3 up) {
-		//	position = position;
-		//	target = target;
-		//	view_matrix = glm::lookAt(position, target, up);
-		//}
-
-		//mat4 matrix() {
-		//	if (dirty) {
-		//		update_matrix();
-		//	}
-		//	return projection * view_matrix;
-		//}
+		int event_id;
+		Camera() :Component(ComponentType::CAMERA) {
+			set_view_rect(0, 0, 1, 1);
+			Env.event_setvice.listen(EventType::OnViewSize, [this](Event* e) {
+				OnViewSize* event = (OnViewSize*)e;
+				width = event->width;
+				height = event->height;
+				dirty = true;
+			});
+		}
+		~Camera() {
+			Env.event_setvice.unlisten(EventType::OnViewSize, event_id);
+		}
 
 		mat4 get_p() {
 			if (dirty) {
@@ -46,22 +42,17 @@ namespace kengine {
 			return projection;
 		}
 
-		//mat4 get_v() {
-		//	return view_matrix;
-		//}
+		Rect get_view_port() {
+			return Rect(view_rect.x * width, view_rect.y * height, view_rect.w * width, view_rect.h * height);
+		}
 
 		void update_matrix() {
-			switch (type)
-			{
-			case CameraType::ORTHO: {
-				projection = glm::ortho(ortho_rect.x, ortho_rect.y, ortho_rect.z, ortho_rect.w, znear, zfar);
-				break;
+			float aspect = (view_rect.w * width)/ (view_rect.h * height);
+			if (type == CameraType::ORTHO) {
+				projection = glm::ortho(-aspect, aspect, -1.0f, 1.0f, znear, zfar);
 			}
-			case CameraType::PERSPECTIVE:
-				projection = glm::perspective(glm::radians(fov), (ortho_rect.y - ortho_rect.x) / (ortho_rect.w - ortho_rect.z), znear, zfar);
-				break;
-			default:
-				break;
+			else {
+				projection = glm::perspective(glm::radians(fov), aspect, znear, zfar);
 			}
 			dirty = false;
 		}
@@ -71,11 +62,11 @@ namespace kengine {
 			dirty = true;
 		}
 
-		void set_ortho(float left, float right, float bottom, float top) {
-			ortho_rect.x = left;
-			ortho_rect.y = right;
-			ortho_rect.z = bottom;
-			ortho_rect.w = top;
+		void set_view_rect(float x, float y, float w, float h) {
+			view_rect.x = x;
+			view_rect.y = y;
+			view_rect.w = w;
+			view_rect.h = h;
 			dirty = true;
 		}
 
@@ -94,6 +85,9 @@ namespace kengine {
 			dirty = true;
 		}
 
+		void set_clear_color(Color color) {
+			clear_color = color;
+		}
 	};
 	typedef shared_ptr<Camera> CameraPtr;
 }

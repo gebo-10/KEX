@@ -27,6 +27,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "glfw", "KEngine\window\exte
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libzmq-static", "KEngine\kengine\external\zmq\out\libzmq-static.vcxproj", "{BEE32BED-6843-320D-AD48-5202CF395044}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "assimp", "KEngine\kengine\external\assimp\out\code\assimp.vcxproj", "{38DF4D6E-6B73-30C0-B466-0242E1A4D6E9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -147,6 +149,18 @@ Global
 		{BEE32BED-6843-320D-AD48-5202CF395044}.RelWithDebInfo|x64.ActiveCfg = RelWithDebInfo|x64
 		{BEE32BED-6843-320D-AD48-5202CF395044}.RelWithDebInfo|x64.Build.0 = RelWithDebInfo|x64
 		{BEE32BED-6843-320D-AD48-5202CF395044}.RelWithDebInfo|x86.ActiveCfg = RelWithDebInfo|x64
+		{38DF4D6E-6B73-30C0-B466-0242E1A4D6E9}.Debug|x64.ActiveCfg = Debug|x64
+		{38DF4D6E-6B73-30C0-B466-0242E1A4D6E9}.Debug|x64.Build.0 = Debug|x64
+		{38DF4D6E-6B73-30C0-B466-0242E1A4D6E9}.Debug|x86.ActiveCfg = Debug|x64
+		{38DF4D6E-6B73-30C0-B466-0242E1A4D6E9}.MinSizeRel|x64.ActiveCfg = MinSizeRel|x64
+		{38DF4D6E-6B73-30C0-B466-0242E1A4D6E9}.MinSizeRel|x64.Build.0 = MinSizeRel|x64
+		{38DF4D6E-6B73-30C0-B466-0242E1A4D6E9}.MinSizeRel|x86.ActiveCfg = MinSizeRel|x64
+		{38DF4D6E-6B73-30C0-B466-0242E1A4D6E9}.Release|x64.ActiveCfg = Release|x64
+		{38DF4D6E-6B73-30C0-B466-0242E1A4D6E9}.Release|x64.Build.0 = Release|x64
+		{38DF4D6E-6B73-30C0-B466-0242E1A4D6E9}.Release|x86.ActiveCfg = Release|x64
+		{38DF4D6E-6B73-30C0-B466-0242E1A4D6E9}.RelWithDebInfo|x64.ActiveCfg = RelWithDebInfo|x64
+		{38DF4D6E-6B73-30C0-B466-0242E1A4D6E9}.RelWithDebInfo|x64.Build.0 = RelWithDebInfo|x64
+		{38DF4D6E-6B73-30C0-B466-0242E1A4D6E9}.RelWithDebInfo|x86.ActiveCfg = RelWithDebInfo|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

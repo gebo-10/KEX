@@ -11,7 +11,7 @@
 //
 //using namespace rapidjson;
 using namespace kengine;
-void KEngine::init() {
+void KEngine::init(int width, int height) {
     //void* context = zmq_ctx_new();
     //void* responder = zmq_socket(context, ZMQ_REP);
     //int rc = zmq_bind(responder, "tcp://*:5555");
@@ -23,6 +23,8 @@ void KEngine::init() {
     //ResourceManager.register_default();
     //ResourceManager.load_resource();
     //Platform::instance().init_platform();
+    Screen::width = width;
+    Screen::height = height;
     Env.init();
     auto name_buff = Env.io->read_file("name.db");
     Env.name_service.init(name_buff);
@@ -61,6 +63,7 @@ void KEngine::init() {
 
     render.init();
     scene_manager.init(render);
+    on_view_size(width, height);
 }
 
 void KEngine::update()
@@ -84,6 +87,12 @@ void KEngine::quit()
 void KEngine::on_view_size(int width, int height)
 {
 	info("view size change {}{}", width, height);
+    OnViewSize e;
+    e.width = width;
+    e.height = height;
+    Screen::width = width;
+    Screen::height = height;
+    Env.event_setvice.dispatch(EventType::OnViewSize, &e);
 }
 
 //void load_resource() {

@@ -7,14 +7,13 @@ namespace kengine {
 		GLuint gpu_id = -1;
 		int m_size = 0;
 		byte* data;
-		UniformBuffer(int size)
+		UniformBuffer(int size, uint32 binding_point)
 		{
 			m_size = size;
 			glGenBuffers(1, &gpu_id);
 			glBindBuffer(GL_UNIFORM_BUFFER, gpu_id);
 			glBufferData(GL_UNIFORM_BUFFER, size, nullptr, GL_DYNAMIC_DRAW); // ‘§∑÷≈‰ø’º‰
-			GLuint BindingPointIndex = 0;
-			glBindBufferBase(GL_UNIFORM_BUFFER, BindingPointIndex, gpu_id);
+			glBindBufferBase(GL_UNIFORM_BUFFER, binding_point, gpu_id);
 			data =(byte*) glMapBuffer(GL_UNIFORM_BUFFER, GL_WRITE_ONLY);
 		}
 

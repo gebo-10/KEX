@@ -30,6 +30,9 @@
 #pragma comment(lib , "flatbuffers.lib")
 //#pragma comment(lib, "freetype.lib")
 #pragma comment(lib, "libzmq-v142-mt-sgd-4_3_4.lib")
+#pragma comment(lib, "assimp-vc142-mtd.lib")
+#pragma comment(lib, "assimpd.lib")
+#pragma comment(lib, "zlibstaticd.lib")
 kengine::KEngine* engine=nullptr;
 int main()
 {
@@ -44,7 +47,7 @@ int main()
     glfwWindowHint(GLFW_SAMPLES, 4);
     
     /* Create a windowed mode window and its OpenGL context */
-    window = glfwCreateWindow(1024, 480, "Hello World", NULL, NULL);
+    window = glfwCreateWindow(1024, 1024, "Hello World", NULL, NULL);
     if (!window)
     {
         glfwTerminate();
@@ -62,7 +65,7 @@ int main()
     }
 
     glfwSetWindowSizeCallback(window, [](GLFWwindow* window, int width, int height)->void {engine->on_view_size(width,height); });
-    engine->init();
+    engine->init(1024, 1024);
     while (!glfwWindowShouldClose(window))
     {
         /* Render here */

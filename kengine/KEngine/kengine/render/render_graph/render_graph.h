@@ -3,8 +3,9 @@
 #include "pass/clear_pass.h"
 #include "pass/state_pass.h"
 #include "pass/draw_pass.h"
-#include "render_target.h"
+#include "pass/fence_pass.h"
 
+#include "render_target.h"
 namespace kengine {
 	class RenderGraph
 	{

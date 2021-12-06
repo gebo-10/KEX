@@ -16,10 +16,21 @@ namespace kengine {
 		MaterialPtr material;
 
 		Pipeline() {
+			states[(int)PipelineStateType::DEPRH_TEST] = std::make_shared<DepthTest>(false);
+			states[(int)PipelineStateType::STENCIL_TEST] = std::make_shared<StencilTest>(false);
 			states[(int)PipelineStateType::CLEAR_VALUE] = std::make_shared<ClearValue>(color_black,0,0);
+			states[(int)PipelineStateType::VIEW_PORT] = std::make_shared<ViewPortState>(Rect(0,0,100,100) );
+			states[(int)PipelineStateType::SCISSOR_STATE] = std::make_shared<ScissorState>(false,Rect(0, 0, 100, 100));
 		}
 
 		void draw(Matrix m, MeshPtr mesh) {
+			//glDisable(GL_CULL_FACE);
+			//glFrontFace(GL_CW);
+			//glEnable(GL_DEPTH_TEST);
+			//glEnable(GL_TEXTURE_2D);
+			//glEnable(GL_TEXTURE_2D_MULTISAMPLE);
+			//glEnable(GL_BLEND);
+			//glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 			material->set_model_matrix(m);
 			mesh->draw();
 		}
@@ -46,9 +57,6 @@ namespace kengine {
 
 		void set_state(PipelineStatePtr state) {
 			PipelineStatePtr origon = states[(int)state->type];
-			//if (origon == state) {
-			//	return;
-			//}
 			origon->set(state);
 		}
 		void sync_common_uniform() {

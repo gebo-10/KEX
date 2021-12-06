@@ -63,7 +63,13 @@ namespace kengine {
 					char* log = (char*)malloc(logLen);
 					GLsizei written;
 					glGetShaderInfoLog(shader, logLen, &written, log);
-					error("vertex shader compile log : {}", log);
+					if (shader_type == GL_VERTEX_SHADER) {
+						error("vertex shader compile log : {}", log);
+					}
+					else if (shader_type == GL_FRAGMENT_SHADER) {
+						error("fragment shader compile log : {}", log);
+					}
+					
 					free(log);
 				}
 				return 0;

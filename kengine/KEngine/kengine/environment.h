@@ -1,5 +1,6 @@
 #pragma once
 #include "support/config.h"
+#include "support/screen.h"
 #include "profiler/profiler.h"
 #include "support/ktime.h"
 #include "platform/platform.h"
@@ -8,6 +9,7 @@
 
 #include "service/name_service.h"
 #include "service/async_service.h"
+#include "service/event_service.h"
 #define Env Environment::instance()
 #define NAME(str) Env.name_service.get_id(str) 
 namespace kengine
@@ -38,6 +40,7 @@ namespace kengine
 
 		NameService name_service;
 		AsyncService async_service;
+		EventService event_setvice;
 		AssetsDatabase assets_database;
 	};
 }

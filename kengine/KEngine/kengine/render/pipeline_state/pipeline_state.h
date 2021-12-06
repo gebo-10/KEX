@@ -1,6 +1,7 @@
 #pragma once
 #include "../gpu_type.h"
 #include <kengine/core/base/base.h>
+#include <kengine/core/math/kmath.h>
 namespace kengine {
 	enum class PipelineStateType {
 		//Rasterization
@@ -9,7 +10,7 @@ namespace kengine {
 		LINE_WIDTH,
 
 		//Per-Fragment Operations
-		SCISSOR_TEST,
+		SCISSOR_STATE,
 		SAMPLE_COVERAGE,
 		BLEND_MODE,
 		DEPRH_TEST,

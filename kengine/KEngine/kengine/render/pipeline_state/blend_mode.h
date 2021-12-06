@@ -1,3 +1,4 @@
+#pragma once
 #include "pipeline_state.h"
 #include <kengine/core/base/color.h>
 namespace kengine {
