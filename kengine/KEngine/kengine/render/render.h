@@ -19,7 +19,7 @@ namespace kengine {
 		RenderGraphPtr default_rg() {
 			RenderGraphPtr render_graph = std::make_shared<RenderGraph>();
 			auto state_pass = std::make_shared<StatePass>();
-			state_pass->states.push_back(std::make_shared<ScissorState>(false, Rect(0,0,Screen::width, Screen::height)));
+			state_pass->states.push_back(std::make_shared<ScissorState>(false, Rect(0,0,0,0)));
 			state_pass->states.push_back( std::make_shared<ClearValue>(color_green, 0, 0) );
 			state_pass->states.push_back( std::make_shared<DepthTest>(true) );
 			render_graph->passes.push_back(state_pass);

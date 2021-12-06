@@ -487,6 +487,9 @@
     <ClInclude Include="kengine\render\render_graph\pass\fence_pass.h">
       <Filter>kengine\render\render_graph\pass</Filter>
     </ClInclude>
+    <ClInclude Include="kengine\render\render_graph\pass\camera_pass.h">
+      <Filter>kengine\render\render_graph\pass</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="kengine\CMakeLists.txt">
