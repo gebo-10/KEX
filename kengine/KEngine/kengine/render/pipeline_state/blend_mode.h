@@ -39,8 +39,6 @@ namespace kengine {
 	class BlendMode :public PipelineState
 	{
 	public:
-		PipelineStateType type = PipelineStateType::BLEND_MODE;
-
 		bool enable = false;
 		Color	blend_color;
 
@@ -52,7 +50,7 @@ namespace kengine {
 		BlendFunc srcAlpha;
 		BlendFunc dstAlpha;
 
-		BlendMode(){}
+		BlendMode():PipelineState(PipelineStateType::BLEND_MODE){}
 		~BlendMode(){}
 		virtual void set(PipelineStatePtr state) {}
 

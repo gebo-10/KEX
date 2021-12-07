@@ -5,7 +5,6 @@ namespace kengine {
 	class ClearValue :public PipelineState
 	{
 	public:
-		//PipelineStateType type = PipelineStateType::CLEAR_VALUE;
 		Color	clear_color;
 		float	clear_depth;
 		int		clear_stencil;

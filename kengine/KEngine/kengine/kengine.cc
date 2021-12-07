@@ -45,10 +45,10 @@ void KEngine::init(int width, int height) {
 
     auto bundle = Env.assets_database.load_bundle("test.bundle");
     Env.assets_database.load_all_bundle_asset(bundle);
-    //auto id = NAME("Assets/Bundle/default.glsl");
-    //auto shader = Env.assets_database.get_resource<Shader>(id);
+    auto id = NAME("Assets/Bundle/cs1.glsl");
+    auto shader = Env.assets_database.get_resource<Shader>(id);
     //info(shader->vert_source);
-    //shader->gpucache();
+    shader->gpucache();
 
     //auto mesh = Env.assets_database.get_resource<Mesh>(NAME("Assets/Bundle/box.fbx"));
     //mesh->gpucache();

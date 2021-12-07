@@ -50,7 +50,7 @@ namespace kengine {
             mbuf.type = MeshBufferType::NORMAL;
             mbuf.data_type = GPUType::FLOAT;
             //mbuf.hit = GPUBufferHit::STATIC_DRAW;
-            mbuf.need_normalized = false; //TODO
+            mbuf.need_normalized = true; //TODO
             mbuf.component_num = 3;
             mbuf.buffer = buffer;
             add_buffer(std::move(mbuf));

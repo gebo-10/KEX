@@ -17,6 +17,7 @@ namespace KStudio
             Decl,
             Vert,
             Frag,
+            Compute,
         }
         State state;
         public ShaderAsset(string path)
@@ -39,6 +40,11 @@ namespace KStudio
                     state = State.Vert;
                     continue;
                 }
+                else if (line.Contains("#compute"))
+                {
+                    state = State.Compute;
+                    continue;
+                }
 
                 switch (state)
                 {
@@ -55,6 +61,10 @@ namespace KStudio
                     case State.Frag:
                         shader.Frag += line;
                         shader.Frag += "\n";
+                        break;
+                    case State.Compute:
+                        shader.Compute += line;
+                        shader.Compute += "\n";
                         break;
                 }
             }

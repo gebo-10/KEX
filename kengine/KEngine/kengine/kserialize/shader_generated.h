@@ -20,6 +20,7 @@ struct ShaderT : public flatbuffers::NativeTable {
   typedef Shader TableType;
   std::string vert{};
   std::string frag{};
+  std::string compute{};
 };
 
 struct Shader FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
@@ -31,7 +32,8 @@ struct Shader FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
   }
   enum FlatBuffersVTableOffset FLATBUFFERS_VTABLE_UNDERLYING_TYPE {
     VT_VERT = 4,
-    VT_FRAG = 6
+    VT_FRAG = 6,
+    VT_COMPUTE = 8
   };
   const flatbuffers::String *vert() const {
     return GetPointer<const flatbuffers::String *>(VT_VERT);
@@ -39,12 +41,17 @@ struct Shader FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
   const flatbuffers::String *frag() const {
     return GetPointer<const flatbuffers::String *>(VT_FRAG);
   }
+  const flatbuffers::String *compute() const {
+    return GetPointer<const flatbuffers::String *>(VT_COMPUTE);
+  }
   bool Verify(flatbuffers::Verifier &verifier) const {
     return VerifyTableStart(verifier) &&
            VerifyOffset(verifier, VT_VERT) &&
            verifier.VerifyString(vert()) &&
            VerifyOffset(verifier, VT_FRAG) &&
            verifier.VerifyString(frag()) &&
+           VerifyOffset(verifier, VT_COMPUTE) &&
+           verifier.VerifyString(compute()) &&
            verifier.EndTable();
   }
   ShaderT *UnPack(const flatbuffers::resolver_function_t *_resolver = nullptr) const;
@@ -62,6 +69,9 @@ struct ShaderBuilder {
   void add_frag(flatbuffers::Offset<flatbuffers::String> frag) {
     fbb_.AddOffset(Shader::VT_FRAG, frag);
   }
+  void add_compute(flatbuffers::Offset<flatbuffers::String> compute) {
+    fbb_.AddOffset(Shader::VT_COMPUTE, compute);
+  }
   explicit ShaderBuilder(flatbuffers::FlatBufferBuilder &_fbb)
         : fbb_(_fbb) {
     start_ = fbb_.StartTable();
@@ -76,8 +86,10 @@ struct ShaderBuilder {
 inline flatbuffers::Offset<Shader> CreateShader(
     flatbuffers::FlatBufferBuilder &_fbb,
     flatbuffers::Offset<flatbuffers::String> vert = 0,
-    flatbuffers::Offset<flatbuffers::String> frag = 0) {
+    flatbuffers::Offset<flatbuffers::String> frag = 0,
+    flatbuffers::Offset<flatbuffers::String> compute = 0) {
   ShaderBuilder builder_(_fbb);
+  builder_.add_compute(compute);
   builder_.add_frag(frag);
   builder_.add_vert(vert);
   return builder_.Finish();
@@ -91,13 +103,16 @@ struct Shader::Traits {
 inline flatbuffers::Offset<Shader> CreateShaderDirect(
     flatbuffers::FlatBufferBuilder &_fbb,
     const char *vert = nullptr,
-    const char *frag = nullptr) {
+    const char *frag = nullptr,
+    const char *compute = nullptr) {
   auto vert__ = vert ? _fbb.CreateString(vert) : 0;
   auto frag__ = frag ? _fbb.CreateString(frag) : 0;
+  auto compute__ = compute ? _fbb.CreateString(compute) : 0;
   return kserialize::CreateShader(
       _fbb,
       vert__,
-      frag__);
+      frag__,
+      compute__);
 }
 
 flatbuffers::Offset<Shader> CreateShader(flatbuffers::FlatBufferBuilder &_fbb, const ShaderT *_o, const flatbuffers::rehasher_function_t *_rehasher = nullptr);
@@ -113,6 +128,7 @@ inline void Shader::UnPackTo(ShaderT *_o, const flatbuffers::resolver_function_t
   (void)_resolver;
   { auto _e = vert(); if (_e) _o->vert = _e->str(); }
   { auto _e = frag(); if (_e) _o->frag = _e->str(); }
+  { auto _e = compute(); if (_e) _o->compute = _e->str(); }
 }
 
 inline flatbuffers::Offset<Shader> Shader::Pack(flatbuffers::FlatBufferBuilder &_fbb, const ShaderT* _o, const flatbuffers::rehasher_function_t *_rehasher) {
@@ -125,23 +141,27 @@ inline flatbuffers::Offset<Shader> CreateShader(flatbuffers::FlatBufferBuilder &
   struct _VectorArgs { flatbuffers::FlatBufferBuilder *__fbb; const ShaderT* __o; const flatbuffers::rehasher_function_t *__rehasher; } _va = { &_fbb, _o, _rehasher}; (void)_va;
   auto _vert = _o->vert.empty() ? 0 : _fbb.CreateString(_o->vert);
   auto _frag = _o->frag.empty() ? 0 : _fbb.CreateString(_o->frag);
+  auto _compute = _o->compute.empty() ? 0 : _fbb.CreateString(_o->compute);
   return kserialize::CreateShader(
       _fbb,
       _vert,
-      _frag);
+      _frag,
+      _compute);
 }
 
 inline const flatbuffers::TypeTable *ShaderTypeTable() {
   static const flatbuffers::TypeCode type_codes[] = {
     { flatbuffers::ET_STRING, 0, -1 },
+    { flatbuffers::ET_STRING, 0, -1 },
     { flatbuffers::ET_STRING, 0, -1 }
   };
   static const char * const names[] = {
     "vert",
-    "frag"
+    "frag",
+    "compute"
   };
   static const flatbuffers::TypeTable tt = {
-    flatbuffers::ST_TABLE, 2, type_codes, nullptr, nullptr, nullptr, names
+    flatbuffers::ST_TABLE, 3, type_codes, nullptr, nullptr, nullptr, names
   };
   return &tt;
 }

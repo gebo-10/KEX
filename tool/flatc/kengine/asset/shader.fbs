@@ -3,5 +3,6 @@ namespace kserialize;
 table Shader{
 	vert:string;
 	frag:string;
+	compute:string;
 }
 root_type Shader;

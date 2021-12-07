@@ -88,6 +88,7 @@ namespace kengine
 			default_resource =std::dynamic_pointer_cast<Resource>( shader);
 			shader->vert_source = flatbuffer_asset->vert;
 			shader->frag_source = flatbuffer_asset->frag;
+			shader->compute_source = flatbuffer_asset->compute;
 		}
 
 		void deserialize_mesh(BufferPtr buffer) {

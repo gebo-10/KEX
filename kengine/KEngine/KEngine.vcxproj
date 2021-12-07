@@ -210,6 +210,7 @@
     <ClInclude Include="kengine\driver\graphics\opengl\driver_opengl.h" />
     <ClInclude Include="kengine\geometry\cube.h" />
     <ClInclude Include="kengine\geometry\plane.h" />
+    <ClInclude Include="kengine\gpgpu\gpgpu.h" />
     <ClInclude Include="kengine\interface\IConfig.h" />
     <ClInclude Include="kengine\kengine.h" />
     <ClInclude Include="kengine\kserialize\assetbundle_generated.h" />
@@ -272,6 +273,7 @@
     <ClInclude Include="kengine\resource\gpu\gpu_resource.h" />
     <ClInclude Include="kengine\resource\gpu\gpu_shader.h" />
     <ClInclude Include="kengine\resource\gpu\gpu_target.h" />
+    <ClInclude Include="kengine\resource\gpu\shader_storage_buffer.h" />
     <ClInclude Include="kengine\resource\gpu\uniform_buffer.h" />
     <ClInclude Include="kengine\resource\ram\animation.h" />
     <ClInclude Include="kengine\resource\ram\material.h" />

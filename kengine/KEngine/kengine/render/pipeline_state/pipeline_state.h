@@ -29,6 +29,7 @@ namespace kengine {
 	};
 	
 	enum class Face {
+		NONE,
 		FRONT,
 		BACK,
 		FRONT_AND_BACK,

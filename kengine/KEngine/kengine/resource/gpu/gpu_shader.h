@@ -6,16 +6,31 @@ namespace kengine {
 	{
 	public:
 		GPUID program_id;
-		GPUShader(string_view vs_source, string_view fs_source)
+		GPUShader(string_view vs_source, string_view fs_source, string_view cs_source)
 		{
 			auto vs = build_shader(GL_VERTEX_SHADER, vs_source);
 			auto fs = build_shader(GL_FRAGMENT_SHADER, fs_source);
-			auto succ = build_program(vs, fs, 0, 0, 0);
-			glDeleteShader(vs);
-			glDeleteShader(fs);
-			//delete_shader(gs);
-			//delete_shader(ts_control);
-			//delete_shader(ts_evaluation);
+			auto cs = build_shader(GL_COMPUTE_SHADER, cs_source);
+			//auto gs = build_shader(GL_GEOMETRY_SHADER, gs_source);
+			//auto ts_control = build_shader(GL_TESS_CONTROL_SHADER, ts_control_source);
+			//auto ts_evaluation = build_shader(GL_TESS_EVALUATION_SHADER, ts_evaluation_source);
+
+			auto succ = build_program(vs, fs, cs, 0, 0, 0);
+
+			if (fs != 0 && vs != 0) {
+				glDeleteShader(vs);
+				glDeleteShader(fs);
+			}
+			if (cs != 0) {
+				glDeleteShader(cs);
+			}
+			//if (gs != 0) {
+			//	glDeleteShader(gs);
+			//}
+			//if (ts_control != 0 && ts_evaluation != 0) {
+			//	glDeleteShader(ts_control);
+			//	glDeleteShader(ts_evaluation);
+			//}
 		}
 
 		~GPUShader()
@@ -69,6 +84,12 @@ namespace kengine {
 					else if (shader_type == GL_FRAGMENT_SHADER) {
 						error("fragment shader compile log : {}", log);
 					}
+					else if (shader_type == GL_COMPUTE_SHADER) {
+						error("compute shader compile log : {}", log);
+					}
+					else {
+						error("unknow type,shader compile log : {}", log);
+					}
 					
 					free(log);
 				}
@@ -76,13 +97,7 @@ namespace kengine {
 			}
 			return shader;
 		}
-		bool build_program(GPUID fs, GPUID vs, GPUID gs, GPUID ts_control, GPUID ts_evaluation) {
-			if (fs == 0 || vs == 0)
-			{
-				error("build_program error :fs == 0 || vs == 0");
-				return false;
-			}
-
+		bool build_program(GPUID fs, GPUID vs, GPUID cs, GPUID gs, GPUID ts_control, GPUID ts_evaluation) {
 			GLuint program = glCreateProgram();
 			if (!program)
 			{
@@ -90,8 +105,13 @@ namespace kengine {
 				return false;
 			}
 
-			glAttachShader(program, fs);
-			glAttachShader(program, vs);
+			if (fs != 0 && vs != 0) {
+				glAttachShader(program, fs);
+				glAttachShader(program, vs);
+			}
+			if (cs != 0) {
+				glAttachShader(program, cs);
+			}
 			if (gs != 0) {
 				glAttachShader(program, gs);
 			}
@@ -102,16 +122,9 @@ namespace kengine {
 
 			glLinkProgram(program);
 
-			//int block_index = glGetUniformBlockIndex(program, "Global");
-			//glUniformBlockBinding(program, block_index, 0);
-
-			//block_index = glGetUniformBlockIndex(program, "Light");
-			//glUniformBlockBinding(program, block_index, 1);
-
-
-			GLint linkStatus;
-			glGetProgramiv(program, GL_LINK_STATUS, &linkStatus);
-			if (GL_FALSE == linkStatus)
+			GLint link_status;
+			glGetProgramiv(program, GL_LINK_STATUS, &link_status);
+			if (GL_FALSE == link_status)
 			{
 				error("ERROR : link shader program failed");
 				GLint logLen;

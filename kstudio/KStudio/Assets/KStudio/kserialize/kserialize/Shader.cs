@@ -33,19 +33,29 @@ public struct Shader : IFlatbufferObject
   public ArraySegment<byte>? GetFragBytes() { return __p.__vector_as_arraysegment(6); }
 #endif
   public byte[] GetFragArray() { return __p.__vector_as_array<byte>(6); }
+  public string Compute { get { int o = __p.__offset(8); return o != 0 ? __p.__string(o + __p.bb_pos) : null; } }
+#if ENABLE_SPAN_T
+  public Span<byte> GetComputeBytes() { return __p.__vector_as_span<byte>(8, 1); }
+#else
+  public ArraySegment<byte>? GetComputeBytes() { return __p.__vector_as_arraysegment(8); }
+#endif
+  public byte[] GetComputeArray() { return __p.__vector_as_array<byte>(8); }
 
   public static Offset<kserialize.Shader> CreateShader(FlatBufferBuilder builder,
       StringOffset vertOffset = default(StringOffset),
-      StringOffset fragOffset = default(StringOffset)) {
-    builder.StartTable(2);
+      StringOffset fragOffset = default(StringOffset),
+      StringOffset computeOffset = default(StringOffset)) {
+    builder.StartTable(3);
+    Shader.AddCompute(builder, computeOffset);
     Shader.AddFrag(builder, fragOffset);
     Shader.AddVert(builder, vertOffset);
     return Shader.EndShader(builder);
   }
 
-  public static void StartShader(FlatBufferBuilder builder) { builder.StartTable(2); }
+  public static void StartShader(FlatBufferBuilder builder) { builder.StartTable(3); }
   public static void AddVert(FlatBufferBuilder builder, StringOffset vertOffset) { builder.AddOffset(0, vertOffset.Value, 0); }
   public static void AddFrag(FlatBufferBuilder builder, StringOffset fragOffset) { builder.AddOffset(1, fragOffset.Value, 0); }
+  public static void AddCompute(FlatBufferBuilder builder, StringOffset computeOffset) { builder.AddOffset(2, computeOffset.Value, 0); }
   public static Offset<kserialize.Shader> EndShader(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<kserialize.Shader>(o);
@@ -60,15 +70,18 @@ public struct Shader : IFlatbufferObject
   public void UnPackTo(ShaderT _o) {
     _o.Vert = this.Vert;
     _o.Frag = this.Frag;
+    _o.Compute = this.Compute;
   }
   public static Offset<kserialize.Shader> Pack(FlatBufferBuilder builder, ShaderT _o) {
     if (_o == null) return default(Offset<kserialize.Shader>);
     var _vert = _o.Vert == null ? default(StringOffset) : builder.CreateString(_o.Vert);
     var _frag = _o.Frag == null ? default(StringOffset) : builder.CreateString(_o.Frag);
+    var _compute = _o.Compute == null ? default(StringOffset) : builder.CreateString(_o.Compute);
     return CreateShader(
       builder,
       _vert,
-      _frag);
+      _frag,
+      _compute);
   }
 };
 
@@ -76,10 +89,12 @@ public class ShaderT
 {
   public string Vert { get; set; }
   public string Frag { get; set; }
+  public string Compute { get; set; }
 
   public ShaderT() {
     this.Vert = null;
     this.Frag = null;
+    this.Compute = null;
   }
   public static ShaderT DeserializeFromBinary(byte[] fbBuffer) {
     return Shader.GetRootAsShader(new ByteBuffer(fbBuffer)).UnPack();

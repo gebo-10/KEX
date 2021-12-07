@@ -32,8 +32,8 @@ namespace kengine {
 
 			auto comp_mesh = std::make_shared<MeshRender>();
 			comp_mesh->material= Env.assets_database.get_resource<Material>(NAME("Assets/Bundle/per_frag_diffuse.material"));
-			comp_mesh->mesh = Env.assets_database.get_resource<Mesh>(NAME("Assets/Bundle/box.fbx"));
-			//comp_mesh->mesh = MeshImporter::import("main/mesh/bird.FBX");
+			//comp_mesh->mesh = Env.assets_database.get_resource<Mesh>(NAME("Assets/Bundle/box.fbx"));
+			comp_mesh->mesh = MeshImporter::import("main/mesh/miku.gltf");
 			comp_mesh->mesh->gpucache();
 			root->add_component(comp_mesh);
 
@@ -48,7 +48,7 @@ namespace kengine {
 				camera_go->add_component(camera);
 
 				auto camera_transform = std::make_shared<Transform>();
-				camera_transform->set_translate(vec3(0, 2, -10));
+				camera_transform->set_translate(vec3(0, 2, -8));
 				camera_go->add_component(camera_transform);
 				//camera->lookat(vec3(0, 5, 5), vec3(0, 0, 0), vec3(0, 1, 0));
 				cameras.push_back(camera_go);

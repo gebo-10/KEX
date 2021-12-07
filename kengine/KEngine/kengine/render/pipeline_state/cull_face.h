@@ -5,9 +5,8 @@ namespace kengine {
 	class CullFace :public PipelineState
 	{
 	public:
-		PipelineStateType type = PipelineStateType::CULL_FACE;
 		Face face;
-		CullFace()
+		CullFace():PipelineState(PipelineStateType::CULL_FACE)
 		{
 		}
 
@@ -18,6 +17,9 @@ namespace kengine {
 		virtual void set(PipelineStatePtr state) {
 			switch (face)
 			{
+			case Face::NONE:
+				glDisable(GL_CULL_FACE);
+				break;
 			case Face::FRONT:
 				//glDisable(GL_CULL_FACE);
 				break;

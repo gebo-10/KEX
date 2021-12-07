@@ -116,6 +116,9 @@
     <Filter Include="kengine\geometry">
       <UniqueIdentifier>{c8a0ec27-60d6-4272-9c0b-5c90af87b576}</UniqueIdentifier>
     </Filter>
+    <Filter Include="kengine\gpgpu">
+      <UniqueIdentifier>{67b66946-e283-4d09-a405-2584f58f3582}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="window\main.cc">
@@ -489,6 +492,12 @@
     </ClInclude>
     <ClInclude Include="kengine\render\render_graph\pass\camera_pass.h">
       <Filter>kengine\render\render_graph\pass</Filter>
+    </ClInclude>
+    <ClInclude Include="kengine\resource\gpu\shader_storage_buffer.h">
+      <Filter>kengine\resource\gpu</Filter>
+    </ClInclude>
+    <ClInclude Include="kengine\gpgpu\gpgpu.h">
+      <Filter>kengine\gpgpu</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
