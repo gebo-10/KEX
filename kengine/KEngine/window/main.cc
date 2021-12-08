@@ -29,10 +29,15 @@
 #pragma comment(lib, "odbccp32.lib")
 #pragma comment(lib , "flatbuffers.lib")
 //#pragma comment(lib, "freetype.lib")
-#pragma comment(lib, "libzmq-v142-mt-sgd-4_3_4.lib")
-#pragma comment(lib, "assimp-vc142-mtd.lib")
-#pragma comment(lib, "assimpd.lib")
-#pragma comment(lib, "zlibstaticd.lib")
+
+#pragma comment(lib, "libzmq.lib")
+
+#pragma comment(lib, "assimp.lib")
+#ifdef _DEBUG
+    #pragma comment(lib, "zlibstaticd.lib")
+#else
+    #pragma comment(lib, "zlibstatic.lib")
+#endif
 kengine::KEngine* engine=nullptr;
 int main()
 {

@@ -4,6 +4,7 @@
 namespace kengine
 {
     enum class GPUBufferType {
+        UNKNOW_TYPE = -1,
         ARRAY_BUFFER = GL_ARRAY_BUFFER,
         UNIFORM_BUFFER = GL_UNIFORM_BUFFER,
         ATOMIC_COUNTER_BUFFER= GL_ATOMIC_COUNTER_BUFFER,
@@ -39,16 +40,28 @@ namespace kengine
     class GPUBuffer {
     public:
         GPUID  gpu_id=-1;
-        uint32_t size=0;
+        uint32 size=0;
         int type;
-        int gpu_memery_hint;
-        GPUBuffer(BufferPtr buffer, int t, int hint) :size(buffer->size),type(t), gpu_memery_hint(hint) {
+        int memery_hint;
+        void* map_data=nullptr;
+
+        GPUBuffer(BufferPtr buffer, GPUBufferType buffer_type, GPUBufferHit buffer_hint):
+            size(buffer->size),type((int)buffer_type),
+            memery_hint((int)buffer_hint) {
             glGenBuffers(1, &gpu_id);
             glBindBuffer(type, gpu_id);
-            glBufferData(type, buffer->size, buffer->data, hint);
+            glBufferData(type, buffer->size, buffer->data, memery_hint);
+        }
+        GPUBuffer(uint32 buffer_size, GPUBufferType buffer_type, GPUBufferHit buffer_hint) :
+            size(buffer_size), type((int)buffer_type),
+            memery_hint((int)buffer_hint) {
+            glGenBuffers(1, &gpu_id);
+            glBindBuffer(type, gpu_id);
+            glBufferData(type, size, nullptr, memery_hint);
         }
 
         ~GPUBuffer() {
+            unmap();
             glDeleteBuffers(1, &gpu_id);
         }
 
@@ -63,14 +76,33 @@ namespace kengine
             return true;
         }
 
-        void bind(int new_type=-1) {
-            if (new_type != -1) {
-                type = new_type;
+        void bind(GPUBufferType new_type=GPUBufferType::UNKNOW_TYPE) {
+            if (new_type != GPUBufferType::UNKNOW_TYPE) {
+                type = (int)new_type;
             }
             glBindBuffer(type, gpu_id);
         }
 
-        
+        void bind_to_point(GPUBufferType type, int binding_point) {
+            bind(type);
+            glBindBufferBase((int)type, binding_point, gpu_id);
+        }
+
+        void* map(GPUBufferHit access) {
+            if (map_data == nullptr) {
+                bind();
+                map_data= glMapBuffer(type, (int)access);
+            }
+            return map_data;
+        }
+
+        void unmap() {
+            if (map_data != nullptr) {
+                bind();
+                glUnmapBuffer(type);
+                map_data = nullptr;
+            }
+        }
     };
     typedef shared_ptr<GPUBuffer> GPUBufferPtr;
 }

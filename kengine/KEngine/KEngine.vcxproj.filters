@@ -444,9 +444,6 @@
     <ClInclude Include="kengine\scene\component\transform.h">
       <Filter>kengine\scene\component</Filter>
     </ClInclude>
-    <ClInclude Include="kengine\resource\gpu\uniform_buffer.h">
-      <Filter>kengine\resource\gpu</Filter>
-    </ClInclude>
     <ClInclude Include="kengine\render\render_graph\common_uniform.h">
       <Filter>kengine\render\render_graph</Filter>
     </ClInclude>
@@ -492,9 +489,6 @@
     </ClInclude>
     <ClInclude Include="kengine\render\render_graph\pass\camera_pass.h">
       <Filter>kengine\render\render_graph\pass</Filter>
-    </ClInclude>
-    <ClInclude Include="kengine\resource\gpu\shader_storage_buffer.h">
-      <Filter>kengine\resource\gpu</Filter>
     </ClInclude>
     <ClInclude Include="kengine\gpgpu\gpgpu.h">
       <Filter>kengine\gpgpu</Filter>

@@ -23,6 +23,7 @@ namespace kengine {
 			if (get_component(component->type) != nullptr) {
 				return false;
 			}
+			component->go = this;
 			components.push_back(component);
 			return true;
 		}

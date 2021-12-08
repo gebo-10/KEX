@@ -3,7 +3,7 @@
 #version 310 es
 
 // The uniform parameters that are passed from application for every frame.
-uniform float radius;
+layout (location = 1) uniform float radius;
 
 // Declare the custom data type that represents one point of a circle.
 // This is vertex position and color respectively,
@@ -24,31 +24,32 @@ struct AttribData
 // Some platforms might support more indices.
 layout(std430, binding = 0) buffer destBuffer
 {
-    AttribData data[];
+    uint data[];
 } outBuffer;
 
 // Declare the group size.
 // This is a one-dimensional problem, so prefer a one-dimensional group layout.
-layout (local_size_x = 64, local_size_y = 1, local_size_z = 1) in;
+layout (local_size_x = 32, local_size_y = 16, local_size_z = 1) in;
 
 // Declare the main program function that is executed once
 // glDispatchCompute is called from the application.
 void main()
 {
         // Read the current global position for this thread
-        uint storePos = gl_GlobalInvocationID.x;
+        //uint storePos = gl_GlobalInvocationID.x;
 
         // Calculate the global number of threads (size) for this work dispatch.
-        uint gSize = gl_WorkGroupSize.x * gl_NumWorkGroups.x;
+        //uint gSize = gl_WorkGroupSize.x * gl_NumWorkGroups.x;
 
         // Calculate an angle for the current thread
-        float alpha = 2.0 * 3.14159265359 * (float(storePos) / float(gSize));
+        //float alpha = 2.0 * 3.14159265359 * (float(storePos) / float(gSize));
 
         // Calculate the vertex position based on
         // the previously calculated angle and radius.
         // This is provided by the application.
-        outBuffer.data[storePos].v = vec4(sin(alpha) * radius, cos(alpha) * radius, 0.0, 1.0);
+        //outBuffer.data[storePos].v = vec4(sin(alpha) * radius, cos(alpha) * radius, 0.0, 1.0);
 
         // Assign a color for the vertex
-        outBuffer.data[storePos].c = vec4(float(storePos) / float(gSize), 0.0, 1.0, 1.0);
+        //outBuffer.data[storePos].c = vec4(float(storePos) / float(gSize), 0.0, 1.0, 1.0);
+        outBuffer.data[gl_WorkGroupID.x*uint(32*16)+gl_LocalInvocationIndex]=gl_LocalInvocationID.y*uint(radius);
 }

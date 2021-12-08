@@ -92,7 +92,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>D:\KEngine\KEngine\KEngine\kengine\external;D:\KEngine\KEngine\KEngine\kengine\external\flatbuffers\include;D:\KEngine\KEngine\KEngine\kengine\external\mio\single_include\mio;D:\KEngine\KEngine\KEngine\kengine\external\rapidjson\include;D:\KEngine\KEngine\KEngine\kengine\external\glm;D:\KEngine\KEngine\KEngine\kengine\external\spdlog\include;D:\KEngine\KEngine\KEngine;D:\KEngine\KEngine\KEngine\window\extern\glfw\include;D:\KEngine\KEngine\KEngine\window\extern\glew\include;D:\KEngine\KEngine\KEngine\kengine\external\libuv\include;D:\KEngine\KEngine\KEngine\kengine\external\sol;D:\KEngine\KEngine\KEngine\kengine\external\lua-5.1.5\src;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)KEngine\kengine\external;$(SolutionDir)KEngine\kengine\external\flatbuffers\include;$(SolutionDir)KEngine\kengine\external\mio\single_include\mio;$(SolutionDir)KEngine\kengine\external\rapidjson\include;$(SolutionDir)KEngine\kengine\external\glm;$(SolutionDir)KEngine\kengine\external\spdlog\include;$(SolutionDir)KEngine;$(SolutionDir)KEngine\window\extern\glfw\include;$(SolutionDir)KEngine\window\extern\glew\include;$(SolutionDir)KEngine\kengine\external\libuv\include;$(SolutionDir)KEngine\kengine\external\sol;$(SolutionDir)KEngine\kengine\external\lua-5.1.5\src;$(SolutionDir)KEngine\kengine\external\zmq\include;$(SolutionDir)KEngine\kengine\external\assimp\include;$(SolutionDir)KEngine\kengine\external\assimp\out\include;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)$(Platform)\$(Configuration)\;$(LibraryPath)</LibraryPath>
     <IntDir>$(SolutionDir)$(Platform)\$(Configuration)\</IntDir>
   </PropertyGroup>
@@ -165,7 +165,7 @@
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <UndefineAllPreprocessorDefinitions>true</UndefineAllPreprocessorDefinitions>
+      <UndefineAllPreprocessorDefinitions>false</UndefineAllPreprocessorDefinitions>
       <StructMemberAlignment>Default</StructMemberAlignment>
     </ClCompile>
     <Link>
@@ -273,8 +273,6 @@
     <ClInclude Include="kengine\resource\gpu\gpu_resource.h" />
     <ClInclude Include="kengine\resource\gpu\gpu_shader.h" />
     <ClInclude Include="kengine\resource\gpu\gpu_target.h" />
-    <ClInclude Include="kengine\resource\gpu\shader_storage_buffer.h" />
-    <ClInclude Include="kengine\resource\gpu\uniform_buffer.h" />
     <ClInclude Include="kengine\resource\ram\animation.h" />
     <ClInclude Include="kengine\resource\ram\material.h" />
     <ClInclude Include="kengine\resource\ram\mesh.h" />

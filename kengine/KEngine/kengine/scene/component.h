@@ -6,10 +6,12 @@ namespace kengine {
 		MESH_RENDER,
 		CAMERA,
 	};
+	class GameObject;
 	class Component
 	{
 	public:
 		ComponentType type;
+		GameObject* go;
 		Component(ComponentType t):type(t)
 		{
 		}

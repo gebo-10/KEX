@@ -1,6 +1,8 @@
 #pragma once
 #define GLM_LEFT_HANDED
 #define GLM_FORCE_LEFT_HANDED
+//#define GLM_FORCE_SSE2
+//#define GLM_FORCE_ALIGNED
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/quaternion.hpp>

@@ -62,10 +62,10 @@ namespace kengine{
 				{
 					indices_type = buffer.data_type;
 					indices_size = buffer.buffer->size / (indices_type == GPUType::UNSIGNED_SHORT ? 2 : 4);
-					gpu_buffer = std::make_shared<GPUBuffer>(buffer.buffer,(int) GPUBufferType::ELEMENT_ARRAY_BUFFER, (int)buffer.hit);
+					gpu_buffer = std::make_shared<GPUBuffer>(buffer.buffer, GPUBufferType::ELEMENT_ARRAY_BUFFER, buffer.hit);
 				}else
 				{
-					gpu_buffer = std::make_shared<GPUBuffer>(buffer.buffer, (int)GPUBufferType::ARRAY_BUFFER, (int)buffer.hit);
+					gpu_buffer = std::make_shared<GPUBuffer>(buffer.buffer, GPUBufferType::ARRAY_BUFFER, buffer.hit);
 					glEnableVertexAttribArray((int) buffer_type);
 					if (buffer.data_type == GPUType::FLOAT)
 					{

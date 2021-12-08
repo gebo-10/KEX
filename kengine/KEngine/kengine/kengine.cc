@@ -3,6 +3,7 @@
 #include "platform/platform.h"
 #include "profiler/profiler.h"
 #include "core/io/kengine_io.h"
+#include "gpgpu/gpgpu.h"
 //#define ZMQ_STATIC
 //#define ZMQ_USE_TWEETNACL
 //#include <zmq.h>
@@ -29,6 +30,9 @@ void KEngine::init(int width, int height) {
     auto name_buff = Env.io->read_file("name.db");
     Env.name_service.init(name_buff);
 
+    auto bundle = Env.assets_database.load_bundle("test.bundle");
+    Env.assets_database.load_all_bundle_asset(bundle);
+
     //Env.async_service.work(nullptr, 
     //    [](void* data) {
     //        info("work.............");
@@ -43,12 +47,24 @@ void KEngine::init(int width, int height) {
     //auto b = Env.io->mmap_file(file);
     //info(b->data());
 
-    auto bundle = Env.assets_database.load_bundle("test.bundle");
-    Env.assets_database.load_all_bundle_asset(bundle);
-    auto id = NAME("Assets/Bundle/cs1.glsl");
-    auto shader = Env.assets_database.get_resource<Shader>(id);
+    
+    //auto mat = Env.assets_database.get_resource<Material>(NAME("Assets/Bundle/cs1.material"));
+
     //info(shader->vert_source);
-    shader->gpucache();
+    //mat->gpucache();
+
+
+    //GPGPU gpgpu;
+    //gpgpu.set_material(mat);
+    //auto ssbo = std::make_shared<GPUBuffer>(32*16*2 *sizeof(int), GPUBufferType::SHADER_STORAGE_BUFFER, GPUBufferHit::DYNAMIC_DRAW);
+    //gpgpu.attach_buffer(0,ssbo);
+    //gpgpu.setup(2,1,1);
+    //int* res =(int*) ssbo->map(GPUBufferHit::READ_ONLY);
+    //
+    //for (int i = 0; i < 32 * 16 * 2; i++)
+    //{
+    //    std::cout << res[i] << " ";
+    //}
 
     //auto mesh = Env.assets_database.get_resource<Mesh>(NAME("Assets/Bundle/box.fbx"));
     //mesh->gpucache();
@@ -87,6 +103,7 @@ void KEngine::quit()
 void KEngine::on_view_size(int width, int height)
 {
 	info("view size change {}{}", width, height);
+    if (width == 0 || height == 0) return;
     OnViewSize e;
     e.width = width;
     e.height = height;
@@ -95,16 +112,7 @@ void KEngine::on_view_size(int width, int height)
     Env.event_setvice.dispatch(EventType::OnViewSize, &e);
 }
 
-//void load_resource() {
-//    sol::table tb = Config::instacne().data["resource"];
-//
-//    for (auto package : tb) {
-//        string name = package.second.as<string>();
-//        load_package(name);
-//    }
 
-//}
-//
 kengine::KEngine& GetKEngineInstance()
 {
     auto e= new KEngine();
