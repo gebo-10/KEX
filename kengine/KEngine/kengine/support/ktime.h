@@ -33,6 +33,7 @@ namespace kengine
 				float sleep = (interval - elapsed) / 2.0f;
 				std::this_thread::sleep_for(std::chrono::milliseconds( static_cast<long long>(sleep) ) );
 			}
+			//std::this_thread::sleep_for(std::chrono::milliseconds(static_cast<long long>(100)));
 		}
 
 		void limit()

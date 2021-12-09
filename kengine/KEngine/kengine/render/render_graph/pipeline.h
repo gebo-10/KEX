@@ -16,11 +16,17 @@ namespace kengine {
 		MaterialPtr material;
 
 		Pipeline() {
-			states[(int)PipelineStateType::DEPRH_TEST] = std::make_shared<DepthTest>(false);
+			states[(int)PipelineStateType::DEPRH_TEST] = std::make_shared<DepthTest>(false,CompareFunc::LEQUAL);
 			states[(int)PipelineStateType::STENCIL_TEST] = std::make_shared<StencilTest>(false);
-			states[(int)PipelineStateType::CLEAR_VALUE] = std::make_shared<ClearValue>(color_black,0,0);
+			states[(int)PipelineStateType::CLEAR_VALUE] = std::make_shared<ClearValue>(color_black,1.0f,0);
 			states[(int)PipelineStateType::VIEW_PORT] = std::make_shared<ViewPortState>(Rectf(0,0,1,1) );
 			states[(int)PipelineStateType::SCISSOR_STATE] = std::make_shared<ScissorState>(false,Rectf(0, 0, 1, 1));
+
+			for (auto state : states) {
+				if (state != nullptr) {
+					state->setup();
+				}
+			}
 		}
 
 		void draw(Matrix m, MeshPtr mesh, int count) {

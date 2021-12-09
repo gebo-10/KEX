@@ -18,7 +18,7 @@ namespace kengine {
 			pipeline.set_state(std::make_shared<ViewPortState>(view_port));
 
 			pipeline.set_state(std::make_shared<ScissorState>(true,view_port));
-			pipeline.set_state(std::make_shared<ClearValue>(color_pink, 0, 0));
+			pipeline.set_state(std::make_shared<ClearValue>(color_pink, 1.0f, 0));
 			glClear(GL_COLOR_BUFFER_BIT| GL_DEPTH_BUFFER_BIT);
 
 			pipeline.common_uniform.v = scene.get_camera_v(camera_id);

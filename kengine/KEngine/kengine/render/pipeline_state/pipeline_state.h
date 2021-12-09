@@ -35,16 +35,16 @@ namespace kengine {
 		FRONT_AND_BACK,
 	};
 
-	enum class CompareFun{
+	enum class CompareFunc {
 		NONE,
-		NEVER,
-		ALWAYS,
-		LESS,
-		GREATER,
-		EQUAL,
-		LEQUAL,
-		GEQUAL,
-		NOTEQUAL
+		NEVER = GL_NEVER,
+		ALWAYS = GL_ALWAYS,
+		LESS = GL_LESS,
+		GREATER = GL_GREATER,
+		EQUAL = GL_EQUAL,
+		LEQUAL = GL_LEQUAL,
+		GEQUAL = GL_GEQUAL,
+		NOTEQUAL = GL_NOTEQUAL
 	};
 
 	class PipelineState {
@@ -55,7 +55,8 @@ namespace kengine {
 		virtual ~PipelineState(){}
 		//virtual PipelineState& operator=(const PipelineState& rhs) {}
 		//virtual bool operator==(const PipelineState& rhs){}
-		virtual void set(shared_ptr<PipelineState> state) {}
+		virtual void set(shared_ptr<PipelineState> state) = 0;
+		virtual void setup() = 0;
 	};
 	typedef shared_ptr<PipelineState> PipelineStatePtr;	
 }

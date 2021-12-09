@@ -14,7 +14,7 @@ namespace kengine {
 		{
 		}
 
-		virtual void set(PipelineStatePtr state) {
+		void set (PipelineStatePtr state) override{
 			switch (face)
 			{
 			case Face::NONE:
@@ -34,6 +34,9 @@ namespace kengine {
 			default:
 				break;
 			}
+		}
+		void setup() override {
+			
 		}
 	};
 }

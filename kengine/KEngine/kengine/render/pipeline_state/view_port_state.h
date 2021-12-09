@@ -20,5 +20,9 @@ namespace kengine {
 				glViewport(view_port.x * Screen::width, view_port.y * Screen::height, view_port.w * Screen::width, view_port.h * Screen::height);
 			}
 		}
+
+		void setup() override {
+			glViewport(view_port.x * Screen::width, view_port.y * Screen::height, view_port.w * Screen::width, view_port.h * Screen::height);
+		}
 	};
 }

@@ -31,5 +31,15 @@ namespace kengine {
 				glScissor(rect.x*Screen::width, rect.y * Screen::height, rect.w * Screen::width, rect.h * Screen::height);
 			}
 		}
+
+		void setup() override {
+			if (enable) {
+				glEnable(GL_SCISSOR_TEST);
+			}
+			else {
+				glDisable(GL_SCISSOR_TEST);
+			}
+			glScissor(rect.x * Screen::width, rect.y * Screen::height, rect.w * Screen::width, rect.h * Screen::height);
+		}
 	};
 }

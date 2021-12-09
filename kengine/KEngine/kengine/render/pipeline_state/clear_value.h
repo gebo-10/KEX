@@ -19,7 +19,8 @@ namespace kengine {
 		{
 		}
 
-		virtual void set(PipelineStatePtr state) {
+
+		void set (PipelineStatePtr state)override {
 			auto new_state = std::dynamic_pointer_cast<ClearValue>(state);
 			if (new_state->clear_color != clear_color) {
 				clear_color = new_state->clear_color;
@@ -31,8 +32,14 @@ namespace kengine {
 			}
 			if (new_state->clear_stencil != clear_stencil) {
 				clear_stencil = new_state->clear_stencil;
-				glClearDepth(clear_stencil);
+				glClearStencil(clear_stencil);
 			}
+		}
+
+		void setup() override{
+			glClearColor(clear_color.r, clear_color.g, clear_color.b, clear_color.a);
+			glClearDepth(clear_depth);
+			glClearStencil(clear_stencil);
 		}
 	};
 }

@@ -5,7 +5,9 @@ namespace kengine {
 	{
 	public:
 		bool enable=false;
-		DepthTest(bool enable) :PipelineState(PipelineStateType::DEPRH_TEST), enable(enable)
+		CompareFunc compare_func;
+
+		DepthTest(bool enable, CompareFunc func) :PipelineState(PipelineStateType::DEPRH_TEST), enable(enable), compare_func(func)
 		{
 		}
 
@@ -24,6 +26,20 @@ namespace kengine {
 					glDisable(GL_DEPTH_TEST);
 				}
 			}
+
+			if (compare_func != new_state->compare_func) {
+				compare_func = new_state->compare_func;
+				glDepthFunc((GLenum)compare_func);
+			}
+		}
+		void setup() override {
+			if (enable) {
+				glEnable(GL_DEPTH_TEST);
+			}
+			else {
+				glDisable(GL_DEPTH_TEST);
+			}
+			glDepthFunc((GLenum)compare_func);
 		}
 	};
 }

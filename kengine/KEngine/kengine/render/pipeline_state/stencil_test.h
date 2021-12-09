@@ -21,6 +21,13 @@ namespace kengine {
 				}
 			}
 		}
-
+		void setup() override {
+			if (enable) {
+				glEnable(GL_STENCIL_TEST);
+			}
+			else {
+				glDisable(GL_STENCIL_TEST);
+			}
+		}
 	};
 }
