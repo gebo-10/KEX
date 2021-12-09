@@ -184,6 +184,8 @@
     <ClCompile Include="kengine\kengine.cc" />
     <ClCompile Include="kengine\platform\window\platform_window.cc" />
     <ClCompile Include="kengine\support\screen.cc" />
+    <ClCompile Include="kengine\util\texture_importer.cc" />
+    <ClCompile Include="kengine\util\texture_importer.cpp" />
     <ClCompile Include="window\main.cc" />
   </ItemGroup>
   <ItemGroup>
@@ -211,6 +213,8 @@
     <ClInclude Include="kengine\geometry\cube.h" />
     <ClInclude Include="kengine\geometry\plane.h" />
     <ClInclude Include="kengine\gpgpu\gpgpu.h" />
+    <ClInclude Include="kengine\gpgpu\mesh_morph.h" />
+    <ClInclude Include="kengine\gpgpu\mesh_skin.h" />
     <ClInclude Include="kengine\interface\IConfig.h" />
     <ClInclude Include="kengine\kengine.h" />
     <ClInclude Include="kengine\kserialize\assetbundle_generated.h" />
@@ -303,7 +307,11 @@
     <ClInclude Include="kengine\system\monitor\test_processor.h" />
     <ClInclude Include="kengine\system\render\render_system.h" />
     <ClInclude Include="kengine\system\system.h" />
+    <ClInclude Include="kengine\util\material_importer.h" />
+    <ClInclude Include="kengine\util\matsha_importer.h" />
     <ClInclude Include="kengine\util\mesh_importer.h" />
+    <ClInclude Include="kengine\util\shader_importer.h" />
+    <ClInclude Include="kengine\util\texture_importer.h" />
     <ClInclude Include="window\test_app.h" />
   </ItemGroup>
   <ItemGroup>

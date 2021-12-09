@@ -32,9 +32,13 @@ namespace kengine {
 		Color(float r, float g, float b) : r(r), g(g), b(b), a(1.0f) {}
 		~Color() {}
 
-		bool operator ==(Color c) {
+		bool operator ==(const Color& c) {
 			return this->r == c.r && this->g == c.g && this->b == c.b && this->a == c.a;
 		}
+		bool operator !=(const Color& c) {
+			return this->r != c.r || this->g != c.g || this->b != c.b || this->a != c.a;
+		}
+
 
 		void to_hsl() {}
 		RGBA get_component() {}

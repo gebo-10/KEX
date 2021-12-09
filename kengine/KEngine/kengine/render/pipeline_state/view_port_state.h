@@ -4,8 +4,8 @@ namespace kengine {
 	class ViewPortState :public PipelineState
 	{
 	public:
-		Rect view_port;
-		ViewPortState(Rect rect) :PipelineState(PipelineStateType::VIEW_PORT), view_port(rect)
+		Rectf view_port;
+		ViewPortState(Rectf rect) :PipelineState(PipelineStateType::VIEW_PORT), view_port(rect)
 		{
 		}
 
@@ -17,7 +17,7 @@ namespace kengine {
 			auto new_state = std::dynamic_pointer_cast<ViewPortState>(state);
 			if (view_port != new_state->view_port) {
 				view_port = new_state->view_port;
-				glViewport(view_port.x, view_port.y, view_port.w, view_port.h);
+				glViewport(view_port.x * Screen::width, view_port.y * Screen::height, view_port.w * Screen::width, view_port.h * Screen::height);
 			}
 		}
 	};

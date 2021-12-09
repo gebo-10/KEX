@@ -35,7 +35,7 @@ namespace kengine {
 				TransformPtr t= std::dynamic_pointer_cast<Transform> ( obj-> get_component(ComponentType::TRANSFORM) );
 				MeshRenderPtr m = std::dynamic_pointer_cast<MeshRender> (obj->get_component(ComponentType::MESH_RENDER));
 				pipeline.use_material(m->material);
-				pipeline.draw(t->matrix(), m->mesh);
+				pipeline.draw(t->matrix(), m->mesh,m->instance_count);
 			}
 		}
 	};

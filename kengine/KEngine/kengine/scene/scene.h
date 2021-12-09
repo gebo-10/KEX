@@ -3,6 +3,7 @@
 #include "component/camera.h"
 #include "game_object.h"
 #include <kengine/util/mesh_importer.h>
+#include <kengine/util/texture_importer.h>
 namespace kengine {
 	class RenderGraph;
 	typedef shared_ptr< RenderGraph> RenderGraphPtr;
@@ -31,14 +32,20 @@ namespace kengine {
 			root->add_component(comp_transform);
 
 			auto comp_mesh = std::make_shared<MeshRender>();
+			comp_mesh->instance_count = 1;
 			comp_mesh->material= Env.assets_database.get_resource<Material>(NAME("Assets/Bundle/per_frag_diffuse.material"));
+
+			TextureUniformData tud;
+			tud.texture = TextureImporter::import("main/texture/miku.png");
+			tud.bind_point = 2;
+			comp_mesh->material->add_uniform(2, ShaderDataType::SAMPLE2D, tud);
+
 			//comp_mesh->mesh = Env.assets_database.get_resource<Mesh>(NAME("Assets/Bundle/box.fbx"));
 			comp_mesh->mesh = MeshImporter::import("main/mesh/miku.gltf");
 			comp_mesh->mesh->gpucache();
 			root->add_component(comp_mesh);
 
 			objs.push_back(root);
-
 			{
 				GameObjectPtr camera_go = std::make_shared<GameObject>();
 				CameraPtr camera;
@@ -48,9 +55,8 @@ namespace kengine {
 				camera_go->add_component(camera);
 
 				auto camera_transform = std::make_shared<Transform>();
-				camera_transform->set_translate(vec3(0, 2, -8));
+				camera_transform->set_translate(vec3(0, 0.5, -4));
 				camera_go->add_component(camera_transform);
-				//camera->lookat(vec3(0, 5, 5), vec3(0, 0, 0), vec3(0, 1, 0));
 				cameras.push_back(camera_go);
 			}
 			/// ///////////////////////////////////////////////////////////////
@@ -63,17 +69,11 @@ namespace kengine {
 				camera_go->add_component(camera);
 
 				auto camera_transform = std::make_shared<Transform>();
-				camera_transform->set_translate(vec3(0, -2, -8));
+				camera_transform->set_translate(vec3(0, -0, -4));
 				camera_go->add_component(camera_transform);
 				cameras.push_back(camera_go);
 			}
 			/// ///////////////////////////////////////////////////////////////
-		}
-
-		std::vector<GameObjectPtr>& cull() {
-			rotate += 1;
-			comp_transform->set_rotate(vec3(0, rotate, 0));
-			return objs;
 		}
 
 		Matrix get_camera_v(int index) {
@@ -88,10 +88,16 @@ namespace kengine {
 			return camera->get_p();
 		}
 
-		Rect get_camera_view_port(int index) {
+		Rectf get_camera_view_port(int index) {
 			auto comp = cameras[index]->get_component(ComponentType::CAMERA);
 			auto camera = std::dynamic_pointer_cast<Camera>(comp);
 			return camera->get_view_port();
+		}
+
+		std::vector<GameObjectPtr>& cull() {
+			rotate += 1;
+			comp_transform->set_rotate(vec3(0, rotate, 0));
+			return objs;
 		}
 	private:
 

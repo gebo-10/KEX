@@ -4,6 +4,13 @@
 #include <kengine/core/math/kmath.h>
 #include <kengine/resource/ram/texture.h>
 namespace kengine {
+    struct TextureUniformData {
+        int bind_point;
+        TexturePtr texture;
+        bool operator==(const TextureUniformData& other) {
+            return bind_point == other.bind_point && texture == other.texture;
+        }
+    };
     struct Uniform {
         bool dirt=false;
         ShaderDataType data_type;
@@ -60,10 +67,9 @@ namespace kengine {
                 break;
             }
             case ShaderDataType::SAMPLE2D: {
-                //auto tex = std::any_cast<TexturePtr>(value);
-                //int texture_index = std::atoi(key.data() + 7);
-                //tex->bind(texture_index);
-                //glUniform1i(location, texture_index);
+                auto data = std::any_cast<TextureUniformData>(value);
+                data.texture->bind(data.bind_point);
+                glUniform1i(location, data.bind_point);
                 break;
             }
             case ShaderDataType::Color: {
@@ -108,7 +114,7 @@ namespace kengine {
                 break;
             }
             case ShaderDataType::SAMPLE2D: {
-                return std::any_cast<int>(value) == std::any_cast<int>(other);
+                return std::any_cast<TextureUniformData>(value) == std::any_cast<TextureUniformData>(other);
                 break;
             }
             case ShaderDataType::Color: {

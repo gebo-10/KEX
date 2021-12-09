@@ -23,10 +23,10 @@ namespace kengine {
         
         void add_buffer(BufferPtr buffer, MeshBufferType type) {}
 
-        void set_indices(BufferPtr buffer) {
+        void set_indices(BufferPtr buffer,GPUType data_type= GPUType::UNSIGNED_SHORT) {
             MeshBuffer mbuf;
             mbuf.type = MeshBufferType::INDICES;
-            mbuf.data_type = GPUType::UNSIGNED_SHORT;
+            mbuf.data_type = data_type;
             //mbuf.hit = GPUBufferHit::STATIC_DRAW;
             //mbuf.need_normalized = false;
             //mbuf.component_num = 1;
@@ -78,20 +78,9 @@ namespace kengine {
             add_buffer(std::move(mbuf));
         }
 
-        void set_uv1(BufferPtr buffer){
+        void set_uv(int index,BufferPtr buffer){
             MeshBuffer mbuf;
-            mbuf.type = MeshBufferType::UV1;
-            mbuf.data_type = GPUType::FLOAT;
-            //mbuf.hit = GPUBufferHit::STATIC_DRAW;
-            //mbuf.need_normalized = true;
-            mbuf.component_num = 2;
-            mbuf.buffer = buffer;
-            add_buffer(std::move(mbuf));
-        }
-
-        void set_uv2(BufferPtr buffer) {
-            MeshBuffer mbuf;
-            mbuf.type = MeshBufferType::UV2;
+            mbuf.type = (MeshBufferType)((int)MeshBufferType::UV0+ index);
             mbuf.data_type = GPUType::FLOAT;
             //mbuf.hit = GPUBufferHit::STATIC_DRAW;
             //mbuf.need_normalized = true;
@@ -100,11 +89,16 @@ namespace kengine {
             add_buffer(std::move(mbuf));
         }
     
-        void draw() {
+        void draw(int count=1) {
             if (gpu_object == nullptr) {
                 gpucache();
             }
-            gpu_object->draw();
+            if (count <= 1) {
+                gpu_object->draw();
+            }
+            else {
+                gpu_object->draw_instance(count);
+            }          
         }
     };
     typedef shared_ptr<Mesh> MeshPtr;

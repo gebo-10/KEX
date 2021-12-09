@@ -19,6 +19,12 @@ namespace kengine {
 		void uncache() {
 			gpu_texture = nullptr;
 		}
+		void bind(int bind_pont) {
+			if (gpu_texture == nullptr) {
+				gpucache();
+			}
+			gpu_texture->bind(bind_pont);
+		}
 	};
 	typedef shared_ptr<Texture> TexturePtr;
 }

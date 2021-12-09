@@ -7,8 +7,16 @@ namespace kengine{
 		COLOR,
 		NORMAL,
 		TANGENT,
+		UV0,
 		UV1,
 		UV2,
+		UV3,
+		UV4,
+		UV5,
+		UV6,
+		UV7,
+		UV8,
+		UV9,
 		BONEIDS,
 		WEIGHTS,
 		CUSTOM1,
@@ -92,6 +100,11 @@ namespace kengine{
 		inline void draw() {
 			bind();
 			glDrawElements((GLenum)primitive, indices_size, (GLenum)indices_type, 0);
+		}
+
+		inline void draw_instance(int count) {
+			bind();
+			glDrawElementsInstanced((GLenum)primitive, indices_size, (GLenum)indices_type, 0, count);
 		}
 	};
 	typedef shared_ptr<GPUObject> GPUObjectPtr;

@@ -1,10 +1,3 @@
-#define GLEW_STATIC
-#include <GL/glew.h>
-#include <GLFW/glfw3.h>
-#include <kengine/kengine.h>
-
-
-
 #pragma comment(lib,"OpenGL32.lib")
 #pragma comment(lib,"ws2_32.lib")
 #pragma comment(lib,"Iphlpapi.lib")
@@ -38,6 +31,11 @@
 #else
     #pragma comment(lib, "zlibstatic.lib")
 #endif
+
+#define GLEW_STATIC
+#include <GL/glew.h>
+#include <GLFW/glfw3.h>
+#include <kengine/kengine.h>
 kengine::KEngine* engine=nullptr;
 int main()
 {

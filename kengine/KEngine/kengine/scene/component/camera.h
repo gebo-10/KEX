@@ -42,8 +42,8 @@ namespace kengine {
 			return projection;
 		}
 
-		Rect get_view_port() {
-			return Rect(view_rect.x * width, view_rect.y * height, view_rect.w * width, view_rect.h * height);
+		Rectf get_view_port() {
+			return view_rect;//Rect(view_rect.x * width, view_rect.y * height, view_rect.w * width, view_rect.h * height);
 		}
 
 		void update_matrix() {

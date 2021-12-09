@@ -102,7 +102,7 @@ void KEngine::quit()
 
 void KEngine::on_view_size(int width, int height)
 {
-	info("view size change {}{}", width, height);
+	info("view size change {} * {}", width, height);
     if (width == 0 || height == 0) return;
     OnViewSize e;
     e.width = width;

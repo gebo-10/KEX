@@ -5,8 +5,8 @@ namespace kengine {
 	{
 	public:
 		bool enable=false;
-		Rect rect;
-		ScissorState(bool enable,Rect rect) :PipelineState(PipelineStateType::SCISSOR_STATE), enable(enable), rect(rect)
+		Rectf rect;
+		ScissorState(bool enable,Rectf rect) :PipelineState(PipelineStateType::SCISSOR_STATE), enable(enable), rect(rect)
 		{
 		}
 
@@ -28,7 +28,7 @@ namespace kengine {
 
 			if (rect != new_state->rect) {
 				rect = new_state->rect;
-				glScissor(rect.x, rect.y, rect.w, rect.h);
+				glScissor(rect.x*Screen::width, rect.y * Screen::height, rect.w * Screen::width, rect.h * Screen::height);
 			}
 		}
 	};

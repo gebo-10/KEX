@@ -12,6 +12,7 @@
 #include<cassert>
 namespace kengine {
     typedef char byte;
+    typedef unsigned char ubyte;
     typedef std::string string;
     typedef std::string_view string_view;
     typedef int8_t int8;

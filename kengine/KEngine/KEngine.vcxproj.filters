@@ -139,6 +139,12 @@
     <ClCompile Include="kengine\support\screen.cc">
       <Filter>kengine\support</Filter>
     </ClCompile>
+    <ClCompile Include="kengine\util\texture_importer.cpp">
+      <Filter>window</Filter>
+    </ClCompile>
+    <ClCompile Include="kengine\util\texture_importer.cc">
+      <Filter>kengine\utiil</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="window\test_app.h">
@@ -492,6 +498,24 @@
     </ClInclude>
     <ClInclude Include="kengine\gpgpu\gpgpu.h">
       <Filter>kengine\gpgpu</Filter>
+    </ClInclude>
+    <ClInclude Include="kengine\gpgpu\mesh_morph.h">
+      <Filter>kengine\scene\component</Filter>
+    </ClInclude>
+    <ClInclude Include="kengine\gpgpu\mesh_skin.h">
+      <Filter>kengine\scene\component</Filter>
+    </ClInclude>
+    <ClInclude Include="kengine\util\texture_importer.h">
+      <Filter>kengine\utiil</Filter>
+    </ClInclude>
+    <ClInclude Include="kengine\util\shader_importer.h">
+      <Filter>kengine\utiil</Filter>
+    </ClInclude>
+    <ClInclude Include="kengine\util\material_importer.h">
+      <Filter>kengine\utiil</Filter>
+    </ClInclude>
+    <ClInclude Include="kengine\util\matsha_importer.h">
+      <Filter>kengine\utiil</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

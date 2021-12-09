@@ -21,7 +21,7 @@ namespace kengine {
 
 		virtual void set(PipelineStatePtr state) {
 			auto new_state = std::dynamic_pointer_cast<ClearValue>(state);
-			if (!(new_state->clear_color == clear_color)) {
+			if (new_state->clear_color != clear_color) {
 				clear_color = new_state->clear_color;
 				glClearColor(clear_color.r, clear_color.g, clear_color.b, clear_color.a);
 			}

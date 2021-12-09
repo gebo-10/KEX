@@ -8,6 +8,7 @@ namespace kengine {
 	public:
 		MeshPtr mesh;
 		MaterialPtr material;
+		int instance_count = 1;
 		MeshRender() :Component(ComponentType::MESH_RENDER)
 		{
 		}
