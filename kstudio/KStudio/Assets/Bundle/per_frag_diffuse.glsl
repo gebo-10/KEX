@@ -14,14 +14,19 @@ layout(std140, binding = 0) uniform Common
     mat4 PV;
     //float time; error
 };
+layout (location = 0) uniform mat4 M;
+
 
 layout (location = 0) in vec3 position;
 layout (location = 1) in vec3 color;
 layout (location = 2) in vec3 normal;
 layout (location = 4) in vec2 uv;
 
-layout (location = 0) uniform mat4 M;
 
+layout(std430, binding = 10) buffer destBuffer
+{
+    vec4 data[];
+} outBuffer;
 
 out vec3 frag_position;
 out vec3 normal_lerped;
@@ -36,9 +41,10 @@ void main()
     vec4 world_normal=M*vec4(normal,1.0);
     normal_lerped = world_normal.xyz;
     texture_coord = uv;
+    //outBuffer.data[gl_VertexID]=vec4(position,0.0);
 }
 
-
+//////////////////////////////////////////////////////////////////////////////
 #frag
 #version 310 es
 precision highp float;
@@ -73,4 +79,5 @@ void main()
     //color = vec4(diffuse,1.0f)*0.7+c*0.3;
     color =texture(texture0,texture_coord)*0.5+ vec4(diffuse*0.5,1.0f);
     //color = c;
+   
 }

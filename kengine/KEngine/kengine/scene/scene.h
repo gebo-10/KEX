@@ -40,8 +40,8 @@ namespace kengine {
 			tud.bind_point = 2;
 			comp_mesh->material->add_uniform(2, ShaderDataType::SAMPLE2D, tud);
 
-			//comp_mesh->mesh = Env.assets_database.get_resource<Mesh>(NAME("Assets/Bundle/box.fbx"));
-			comp_mesh->mesh = MeshImporter::import("main/mesh/miku.gltf");
+			comp_mesh->mesh = Env.assets_database.get_resource<Mesh>(NAME("Assets/Bundle/box.fbx"));
+			//comp_mesh->mesh = MeshImporter::import("main/mesh/miku.gltf");
 			comp_mesh->mesh->gpucache();
 			root->add_component(comp_mesh);
 

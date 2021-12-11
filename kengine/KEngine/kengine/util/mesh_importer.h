@@ -37,6 +37,8 @@ namespace kengine {
 			auto ai_mesh = scene->mMeshes[0];
 			//info("mesh num: {}", scene->mNumMeshes);
 			//info("bone num: {}", ai_mesh->mNumBones);
+			//ai_mesh->mAnimMeshes
+
 
 			auto mesh = std::make_shared<Mesh>();
 			load_position(ai_mesh, mesh);

@@ -30,13 +30,30 @@ namespace kengine {
 
 			pipeline.sync_common_uniform();
 
+			//auto ssbo = std::make_shared<GPUBuffer>(100 * sizeof(float), GPUBufferType::SHADER_STORAGE_BUFFER, GPUBufferHit::DYNAMIC_DRAW);
+			//ssbo->bind_to_point(GPUBufferType::SHADER_STORAGE_BUFFER, 10);
+
 			auto objs = scene.cull();
+			//float* res2=nullptr;
 			for (auto obj : objs) {
 				TransformPtr t= std::dynamic_pointer_cast<Transform> ( obj-> get_component(ComponentType::TRANSFORM) );
 				MeshRenderPtr m = std::dynamic_pointer_cast<MeshRender> (obj->get_component(ComponentType::MESH_RENDER));
+				//res2 = (float*)m->mesh->mesh_buffer[MeshBufferType::POSITION].buffer->data;
 				pipeline.use_material(m->material);
 				pipeline.draw(t->matrix(), m->mesh,m->instance_count);
 			}
+
+			//glMemoryBarrier(GL_SHADER_IMAGE_ACCESS_BARRIER_BIT);
+			//glFinish();
+			//
+			//float* res = (float*)ssbo->map(GPUBufferHit::READ_ONLY);
+			//
+			//for (int i = 0; i <24; i++)
+			//{
+			//	std::cout << res[i*4+0] << " " << res[i * 4 + 1] << " " << res[i * 4 + 2] << " " << res[i * 4 + 3] << std::endl;
+			//	std::cout << res2[i * 3 + 0] << " " << res2[i * 3 + 1] << " " << res2[i * 3 + 2] << std::endl;
+			//}
+			return;
 		}
 	};
 }
