@@ -5,6 +5,7 @@ namespace kengine {
 	enum class EventType
 	{
 		OnViewSize,
+		OnUpdate,
 	};
 	struct Event
 	{

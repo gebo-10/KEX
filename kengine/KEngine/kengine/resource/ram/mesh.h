@@ -7,36 +7,39 @@ namespace kengine {
     public:
         GPUObjectPtr gpu_object;
         PrimitiveType primitive = PrimitiveType::TRIANGLE_STRIP;
-        std::map<MeshBufferType,MeshBuffer> mesh_buffer;
+        MeshBuffer indices_buffer;
+        std::vector<MeshBuffer> mesh_buffers;
 
-        void gpucache() {
-            //if gpu_object ~= nullptr  return
-            gpu_object = std::make_shared<GPUObject>(primitive,mesh_buffer);
+        inline void gpucache( ) {
+            if (gpu_object == nullptr || dirty) {
+                gpu_object = std::make_shared<GPUObject>(primitive, indices_buffer, mesh_buffers);
+                dirty = false;
+            }
         }
-        void uncache() {
+
+        inline void uncache() {
             gpu_object = nullptr;
         }
 
-        void add_buffer(MeshBuffer&& mbuffer) {
-            mesh_buffer[mbuffer.type] = mbuffer;
+        inline void add_buffer(MeshBuffer&& mbuffer) {
+            mesh_buffers.push_back(std::move( mbuffer) );
         }
-        
-        void add_buffer(BufferPtr buffer, MeshBufferType type) {}
 
         void set_indices(BufferPtr buffer,GPUType data_type= GPUType::UNSIGNED_SHORT) {
             MeshBuffer mbuf;
-            mbuf.type = MeshBufferType::INDICES;
+            mbuf.layout_index = MeshBufferType::INDICES;
             mbuf.data_type = data_type;
             //mbuf.hit = GPUBufferHit::STATIC_DRAW;
             //mbuf.need_normalized = false;
             //mbuf.component_num = 1;
             mbuf.buffer = buffer;
-            add_buffer( std::move(mbuf) );
+            //add_buffer( std::move(mbuf) );
+            indices_buffer = mbuf;
         }
 
         void set_position(BufferPtr buffer){
             MeshBuffer mbuf;
-            mbuf.type = MeshBufferType::POSITION;
+            mbuf.layout_index = MeshBufferType::POSITION;
             mbuf.data_type = GPUType::FLOAT;
             //mbuf.hit = GPUBufferHit::STATIC_DRAW;
             //mbuf.need_normalized = false;
@@ -47,7 +50,7 @@ namespace kengine {
 
         void set_normal(BufferPtr buffer) {
             MeshBuffer mbuf;
-            mbuf.type = MeshBufferType::NORMAL;
+            mbuf.layout_index = MeshBufferType::NORMAL;
             mbuf.data_type = GPUType::FLOAT;
             //mbuf.hit = GPUBufferHit::STATIC_DRAW;
             mbuf.need_normalized = true; //TODO
@@ -58,7 +61,7 @@ namespace kengine {
 
         void set_tangent(BufferPtr buffer) {
             MeshBuffer mbuf;
-            mbuf.type = MeshBufferType::TANGENT;
+            mbuf.layout_index = MeshBufferType::TANGENT;
             mbuf.data_type = GPUType::FLOAT;
             //mbuf.hit = GPUBufferHit::STATIC_DRAW;
             //mbuf.need_normalized = true; ??
@@ -69,7 +72,7 @@ namespace kengine {
 
         void set_color(BufferPtr buffer) {
             MeshBuffer mbuf;
-            mbuf.type = MeshBufferType::COLOR;
+            mbuf.layout_index = MeshBufferType::COLOR;
             mbuf.data_type = GPUType::FLOAT;
             //mbuf.hit = GPUBufferHit::STATIC_DRAW;
             //mbuf.need_normalized = true;
@@ -80,7 +83,7 @@ namespace kengine {
 
         void set_uv(int index,BufferPtr buffer){
             MeshBuffer mbuf;
-            mbuf.type = (MeshBufferType)((int)MeshBufferType::UV0+ index);
+            mbuf.layout_index = (MeshBufferType)((int)MeshBufferType::UV0+ index);
             mbuf.data_type = GPUType::FLOAT;
             //mbuf.hit = GPUBufferHit::STATIC_DRAW;
             //mbuf.need_normalized = true;
@@ -90,9 +93,7 @@ namespace kengine {
         }
     
         void draw(int count=1) {
-            if (gpu_object == nullptr) {
-                gpucache();
-            }
+            gpucache();
             if (count <= 1) {
                 gpu_object->draw();
             }

@@ -15,13 +15,15 @@ layout(std140, binding = 0) uniform Common
     mat4 PV;
 };
 layout (location = 0) uniform mat4 M;
+layout (location = 1) uniform vec4 c;
+layout (location = 2) uniform sampler2D texture0;
+layout (location = 3) uniform float blendkey;
 
-
-layout (location = 0) in vec3 position;
-layout (location = 1) in vec3 color;
-layout (location = 2) in vec3 normal;
-layout (location = 4) in vec2 uv;
-
+layout (location = 0)  in vec3 position;
+layout (location = 1)  in vec3 color;
+layout (location = 2)  in vec3 normal;
+layout (location = 4)  in vec2 uv;
+layout (location = 14) in vec2 morph_position;
 
 layout(std430, binding = 10) buffer destBuffer
 {

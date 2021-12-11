@@ -42,7 +42,6 @@ namespace kengine {
 
 			comp_mesh->mesh = Env.assets_database.get_resource<Mesh>(NAME("Assets/Bundle/box.fbx"));
 			//comp_mesh->mesh = MeshImporter::import("main/mesh/miku.gltf");
-			comp_mesh->mesh->gpucache();
 			root->add_component(comp_mesh);
 
 			objs.push_back(root);

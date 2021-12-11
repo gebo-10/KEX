@@ -87,7 +87,7 @@ void KEngine::update()
     //static int a = 0;
     //a++;
     Env.update();
-    //info("fps:{}", Env.time.fps);
+    info("fps:{}", Env.time.fps());
 
     //Env.profiler.fps_limit();
     //info("hello{}",a);
@@ -104,11 +104,11 @@ void KEngine::on_view_size(int width, int height)
 {
 	info("view size change {} * {}", width, height);
     if (width == 0 || height == 0) return;
+    Screen::width = width;
+    Screen::height = height;
     OnViewSize e;
     e.width = width;
     e.height = height;
-    Screen::width = width;
-    Screen::height = height;
     Env.event_setvice.dispatch(EventType::OnViewSize, &e);
 }
 

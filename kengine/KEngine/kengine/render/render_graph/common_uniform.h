@@ -5,7 +5,7 @@ namespace kengine {
 	//#pragma pack(4)
 	struct CommonUniform { //alignas
 	public:
-		//float time;
+		vec4 time;
 		vec4	light_dir;
 		Color	light_color;
 		Matrix v;

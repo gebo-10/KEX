@@ -4,7 +4,7 @@ namespace kengine {
 	class Resource
 	{
 	public:
-		//enum ResourceType
+		//enum class ResourceType
 		//{
 		//	UNKNOW,
 		//	TEXTURE,
@@ -14,15 +14,9 @@ namespace kengine {
 		//	MODEL,
 		//};
 		//ResourceType resource_type;
-
-		Resource()
-		{
-		}
-
-		virtual ~Resource()
-		{
-		}
-
+		bool dirty=true;
+		Resource(){}
+		virtual ~Resource(){}
 		virtual void clone(){}
 	};
 	typedef shared_ptr<Resource> ResourcePtr;

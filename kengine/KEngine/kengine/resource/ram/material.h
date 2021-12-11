@@ -54,16 +54,18 @@ namespace kengine {
             }
             case ShaderDataType::VEC4: {
                 auto v4 = std::any_cast<vec4>(value);
-                glUniform4f(location, v4.x, v4.y, v4.z, v4.w);
+                //glUniform4f(location, v4.x, v4.y, v4.z, v4.w);
+                glUniform1fv(location, 4, glm::value_ptr(v4));
                 break;
             }
             case ShaderDataType::MAT3:
                 mat3 m3 = std::any_cast<mat3>(value);
-                glUniformMatrix4fv(location, 1, false, &m3[0][0]);
+                //glUniformMatrix4fv(location, 1, false, &m3[0][0]);
                 break;
             case ShaderDataType::MAT4: {
                 mat4 m4 = std::any_cast<mat4>(value);
-                glUniformMatrix4fv(location, 1, false, &m4[0][0]);
+                //glUniformMatrix4fv(location, 1, false, &m4[0][0]);
+                glUniform1fv(location, 16, glm::value_ptr(m4));
                 break;
             }
             case ShaderDataType::SAMPLE2D: {

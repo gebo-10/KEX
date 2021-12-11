@@ -8,8 +8,8 @@ namespace kengine {
 	class Camera :public Component {
 	public:
 		CameraType type = CameraType::PERSPECTIVE;
-		int width = 100;
-		int height = 100;
+		//int width = 100;
+		//int height = 100;
 
 		Rectf view_rect;
 		float fov = 60.f;
@@ -25,9 +25,9 @@ namespace kengine {
 		Camera() :Component(ComponentType::CAMERA) {
 			set_view_rect(0, 0, 1, 1);
 			Env.event_setvice.listen(EventType::OnViewSize, [this](Event* e) {
-				OnViewSize* event = (OnViewSize*)e;
-				width = event->width;
-				height = event->height;
+				//OnViewSize* event = (OnViewSize*)e;
+				//width = event->width;
+				//height = event->height;
 				dirty = true;
 			});
 		}
@@ -47,7 +47,7 @@ namespace kengine {
 		}
 
 		void update_matrix() {
-			float aspect = (view_rect.w * width)/ (view_rect.h * height);
+			float aspect = (view_rect.w * Screen::width)/ (view_rect.h * Screen::height);
 			if (type == CameraType::ORTHO) {
 				projection = glm::ortho(-aspect, aspect, -1.0f, 1.0f, znear, zfar);
 			}

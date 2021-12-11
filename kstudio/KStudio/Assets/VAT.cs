@@ -7,6 +7,7 @@ public class VAT : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //Time.deltaTime
         var mesh_render = GetComponent<SkinnedMeshRenderer>();
        // mesh_render.SetBlendShapeWeight(0, 50);
         

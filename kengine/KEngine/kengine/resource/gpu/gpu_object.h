@@ -2,7 +2,7 @@
 #include "gpu_resource.h"
 #include "gpu_buffer.h"
 namespace kengine{
-	enum class MeshBufferType {
+	enum MeshBufferType {
 		POSITION,
 		COLOR,
 		NORMAL,
@@ -15,10 +15,10 @@ namespace kengine{
 		UV5,
 		UV6,
 		UV7,
-		UV8,
-		UV9,
 		BONEIDS,
 		WEIGHTS,
+		MORPH_POSITION,
+		MORPH_NORMAL,
 		CUSTOM1,
 		CUSTOM2,
 		CUSTOM3,
@@ -29,7 +29,7 @@ namespace kengine{
 
 	class MeshBuffer {
 	public:
-		MeshBufferType type;
+		int layout_index;
 		GPUType data_type = GPUType::FLOAT;
 		GPUBufferHit hit = GPUBufferHit::STATIC_DRAW;
 		bool need_normalized = false;
@@ -45,9 +45,9 @@ namespace kengine{
 		std::vector<GPUBufferPtr> gpu_buffers;
 		int indices_size;
 		GPUType indices_type;
-		GPUObject(PrimitiveType primitive_type,std::map<MeshBufferType, MeshBuffer>& buffers):primitive(primitive_type)
+		GPUObject(PrimitiveType primitive_type, MeshBuffer &indices_buffer, std::vector<MeshBuffer>& buffers):primitive(primitive_type)
 		{
-			create(buffers);
+			create(indices_buffer,buffers);
 		}
 
 		~GPUObject()
@@ -56,33 +56,28 @@ namespace kengine{
 			glDeleteVertexArrays(1, &gpu_id);
 		}
 
-		void create(std::map<MeshBufferType, MeshBuffer>& buffers) {
+		void create(MeshBuffer& indices_buffer, std::vector<MeshBuffer>& buffers) {
 			glGenVertexArrays(1, &gpu_id);
 			glBindVertexArray(gpu_id);
 
-			for (auto item : buffers)
+			GPUBufferPtr gpu_buffer;
+			indices_type = indices_buffer.data_type;
+			indices_size = indices_buffer.buffer->size / (indices_type == GPUType::UNSIGNED_SHORT ? 2 : 4);
+			gpu_buffer = std::make_shared<GPUBuffer>(indices_buffer.buffer, GPUBufferType::ELEMENT_ARRAY_BUFFER, indices_buffer.hit);
+			gpu_buffers.push_back(gpu_buffer);
+
+			for (auto & buffer : buffers)
 			{
-				auto buffer = item.second;
-				auto buffer_type = item.first;
-				GPUBufferPtr gpu_buffer;
-				
-				if(buffer_type== MeshBufferType::INDICES)
-				{
-					indices_type = buffer.data_type;
-					indices_size = buffer.buffer->size / (indices_type == GPUType::UNSIGNED_SHORT ? 2 : 4);
-					gpu_buffer = std::make_shared<GPUBuffer>(buffer.buffer, GPUBufferType::ELEMENT_ARRAY_BUFFER, buffer.hit);
-				}else
-				{
-					gpu_buffer = std::make_shared<GPUBuffer>(buffer.buffer, GPUBufferType::ARRAY_BUFFER, buffer.hit);
-					glEnableVertexAttribArray((int) buffer_type);
-					if (buffer.data_type == GPUType::FLOAT)
-					{
-						glVertexAttribPointer((GLuint)buffer_type, buffer.component_num, (GLenum)buffer.data_type, buffer.need_normalized, 0, (const GLvoid*)0);
-					}
-					else if (buffer.data_type == GPUType::INT) {
-						glVertexAttribIPointer((GLuint)buffer_type, buffer.component_num, (GLenum)buffer.data_type, 0, (const GLvoid*)0);
-					}
+				auto layout_index = buffer.layout_index;
+				GPUBufferPtr gpu_buffer = std::make_shared<GPUBuffer>(buffer.buffer, GPUBufferType::ARRAY_BUFFER, buffer.hit);
+				glEnableVertexAttribArray((int) layout_index);
+				if (buffer.data_type >= GPUType::BYTE && buffer.data_type <= GPUType::INT) {
+					glVertexAttribIPointer((GLuint)layout_index, buffer.component_num, (GLenum)buffer.data_type, 0, (const GLvoid*)0);
 				}
+				else {
+					glVertexAttribPointer((GLuint)layout_index, buffer.component_num, (GLenum)buffer.data_type, buffer.need_normalized, 0, (const GLvoid*)0);
+				}
+				//else if(double) {glVertexAttribLPointer(); }//TODO
 				gpu_buffers.push_back(gpu_buffer);
 			}
 			glBindVertexArray(0);

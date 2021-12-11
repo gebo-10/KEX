@@ -6,7 +6,7 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/quaternion.hpp>
-
+#include <glm/ext.hpp>
 namespace kengine {
 	using Vector2 = glm::highp_vec2;
 	using vec2 = glm::highp_vec2;

@@ -25,6 +25,7 @@ namespace kengine {
 		{
 		}
 		void exec(Scene& scene) {
+			pipeline.common_uniform.time = vec4(Env.time.now, 0, 0, 0);
 			for (auto pass : passes) {
 				pass->exec(scene,pipeline);
 			}

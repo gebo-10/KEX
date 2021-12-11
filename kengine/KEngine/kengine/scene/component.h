@@ -4,6 +4,7 @@ namespace kengine {
 	enum class ComponentType {
 		TRANSFORM,
 		MESH_RENDER,
+		MESH_MORPH,
 		CAMERA,
 	};
 	class GameObject;

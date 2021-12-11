@@ -12,16 +12,21 @@ namespace kengine{
         INT = GL_INT,
         UNSIGNED_INT = GL_UNSIGNED_INT,
         FLOAT = GL_FLOAT,
+        HALF_FLOAT = GL_HALF_FLOAT,
+        FIXED = GL_FIXED,
+        INT_2_10_10_10_REV = GL_INT_2_10_10_10_REV,
+        UNSIGNED_INT_2_10_10_10_REV = GL_UNSIGNED_INT_2_10_10_10_REV,
     };
 
     enum class PrimitiveType {
-        POINTS,
-        LINES,
-        LINE_STRIP,
-        TRIANGLES,
-        TRIANGLE_STRIP,
-        QUADS,
-        QUAD_STRIP,
+        POINTS = GL_POINTS,
+        LINES = GL_LINES,
+        LINE_LOOP= GL_LINE_LOOP,
+        LINE_STRIP = GL_LINE_STRIP,
+        TRIANGLES = GL_TRIANGLES,
+        TRIANGLE_STRIP = GL_TRIANGLE_STRIP,
+        QUADS = GL_QUADS,
+        QUAD_STRIP = GL_QUAD_STRIP,
         PRIMITIVE_MAX,
     };
     enum class ShaderDataType {

@@ -213,8 +213,6 @@
     <ClInclude Include="kengine\geometry\cube.h" />
     <ClInclude Include="kengine\geometry\plane.h" />
     <ClInclude Include="kengine\gpgpu\gpgpu.h" />
-    <ClInclude Include="kengine\gpgpu\mesh_morph.h" />
-    <ClInclude Include="kengine\gpgpu\mesh_skin.h" />
     <ClInclude Include="kengine\interface\IConfig.h" />
     <ClInclude Include="kengine\kengine.h" />
     <ClInclude Include="kengine\kserialize\assetbundle_generated.h" />
@@ -289,7 +287,9 @@
     <ClInclude Include="kengine\scene\component.h" />
     <ClInclude Include="kengine\scene\component\camera.h" />
     <ClInclude Include="kengine\scene\component\light.h" />
+    <ClInclude Include="kengine\scene\component\mesh_morph.h" />
     <ClInclude Include="kengine\scene\component\mesh_render.h" />
+    <ClInclude Include="kengine\scene\component\mesh_skin.h" />
     <ClInclude Include="kengine\scene\component\transform.h" />
     <ClInclude Include="kengine\scene\component\uniform_component.h" />
     <ClInclude Include="kengine\scene\game_object.h" />

@@ -499,12 +499,6 @@
     <ClInclude Include="kengine\gpgpu\gpgpu.h">
       <Filter>kengine\gpgpu</Filter>
     </ClInclude>
-    <ClInclude Include="kengine\gpgpu\mesh_morph.h">
-      <Filter>kengine\scene\component</Filter>
-    </ClInclude>
-    <ClInclude Include="kengine\gpgpu\mesh_skin.h">
-      <Filter>kengine\scene\component</Filter>
-    </ClInclude>
     <ClInclude Include="kengine\util\texture_importer.h">
       <Filter>kengine\utiil</Filter>
     </ClInclude>
@@ -516,6 +510,12 @@
     </ClInclude>
     <ClInclude Include="kengine\util\matsha_importer.h">
       <Filter>kengine\utiil</Filter>
+    </ClInclude>
+    <ClInclude Include="kengine\scene\component\mesh_morph.h">
+      <Filter>kengine\scene\component</Filter>
+    </ClInclude>
+    <ClInclude Include="kengine\scene\component\mesh_skin.h">
+      <Filter>kengine\scene\component</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
