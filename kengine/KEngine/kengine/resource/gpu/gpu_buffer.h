@@ -83,6 +83,10 @@ namespace kengine
             glBindBuffer(type, gpu_id);
         }
 
+        void bind_to_point(int binding_point) {
+            bind();
+            glBindBufferBase((int)type, binding_point, gpu_id);
+        }
         void bind_to_point(GPUBufferType type, int binding_point) {
             bind(type);
             glBindBufferBase((int)type, binding_point, gpu_id);

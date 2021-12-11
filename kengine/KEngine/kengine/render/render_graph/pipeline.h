@@ -59,7 +59,7 @@ namespace kengine {
 				return;
 			}
 			material = m;
-			m->bind();
+			m->attach_uniform();
 		}
 
 		void set_state(PipelineStatePtr state) {

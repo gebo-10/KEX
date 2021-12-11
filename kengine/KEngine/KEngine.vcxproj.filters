@@ -517,6 +517,9 @@
     <ClInclude Include="kengine\scene\component\mesh_skin.h">
       <Filter>kengine\scene\component</Filter>
     </ClInclude>
+    <ClInclude Include="kengine\resource\ram\uniform.h">
+      <Filter>kengine\resource\ram</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="kengine\CMakeLists.txt">

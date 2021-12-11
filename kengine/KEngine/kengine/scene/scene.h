@@ -35,7 +35,7 @@ namespace kengine {
 			comp_mesh->instance_count = 1;
 			comp_mesh->material= Env.assets_database.get_resource<Material>(NAME("Assets/Bundle/per_frag_diffuse.material"));
 
-			TextureUniformData tud;
+			TextureUniform tud;
 			tud.texture = TextureImporter::import("main/texture/miku.png");
 			tud.bind_point = 2;
 			comp_mesh->material->add_uniform(2, ShaderDataType::SAMPLE2D, tud);

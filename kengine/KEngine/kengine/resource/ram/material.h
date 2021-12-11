@@ -4,11 +4,19 @@
 #include <kengine/core/math/kmath.h>
 #include <kengine/resource/ram/texture.h>
 namespace kengine {
-    struct TextureUniformData {
+    struct TextureUniform {
         int bind_point;
         TexturePtr texture;
-        bool operator==(const TextureUniformData& other) {
+        bool operator==(const TextureUniform& other) {
             return bind_point == other.bind_point && texture == other.texture;
+        }
+    };
+
+    struct BufferUniform {
+        int bind_point;
+        GPUBufferPtr gpu_buffer;
+        bool operator==(const BufferUniform& other) {
+            return bind_point == other.bind_point && gpu_buffer == other.gpu_buffer;
         }
     };
     struct Uniform {
@@ -23,7 +31,7 @@ namespace kengine {
             dirt = true;
         }
 
-        void sync(ShaderPtr shader) {
+        void sync() {
             if (!dirt) return;
             dirt = false;
             //if (location == -1) {
@@ -69,7 +77,7 @@ namespace kengine {
                 break;
             }
             case ShaderDataType::SAMPLE2D: {
-                auto data = std::any_cast<TextureUniformData>(value);
+                auto data = std::any_cast<TextureUniform>(value);
                 data.texture->bind(data.bind_point);
                 glUniform1i(location, data.bind_point);
                 break;
@@ -116,7 +124,7 @@ namespace kengine {
                 break;
             }
             case ShaderDataType::SAMPLE2D: {
-                return std::any_cast<TextureUniformData>(value) == std::any_cast<TextureUniformData>(other);
+                return std::any_cast<TextureUniform>(value) == std::any_cast<TextureUniform>(other);
                 break;
             }
             case ShaderDataType::Color: {
@@ -133,7 +141,8 @@ namespace kengine {
     public:
         ShaderPtr shader;
         std::vector<Uniform> uniforms;
-        //std::unordered_map<std::string, Uniform> uniforms;
+        std::vector<TextureUniform> texture_uniforms;
+        std::vector<BufferUniform> buffer_uniforms;
         Material(ShaderPtr pshader)
         {
             shader = pshader;
@@ -143,7 +152,7 @@ namespace kengine {
             unbind();
         }
 
-        void bind() {
+        void attach_uniform() {
             sync_uniform();
         }
 
@@ -154,7 +163,16 @@ namespace kengine {
         void sync_uniform() {
             shader->bind();
             for (Uniform& uniform : uniforms) {
-                uniform.sync(shader);
+                uniform.sync();
+            }
+            for (auto & texture_uniform : texture_uniforms) {
+               // uniform.sync(shader);
+                BindPointManager.bind()
+            }
+
+            for (auto& buffer_uniform : buffer_uniforms) {
+                //uniform.sync(shader);
+                BindPointManager.bind()
             }
         }
 
@@ -164,11 +182,11 @@ namespace kengine {
 
         void set_model_matrix(Matrix M) {
             //int location = glGetUniformLocation(shader->gpu_id, "M");
-            glUniformMatrix4fv(0, 1, false, &M[0][0]);
+            glUniformMatrix4fv(0, 1, false,glm::value_ptr(M));
         }
 
         bool set_uniform(Name name, std::any value) {
-            auto uniform = find_uniform(name);
+            auto uniform = get_uniform(name);
             if (uniform != nullptr) {
                 uniform->set(value);
                 return true;
@@ -180,7 +198,7 @@ namespace kengine {
             uniforms.push_back(Uniform{ true,data_type, location,value });
         }
 
-        Uniform* find_uniform(int location) {
+        Uniform* get_uniform(int location) {
             for (auto & uniform : uniforms) {
                 if (uniform.location == location) {
                     return &uniform;

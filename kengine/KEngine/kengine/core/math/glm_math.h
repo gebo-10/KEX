@@ -27,4 +27,6 @@ namespace kengine {
 	using Quaternion = glm::quat;
 	using Quat = glm::quat;
 	using quat = glm::quat;
+
+	//template<typename T, glm::qualifier Q> using value_ptr = glm::value_ptr;
 }

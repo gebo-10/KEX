@@ -284,6 +284,7 @@
     <ClInclude Include="kengine\resource\ram\script.h" />
     <ClInclude Include="kengine\resource\ram\shader.h" />
     <ClInclude Include="kengine\resource\ram\texture.h" />
+    <ClInclude Include="kengine\resource\ram\uniform.h" />
     <ClInclude Include="kengine\scene\component.h" />
     <ClInclude Include="kengine\scene\component\camera.h" />
     <ClInclude Include="kengine\scene\component\light.h" />

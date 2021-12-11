@@ -53,5 +53,24 @@ namespace kengine{
     };
     //extern std::map < GPUDataType, GPUDataTypeInfo > gpu_data_type_info;
 
-    
+    class TypeInfo {
+    public:
+        static int gpu_type_size(GPUType type) {
+            switch (type)
+            {
+            case kengine::GPUType::BYTE: return sizeof(byte);
+            case kengine::GPUType::UNSIGNED_BYTE: return sizeof(ubyte);
+            case kengine::GPUType::SHORT: return sizeof(int16);
+            case kengine::GPUType::UNSIGNED_SHORT: return sizeof(uint16);
+            case kengine::GPUType::INT: return sizeof(int32);
+            case kengine::GPUType::UNSIGNED_INT:return sizeof(uint32);
+            case kengine::GPUType::FLOAT:return sizeof(float);
+            case kengine::GPUType::HALF_FLOAT:return sizeof(int16);
+            case kengine::GPUType::FIXED:return sizeof(uint32);
+            case kengine::GPUType::INT_2_10_10_10_REV:return sizeof(uint32);
+            case kengine::GPUType::UNSIGNED_INT_2_10_10_10_REV:return sizeof(uint32);
+            default: return 0;
+            }
+        }
+    };
 }

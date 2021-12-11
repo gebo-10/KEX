@@ -4,6 +4,7 @@ namespace kengine{
 	class GPUResource
 	{
 	public:
+		GPUID gpu_id;
 		GPUResource()
 		{
 		}

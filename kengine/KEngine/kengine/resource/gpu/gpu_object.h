@@ -88,7 +88,7 @@ namespace kengine{
 			glBindVertexArray(gpu_id);
 		}
 
-		inline void unbind(void) {
+		inline void unbind() {
 			glBindVertexArray(0);
 		}
 
