@@ -131,22 +131,32 @@ namespace kengine
 				ShaderDataType type = uniform["type"];
 
 				sol::table value=uniform["value"];
+				int value_size = value.size();
 				switch (type)
 				{
-				case ShaderDataType::FLOAT:
-					material->add_uniform(location, type,  (float)value[1] );
+				case ShaderDataType::FLOAT:{
+					auto data = (float)value[1];
+					material->add_uniform(location, type, &data);
 					break;
+				}
 				case ShaderDataType::Color: {
-					auto color = Color((float)value[1], (float)value[2], (float)value[3], (float)value[4]);
-					material->add_uniform(location, type, color);
+					std::vector<float> data;
+					data.clear();
+					data.reserve(value_size);
+					for (int i = 0; i < value_size; i++) {
+						data.push_back((float)value[i + 1]);
+					}
+					material->add_uniform(location, type, data.data(), value_size /4);
 					break;
 				}
 				case ShaderDataType::MAT4: {
-					Matrix mat{ 1.f };
-					//for (int i = 0; i < 16; i++) {
-					//	mat[i][j] = (float)value[i + 1];
-					//}
-					material->add_uniform(location, type, mat);
+					std::vector<float> data;
+					data.clear();
+					data.reserve(value_size);
+					for (int i = 0; i < value_size; i++) {
+						data.push_back((float)value[i + 1]);
+					}
+					material->add_uniform(location, type, data.data(), value_size / 16);
 					break;
 				}
 				default:

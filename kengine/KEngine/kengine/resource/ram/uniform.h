@@ -1,8 +1,82 @@
 #pragma once
-#include "resource.h"
-#include "kengine/resource/ram/shader.h"
+//#include "resource.h"
 #include <kengine/core/math/kmath.h>
-#include <kengine/resource/ram/texture.h>
+namespace kengine {   
+    struct Uniform {
+        bool dirty = true;
+        ShaderDataType type;
+        int location = -1;
+        BufferPtr buffer;
+        Uniform() = delete;
+        Uniform(int location, ShaderDataType type, int count=1) :type(type),location(location) {
+            auto info = TypeInfo::shader_data_type_info(type);
+            int value_size = info.size* count;
+            buffer = std::make_shared<Buffer>(value_size);
+        }
+
+        void set(void* value) {
+            if (value == nullptr) return;
+            if (std::memcmp(buffer->data, value, buffer->size) == 0) return;
+            std::memcpy(buffer->data, value, buffer->size);
+            dirty = true;
+        }
+
+        template<typename T>
+        void set(T& value) {
+            set(glm::value_ptr(value));
+        }
+
+        void set(Color& value) {set(&value); }
+        void set(float& value) {set(&value);}
+        void set(int& value) {set(&value);}
+        void set(uint& value) {set(&value);}
+
+        void sync() {
+            if (!dirty) return;
+            dirty = false;
+            auto info = TypeInfo::shader_data_type_info(type);
+            int count = buffer->size/ info.size;
+            
+            switch (type)
+            {
+            case kengine::ShaderDataType::INT:
+                glUniform1iv(location, count, (GLint*)buffer->data);
+                break;
+            case kengine::ShaderDataType::UINT:
+                glUniform1uiv(location, count, (GLuint*)buffer->data);
+                break;
+            case kengine::ShaderDataType::FLOAT:
+                glUniform1fv(location, count, (GLfloat*)buffer->data);
+                break;
+            case kengine::ShaderDataType::VEC2:
+                glUniform2fv(location, count, (GLfloat*)buffer->data);
+                break;
+            case kengine::ShaderDataType::VEC3:
+                glUniform3fv(location, count, (GLfloat*)buffer->data);
+                break;
+            case kengine::ShaderDataType::VEC4:
+                glUniform4fv(location, count, (GLfloat*)buffer->data);
+                break;
+            case kengine::ShaderDataType::MAT2:
+                glUniformMatrix2fv(location, count, false, (GLfloat*)buffer->data);
+                break;
+            case kengine::ShaderDataType::MAT3:
+                glUniformMatrix3fv(location, count, false,(GLfloat*)buffer->data);
+                break;
+            case kengine::ShaderDataType::MAT4:
+                glUniformMatrix4fv(location, count, false, (GLfloat*)buffer->data);
+                break;
+            case kengine::ShaderDataType::Color:
+                glUniform4fv(location, count, (GLfloat*)buffer->data);
+                break;
+            default:
+                break;
+            }
+        }
+    };
+}
+
+
 //namespace kengine {
 //	class Uniform {
 //    public:
@@ -122,70 +196,3 @@
 //       }
 //   };
 //}
-
-namespace kengine {   
-    struct Uniform {
-        bool dirty = false;
-        GPUType type;
-        int location = -1;
-        BufferPtr buffer;
-        Uniform() = delete;
-        Uniform(int location, GPUType type, int count):type(type),location(location) {
-            int value_size = TypeInfo::gpu_type_size(type) * count;
-            buffer = std::make_shared<Buffer>(value_size);
-        }
-
-        Uniform(int location, ShaderDataType shader_data_type, int count=1) :location(location) {
-            auto info = TypeInfo::shader_data_type_info(shader_data_type);
-            type = info.gpu_type;
-            int value_size = info.size* count;
-            buffer = std::make_shared<Buffer>(value_size);
-        }
-
-        void set(void* value) {
-            if (memcmp(buffer->data, value, buffer->size) == 0) return;
-            std::memcpy(buffer->data, value, buffer->size);
-            dirty = true;
-        }
-
-        template<typename T>
-        void set(T& value) {
-            set(glm::value_ptr(value));
-        }
-
-        void set(Color& value) {set(&value); }
-        void set(float& value) {set(&value);}
-        void set(int& value) {set(&value);}
-        void set(uint& value) {set(&value);}
-
-        void sync() {
-            if (!dirty) return;
-            dirty = false;
-            int count = buffer->size/TypeInfo::gpu_type_size(type);
-            switch (type)
-            {
-            case kengine::GPUType::INT:
-                glUniform1iv(location, count, (GLint*)buffer->data);
-                break;
-            case kengine::GPUType::UNSIGNED_INT:
-                glUniform1uiv(location, count,(GLuint *) buffer->data);
-                break;
-            case kengine::GPUType::FLOAT:{
-                float *f= (GLfloat*)buffer->data;
-                if (count == 4) {
-                    //glUniform4f(location, f[0], f[1], f[2], f[3]);
-                    glUniform4fv(location, 1, f);
-                    //glUniform1fv(location, 4,f);
-                }
-                //glUniform1fv(location, count, (GLfloat*)buffer->data);
-                break;
-            }
-            default:
-                break;
-            }
-        }
-    };
-}
-
-
-

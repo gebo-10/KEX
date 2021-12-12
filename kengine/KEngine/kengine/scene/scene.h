@@ -35,13 +35,12 @@ namespace kengine {
 			comp_mesh->instance_count = 1;
 			comp_mesh->material= Env.assets_database.get_resource<Material>(NAME("Assets/Bundle/per_frag_diffuse.material"));
 
-			TextureUniform tud;
-			tud.texture = TextureImporter::import("main/texture/miku.png");
-			tud.bind_point = 2;
-			//comp_mesh->material->add_uniform(2, ShaderDataType::SAMPLE2D, tud);
+			auto texture = TextureImporter::import("main/texture/miku.png");
+			comp_mesh->material->add_texture(2, texture);
 
-			comp_mesh->mesh = Env.assets_database.get_resource<Mesh>(NAME("Assets/Bundle/box.fbx"));
-			//comp_mesh->mesh = MeshImporter::import("main/mesh/miku.gltf");
+			//comp_mesh->mesh = Env.assets_database.get_resource<Mesh>(NAME("Assets/Bundle/box.fbx"));
+			comp_mesh->mesh = MeshImporter::import("main/mesh/miku.gltf");
+
 			root->add_component(comp_mesh);
 
 			objs.push_back(root);

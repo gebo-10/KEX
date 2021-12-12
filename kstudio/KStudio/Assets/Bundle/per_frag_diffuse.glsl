@@ -5,13 +5,6 @@
 #version 310 es
 precision highp float;
 
-struct TheStruct
-{
-  vec3 first;
-  vec4 second;
-  mat4 third;
-};
-layout(location = 20)uniform TheStruct uniformArrayOfStructs[10];
 
 
 layout(std140, binding = 0) uniform Common
@@ -42,7 +35,6 @@ out vec3 normal_lerped;
 out vec2 texture_coord;
 void main()
 {
-    vec4 a=uniformArrayOfStructs[0].second;
     vec4 word_pos=M*vec4(position,1.0);
     //word_pos.x=word_pos.x+float(gl_InstanceID-3)*3.0;
     gl_Position = PV*word_pos;
@@ -67,8 +59,8 @@ layout(std140, binding = 0) uniform Common
     mat4 P;
     mat4 PV;
 };
-layout (location = 1) uniform vec4 c;
-layout (binding = 0)  uniform sampler2D texture0;
+layout (location = 1) uniform vec4 c[10];
+layout (binding = 1)  uniform sampler2D texture0;
 in vec3 normal_lerped;
 in vec3 frag_position;
 in vec2 texture_coord;
@@ -83,11 +75,12 @@ void main()
     //vec3 lightDir = normalize(lightPos - frag_position);
     vec3 lightDir = normalize(light_dir.xyz);
     float diff = max(dot(norm, -lightDir), 0.0);
-    vec3 diffuse = diff * c.xyz;
-
+    //vec3 diffuse = diff * c[2].xyz;
+    vec3 diffuse = diff * ligth_color.xyz;
     
     //color = vec4(diffuse,1.0f)*0.7+c*0.3;
-    color =texture(texture0,texture_coord)*0.5+ vec4(diffuse*sin(time.x*5.0),1.0f);
+    //color =texture(texture0,texture_coord)*0.5+ vec4(diffuse*sin(time.x*5.0),1.0f);
+    color =texture(texture0,texture_coord)*0.5+ vec4(diffuse,1.0f);
     //color = c;
    
 }

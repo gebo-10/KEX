@@ -36,9 +36,9 @@ namespace kengine{
         VEC2,
         VEC3,
         VEC4,
+        MAT2,
         MAT3,
         MAT4,
-        SAMPLE2D,
         Color,
         MAX,
     };
@@ -84,12 +84,12 @@ namespace kengine{
                 return { GPUType::FLOAT ,sizeof(float) * 3 };
             case kengine::ShaderDataType::VEC4:
                 return { GPUType::FLOAT ,sizeof(float) * 4 };
+            case kengine::ShaderDataType::MAT2:
+                return { GPUType::FLOAT ,sizeof(float) * 4 };
             case kengine::ShaderDataType::MAT3:
                 return { GPUType::FLOAT ,sizeof(float) * 9 };
             case kengine::ShaderDataType::MAT4:
                 return { GPUType::FLOAT ,sizeof(float) * 16 };
-            case kengine::ShaderDataType::SAMPLE2D:
-                return { GPUType::INT ,sizeof(int) };
             case kengine::ShaderDataType::Color:
                 return { GPUType::FLOAT ,sizeof(float) * 4 };
             default:

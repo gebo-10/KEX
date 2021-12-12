@@ -5,9 +5,9 @@ local ShaderDataType ={
 	VEC2=3,
 	VEC3=4,
 	VEC4=5,
-	MAT3=6,
-	MAT4=7,
-	SAMPLE2D=8,
+	MAT2=6,
+	MAT3=7,
+	MAT4=8,
 	Color=9,
 };
 
@@ -19,13 +19,8 @@ return{
 			location = 0,
 			name="M",
 			type=ShaderDataType.MAT4,
-			value={0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,}
+			value={0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}
 		},
-		{
-			location = 1,
-			name="c",
-			type=ShaderDataType.Color,
-			value={0.9,0.5,0.1,1}
-		}
+
 	}
 }

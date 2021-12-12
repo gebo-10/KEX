@@ -23,6 +23,7 @@ namespace kengine {
 	class BindPointManager
 	{
 	public:
+		GPUID shader_bind_point = 0;
 		GPUID vao_bind_point=0;
 		GPUID ubo_bind_point[32] = { 0 };
 		GPUID ssbo_bind_point[32] = { 0 };
@@ -30,6 +31,13 @@ namespace kengine {
 		BindPointManager(){}
 
 		~BindPointManager(){}
+
+		void bind_shader(ShaderPtr shader) {
+			auto id = shader->gpu_shader->program_id;
+			if (id == shader_bind_point) return;
+			shader_bind_point = id;
+			shader->bind();
+		}
 
 		void bind_vao(GPUObjectPtr object) {
 			auto id = object->gpu_id;
