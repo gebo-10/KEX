@@ -5,12 +5,10 @@ local ShaderDataType ={
 	VEC2=3,
 	VEC3=4,
 	VEC4=5,
-	RGB=6,
-	RGBA=7,
-	MAT3=8,
-	MAT4=9,
-	SAMPLE2D=10,
-	Color=11,
+	MAT3=6,
+	MAT4=7,
+	SAMPLE2D=8,
+	Color=9,
 };
 
 return{
@@ -18,10 +16,16 @@ return{
 	name="default",
 	uniforms={
 		{
+			location = 0,
+			name="M",
+			type=ShaderDataType.MAT4,
+			value={0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,}
+		},
+		{
 			location = 1,
 			name="c",
 			type=ShaderDataType.Color,
-			value={0.63,0.13,0.94,1}
+			value={0.9,0.5,0.1,1}
 		}
 	}
 }

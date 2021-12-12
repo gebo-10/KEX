@@ -21,6 +21,29 @@ return{
 			name="radius",
 			type=ShaderDataType.FLOAT,
 			value={2}
+		},
+	},
+	texture={
+		{
+			name="s",
+			bind_point=1,
+			texture="Assets/Bundle/xxx.texture",
+		}
+	},
+	ubo={
+		{
+			name="b1",
+			bind_point=1,
+			type=ShaderDataType.FLOAT,
+			value={2}
+		}
+	},
+	ssbo={
+		{
+			name="b1",
+			bind_point=1,
+			type=ShaderDataType.FLOAT,
+			value={2}
 		}
 	}
 }

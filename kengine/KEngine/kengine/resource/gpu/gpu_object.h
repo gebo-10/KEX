@@ -93,12 +93,12 @@ namespace kengine{
 		}
 
 		inline void draw() {
-			bind();
+			//bind();
 			glDrawElements((GLenum)primitive, indices_size, (GLenum)indices_type, 0);
 		}
 
 		inline void draw_instance(int count) {
-			bind();
+			//bind();
 			glDrawElementsInstanced((GLenum)primitive, indices_size, (GLenum)indices_type, 0, count);
 		}
 	};

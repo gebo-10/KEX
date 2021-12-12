@@ -5,11 +5,12 @@
 #include "../pipeline_state/all_state.h"
 #include "render_target.h"
 #include "common_uniform.h"
-
+#include "bind_point_manager.h"
 namespace kengine {
 	class Pipeline
 	{
 	public:
+		BindPointManager bind_point_manager;
 		CommonUniform common_uniform;
 		PipelineStatePtr states[(int)PipelineStateType::PIPELINE_STATE_TYPE_NUM];
 		RenderTargetPtr target = nullptr;
@@ -37,9 +38,12 @@ namespace kengine {
 			//glEnable(GL_TEXTURE_2D_MULTISAMPLE);
 			//glEnable(GL_BLEND);
 			//glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+			
 			material->set_model_matrix(m);
+			material->attach_uniform(bind_point_manager);
+			mesh->gpucache();
+			bind_point_manager.bind_vao(mesh->gpu_object);
 			mesh->draw(count);
-			//mesh->draw_instance(6);
 		}
 
 		void set_target(RenderTargetPtr t) {
@@ -59,7 +63,7 @@ namespace kengine {
 				return;
 			}
 			material = m;
-			m->attach_uniform();
+			m->bind();
 		}
 
 		void set_state(PipelineStatePtr state) {

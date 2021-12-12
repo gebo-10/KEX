@@ -520,6 +520,9 @@
     <ClInclude Include="kengine\resource\ram\uniform.h">
       <Filter>kengine\resource\ram</Filter>
     </ClInclude>
+    <ClInclude Include="kengine\render\bind_point_manager.h">
+      <Filter>kengine\render\render_graph</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="kengine\CMakeLists.txt">

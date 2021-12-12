@@ -129,23 +129,32 @@ namespace kengine
 				sol::table uniform = item.second;
 				int location=uniform["location"];
 				ShaderDataType type = uniform["type"];
-				material->add_uniform(location, type, uniform_value(type, uniform["value"]));
+
+				sol::table value=uniform["value"];
+				switch (type)
+				{
+				case ShaderDataType::FLOAT:
+					material->add_uniform(location, type,  (float)value[1] );
+					break;
+				case ShaderDataType::Color: {
+					auto color = Color((float)value[1], (float)value[2], (float)value[3], (float)value[4]);
+					material->add_uniform(location, type, color);
+					break;
+				}
+				case ShaderDataType::MAT4: {
+					Matrix mat{ 1.f };
+					//for (int i = 0; i < 16; i++) {
+					//	mat[i][j] = (float)value[i + 1];
+					//}
+					material->add_uniform(location, type, mat);
+					break;
+				}
+				default:
+					break;
+				}
 			}
 		}
 
-		std::any uniform_value(ShaderDataType type, sol::table vec) {
-			switch (type)
-			{
-			case ShaderDataType::FLOAT:
-				return (float)vec[1];
-			case ShaderDataType::Color:{
-				auto color=Color((float)vec[1], (float)vec[2], (float)vec[3], (float)vec[4] );
-				return color;
-			}
-			default:
-				break;
-			}
-		}
 	};
 	typedef shared_ptr<Asset> AssetPtr;
 }

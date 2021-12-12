@@ -22,7 +22,7 @@ namespace kengine {
 		}
 
 		void setup(int x, int y, int z, bool wait=true) {
-			material->attach_uniform();
+			//material->attach_uniform();
 			glDispatchCompute(x,y,z);
 			//glMemoryBarrier(GL_SHADER_IMAGE_ACCESS_BARRIER_BIT);
 			glFinish();

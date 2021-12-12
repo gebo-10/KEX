@@ -8,8 +8,8 @@ namespace kengine {
         string_view vert_source; //todo change stringptr
         string_view frag_source;
         string_view compute_source;
-        void gpucache(bool cover=false) {
-            if (cover) uncache();
+        void gpucache() {
+            if (dirty) uncache();
             if (gpu_shader != nullptr) return;
             gpu_shader = std::make_shared<GPUShader>(vert_source, frag_source, compute_source);
         }

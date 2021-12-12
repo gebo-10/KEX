@@ -224,6 +224,7 @@
     <ClInclude Include="kengine\platform\window\io_window.h" />
     <ClInclude Include="kengine\platform\window\mmap.h" />
     <ClInclude Include="kengine\profiler\profiler.h" />
+    <ClInclude Include="kengine\render\bind_point_manager.h" />
     <ClInclude Include="kengine\render\gpu_type.h" />
     <ClInclude Include="kengine\render\graphics.h" />
     <ClInclude Include="kengine\render\pipeline_state\all_state.h" />

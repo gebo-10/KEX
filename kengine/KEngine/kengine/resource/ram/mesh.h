@@ -93,7 +93,7 @@ namespace kengine {
         }
     
         void draw(int count=1) {
-            gpucache();
+            //gpucache();
             if (count <= 1) {
                 gpu_object->draw();
             }

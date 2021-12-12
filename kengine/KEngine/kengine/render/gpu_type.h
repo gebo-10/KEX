@@ -36,20 +36,16 @@ namespace kengine{
         VEC2,
         VEC3,
         VEC4,
-        RGB,
-        RGBA,
         MAT3,
         MAT4,
         SAMPLE2D,
         Color,
+        MAX,
     };
     struct ShaderDataTypeInfo
     {
-        ShaderDataType type;
-        int num;
+        GPUType gpu_type;
         int size;
-        //GPUDataTypeInfo() {}
-        //GPUDataTypeInfo(GPUDataType data_type, int data_num, int data_size) :type(data_type), num(data_num), size(data_size) {}
     };
     //extern std::map < GPUDataType, GPUDataTypeInfo > gpu_data_type_info;
 
@@ -70,6 +66,35 @@ namespace kengine{
             case kengine::GPUType::INT_2_10_10_10_REV:return sizeof(uint32);
             case kengine::GPUType::UNSIGNED_INT_2_10_10_10_REV:return sizeof(uint32);
             default: return 0;
+            }
+        }
+    
+        static ShaderDataTypeInfo shader_data_type_info(ShaderDataType type) {
+            switch (type)
+            {
+            case kengine::ShaderDataType::INT:
+                return { GPUType::INT ,sizeof(int) };
+            case kengine::ShaderDataType::UINT:
+                return { GPUType::UNSIGNED_INT ,sizeof(int) };
+            case kengine::ShaderDataType::FLOAT:
+                return { GPUType::FLOAT ,sizeof(float) };
+            case kengine::ShaderDataType::VEC2:
+                return { GPUType::FLOAT ,sizeof(float)*2 };
+            case kengine::ShaderDataType::VEC3:
+                return { GPUType::FLOAT ,sizeof(float) * 3 };
+            case kengine::ShaderDataType::VEC4:
+                return { GPUType::FLOAT ,sizeof(float) * 4 };
+            case kengine::ShaderDataType::MAT3:
+                return { GPUType::FLOAT ,sizeof(float) * 9 };
+            case kengine::ShaderDataType::MAT4:
+                return { GPUType::FLOAT ,sizeof(float) * 16 };
+            case kengine::ShaderDataType::SAMPLE2D:
+                return { GPUType::INT ,sizeof(int) };
+            case kengine::ShaderDataType::Color:
+                return { GPUType::FLOAT ,sizeof(float) * 4 };
+            default:
+                error("TypeInfo.shader_data_type_info: UnKnow type");
+                break;
             }
         }
     };
