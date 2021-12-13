@@ -38,7 +38,8 @@ namespace kengine {
 			//glEnable(GL_TEXTURE_2D_MULTISAMPLE);
 			//glEnable(GL_BLEND);
 			//glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-			
+			//glDisable(GL_PRIMITIVE_RESTART_FIXED_INDEX);
+
 			material->set_model_matrix(m);
 			material->attach_uniform(bind_point_manager);
 			mesh->gpucache();

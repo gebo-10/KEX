@@ -151,6 +151,7 @@ namespace kengine {
 		}
 		
 		void bind(int index) {
+			assert(gpu_id != 0);
 			glActiveTexture(GL_TEXTURE0 + index);
 			glBindTexture((GLenum)m_desc.type, gpu_id);
 		}

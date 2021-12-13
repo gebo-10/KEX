@@ -21,15 +21,15 @@ namespace kengine {
             dirty = true;
         }
 
-        template<typename T>
-        void set(T& value) {
-            set(glm::value_ptr(value));
-        }
+        //template<typename T>
+        //void set(T& value) {
+        //    set(glm::value_ptr(value));
+        //}
 
-        void set(Color& value) {set(&value); }
-        void set(float& value) {set(&value);}
-        void set(int& value) {set(&value);}
-        void set(uint& value) {set(&value);}
+        //void set(Color& value) {set(&value); }
+        //void set(float& value) {set(&value);}
+        //void set(int& value) {set(&value);}
+        //void set(uint& value) {set(&value);}
 
         void sync() {
             if (!dirty) return;

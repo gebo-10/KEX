@@ -119,6 +119,9 @@
     <Filter Include="kengine\gpgpu">
       <UniqueIdentifier>{67b66946-e283-4d09-a405-2584f58f3582}</UniqueIdentifier>
     </Filter>
+    <Filter Include="kengine\core\collection">
+      <UniqueIdentifier>{86fe1293-b3c3-4849-8955-5be81dc7f3f5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="window\main.cc">
@@ -508,7 +511,7 @@
     <ClInclude Include="kengine\util\material_importer.h">
       <Filter>kengine\utiil</Filter>
     </ClInclude>
-    <ClInclude Include="kengine\util\matsha_importer.h">
+    <ClInclude Include="kengine\util\mat_glsl_importer.h">
       <Filter>kengine\utiil</Filter>
     </ClInclude>
     <ClInclude Include="kengine\scene\component\mesh_morph.h">
@@ -520,8 +523,11 @@
     <ClInclude Include="kengine\resource\ram\uniform.h">
       <Filter>kengine\resource\ram</Filter>
     </ClInclude>
-    <ClInclude Include="kengine\render\bind_point_manager.h">
+    <ClInclude Include="kengine\render\render_graph\bind_point_manager.h">
       <Filter>kengine\render\render_graph</Filter>
+    </ClInclude>
+    <ClInclude Include="kengine\core\collection\circle_queue.h">
+      <Filter>kengine\core\collection</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

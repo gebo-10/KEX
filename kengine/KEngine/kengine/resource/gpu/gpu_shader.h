@@ -42,6 +42,7 @@ namespace kengine {
 		}
 
 		void bind() {
+			assert(program_id != 0);
 			glUseProgram(program_id);
 		}
 

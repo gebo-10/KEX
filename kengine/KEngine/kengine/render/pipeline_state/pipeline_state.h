@@ -30,9 +30,9 @@ namespace kengine {
 	
 	enum class Face {
 		NONE,
-		FRONT,
-		BACK,
-		FRONT_AND_BACK,
+		FRONT=GL_FRONT,
+		BACK = GL_BACK,
+		FRONT_AND_BACK = GL_FRONT_AND_BACK,
 	};
 
 	enum class CompareFunc {

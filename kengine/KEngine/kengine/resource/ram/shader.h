@@ -5,9 +5,17 @@ namespace kengine {
     class Shader : public Resource{
     public:
         GPUShaderPtr gpu_shader;
-        string_view vert_source; //todo change stringptr
-        string_view frag_source;
-        string_view compute_source;
+        string vert_source; //todo change stringptr
+        string frag_source;
+        string compute_source;
+        Shader() = default;
+        Shader(string & vert, string& frag) {
+            vert_source = std::move(vert);
+            frag_source = std::move(frag);
+        }
+        Shader(string& compute) {
+            compute_source = std::move(compute);
+        }
         void gpucache() {
             if (dirty) uncache();
             if (gpu_shader != nullptr) return;

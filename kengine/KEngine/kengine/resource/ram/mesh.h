@@ -6,7 +6,7 @@ namespace kengine {
     class Mesh: public Resource {
     public:
         GPUObjectPtr gpu_object;
-        PrimitiveType primitive = PrimitiveType::TRIANGLE_STRIP;
+        PrimitiveType primitive = PrimitiveType::TRIANGLES;
         MeshBuffer indices_buffer;
         std::vector<MeshBuffer> mesh_buffers;
 
@@ -22,10 +22,11 @@ namespace kengine {
         }
 
         inline void add_buffer(MeshBuffer&& mbuffer) {
-            mesh_buffers.push_back(std::move( mbuffer) );
+            mesh_buffers.push_back( mbuffer );
         }
 
-        void set_indices(BufferPtr buffer,GPUType data_type= GPUType::UNSIGNED_SHORT) {
+        void set_indices(PrimitiveType primitive_type, BufferPtr buffer, GPUType data_type = GPUType::UNSIGNED_SHORT) {
+            primitive = primitive_type;
             MeshBuffer mbuf;
             mbuf.layout_index = MeshBufferType::INDICES;
             mbuf.data_type = data_type;

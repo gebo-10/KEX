@@ -17,11 +17,6 @@ return{
 	shader="Assets/Bundle/default.glsl",
 	name="default",
 	uniforms={
-		{
-			location = 1,
-			name="c",
-			type=ShaderDataType.Color,
-			value={0.63,0.13,0.94,1}
-		}
+
 	}
 }

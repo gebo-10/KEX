@@ -60,11 +60,10 @@ namespace kengine{
 			glGenVertexArrays(1, &gpu_id);
 			glBindVertexArray(gpu_id);
 
-			GPUBufferPtr gpu_buffer;
 			indices_type = indices_buffer.data_type;
 			indices_size = indices_buffer.buffer->size / (indices_type == GPUType::UNSIGNED_SHORT ? 2 : 4);
-			gpu_buffer = std::make_shared<GPUBuffer>(indices_buffer.buffer, GPUBufferType::ELEMENT_ARRAY_BUFFER, indices_buffer.hit);
-			gpu_buffers.push_back(gpu_buffer);
+			GPUBufferPtr gpu_indices_buffer = std::make_shared<GPUBuffer>(indices_buffer.buffer, GPUBufferType::ELEMENT_ARRAY_BUFFER, indices_buffer.hit);
+			gpu_buffers.push_back(gpu_indices_buffer);
 
 			for (auto & buffer : buffers)
 			{

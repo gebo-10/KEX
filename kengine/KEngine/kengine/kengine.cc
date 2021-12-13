@@ -4,19 +4,12 @@
 #include "profiler/profiler.h"
 #include "core/io/kengine_io.h"
 #include "gpgpu/gpgpu.h"
-//#define ZMQ_STATIC
-//#define ZMQ_USE_TWEETNACL
-//#include <zmq.h>
+
 
 //#include "rapidjson/document.h"
-//
 //using namespace rapidjson;
 using namespace kengine;
 void KEngine::init(int width, int height) {
-    //void* context = zmq_ctx_new();
-    //void* responder = zmq_socket(context, ZMQ_REP);
-    //int rc = zmq_bind(responder, "tcp://*:5555");
-    //assert(rc == 0);
 
     //Document document;
     //document.Parse("{}");

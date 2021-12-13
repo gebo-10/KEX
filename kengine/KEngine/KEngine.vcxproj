@@ -193,6 +193,7 @@
     <ClInclude Include="kengine\core\base\ctree.h" />
     <ClInclude Include="kengine\core\base\link_object_alloc.h" />
     <ClInclude Include="kengine\core\base\object_alloc.h" />
+    <ClInclude Include="kengine\core\collection\circle_queue.h" />
     <ClInclude Include="kengine\core\math\glm_math.h" />
     <ClInclude Include="kengine\core\math\kmath.h" />
     <ClInclude Include="kengine\core\math\rect.h" />
@@ -224,7 +225,6 @@
     <ClInclude Include="kengine\platform\window\io_window.h" />
     <ClInclude Include="kengine\platform\window\mmap.h" />
     <ClInclude Include="kengine\profiler\profiler.h" />
-    <ClInclude Include="kengine\render\bind_point_manager.h" />
     <ClInclude Include="kengine\render\gpu_type.h" />
     <ClInclude Include="kengine\render\graphics.h" />
     <ClInclude Include="kengine\render\pipeline_state\all_state.h" />
@@ -239,6 +239,7 @@
     <ClInclude Include="kengine\render\render.h" />
     <ClInclude Include="kengine\render\graphics_api.h" />
     <ClInclude Include="kengine\render\render_graph\attachment.h" />
+    <ClInclude Include="kengine\render\render_graph\bind_point_manager.h" />
     <ClInclude Include="kengine\render\render_graph\common_uniform.h" />
     <ClInclude Include="kengine\render\render_graph\object_filter.h" />
     <ClInclude Include="kengine\render\render_graph\pass\blit_pass.h" />
@@ -310,7 +311,7 @@
     <ClInclude Include="kengine\system\render\render_system.h" />
     <ClInclude Include="kengine\system\system.h" />
     <ClInclude Include="kengine\util\material_importer.h" />
-    <ClInclude Include="kengine\util\matsha_importer.h" />
+    <ClInclude Include="kengine\util\mat_glsl_importer.h" />
     <ClInclude Include="kengine\util\mesh_importer.h" />
     <ClInclude Include="kengine\util\shader_importer.h" />
     <ClInclude Include="kengine\util\texture_importer.h" />

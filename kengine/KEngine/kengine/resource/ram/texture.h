@@ -14,17 +14,20 @@ namespace kengine {
 			buffers.clear();
 		}
 		void gpucache() {
-			gpu_texture = std::make_shared<GPUTexture>(desc, buffers);
+			if (gpu_texture == nullptr || dirty) {
+				gpu_texture = std::make_shared<GPUTexture>(desc, buffers);
+				dirty = false;
+			}
 		}
 		void uncache() {
 			gpu_texture = nullptr;
 		}
-		void bind(int bind_pont) {
-			if (gpu_texture == nullptr) {
-				gpucache();
-			}
-			gpu_texture->bind(bind_pont);
-		}
+		//void bind(int bind_pont) {
+		//	if (gpu_texture == nullptr) {
+		//		gpucache();
+		//	}
+		//	gpu_texture->bind(bind_pont);
+		//}
 	};
 	typedef shared_ptr<Texture> TexturePtr;
 }

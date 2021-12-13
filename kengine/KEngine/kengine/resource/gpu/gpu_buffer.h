@@ -52,6 +52,7 @@ namespace kengine
             glBindBuffer(type, gpu_id);
             glBufferData(type, buffer->size, buffer->data, memery_hint);
         }
+
         GPUBuffer(uint32 buffer_size, GPUBufferType buffer_type, GPUBufferHit buffer_hint) :
             size(buffer_size), type((int)buffer_type),
             memery_hint((int)buffer_hint) {
@@ -77,18 +78,19 @@ namespace kengine
         }
 
         void bind(GPUBufferType new_type=GPUBufferType::UNKNOW_TYPE) {
+            assert(gpu_id != 0);
             if (new_type != GPUBufferType::UNKNOW_TYPE) {
                 type = (int)new_type;
             }
             glBindBuffer(type, gpu_id);
         }
 
-        void bind_to_point(int binding_point) {
-            bind();
-            glBindBufferBase((int)type, binding_point, gpu_id);
-        }
-        void bind_to_point(GPUBufferType type, int binding_point) {
-            bind(type);
+        void bind_to_point(int binding_point, GPUBufferType new_type = GPUBufferType::UNKNOW_TYPE) {
+            assert(gpu_id != 0);
+            if (new_type != GPUBufferType::UNKNOW_TYPE) {
+                type = (int)new_type;
+            }
+            bind(new_type);
             glBindBufferBase((int)type, binding_point, gpu_id);
         }
 

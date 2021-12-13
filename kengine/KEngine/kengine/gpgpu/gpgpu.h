@@ -14,7 +14,7 @@ namespace kengine {
 		{
 		}
 		void attach_buffer(int bind_point, GPUBufferPtr buffer) {
-			buffer->bind_to_point(GPUBufferType::SHADER_STORAGE_BUFFER, bind_point);
+			buffer->bind_to_point(bind_point, GPUBufferType::SHADER_STORAGE_BUFFER);
 		}
 
 		void set_material(MaterialPtr cs_material) {

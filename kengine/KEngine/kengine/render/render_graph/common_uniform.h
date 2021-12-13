@@ -16,7 +16,7 @@ namespace kengine {
 		void sync() {
 			if (uniform_buffer == nullptr) {
 				uniform_buffer = std::make_shared<GPUBuffer>(sizeof(CommonUniform) - sizeof(GPUBufferPtr), GPUBufferType::UNIFORM_BUFFER, GPUBufferHit::DYNAMIC_DRAW);
-				uniform_buffer->bind_to_point(GPUBufferType::UNIFORM_BUFFER, 0);
+				uniform_buffer->bind_to_point(0);
 				uniform_buffer->map(GPUBufferHit::WRITE_ONLY);
 			}
 			memcpy(uniform_buffer->map_data, this, sizeof(CommonUniform) - sizeof(GPUBufferPtr));

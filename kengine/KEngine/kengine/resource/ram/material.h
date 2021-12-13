@@ -9,9 +9,6 @@ namespace kengine {
     struct TextureUniform {
         int bind_point;
         TexturePtr texture;
-        //bool operator==(const TextureUniform& other) {
-        //    return bind_point == other.bind_point && texture == other.texture;
-        //}
     };
 
     struct BufferUniform {
@@ -23,7 +20,7 @@ namespace kengine {
     public:
         ShaderPtr shader;
         std::vector<Uniform> uniforms;
-        std::vector<TextureUniform> texture_uniforms;
+        std::vector<TextureUniform> texture_uniforms;//TODO 使用数组
         std::vector<BufferUniform> buffer_uniforms;
         Material(ShaderPtr pshader)
         {
@@ -69,18 +66,18 @@ namespace kengine {
             //int location = glGetUniformLocation(shader->gpu_id, "M");
             //glUniformMatrix4fv(0, 1, false,glm::value_ptr(M));
             //glUniform1fv(0,16,(float *) &M);
-            set_uniform(0, M);
+            set_uniform(0, glm::value_ptr(M));
         }
 
-        template <typename T>
-        bool set_uniform(Name name, T value) {
-            auto uniform = get_uniform(name);
-            if (uniform != nullptr) {
-                uniform->set(value);
-                return true;
-            }
-            return false;
-        }
+        //template <typename T>
+        //bool set_uniform(Name name, T value) {
+        //    auto uniform = get_uniform(name);
+        //    if (uniform != nullptr) {
+        //        uniform->set(value);
+        //        return true;
+        //    }
+        //    return false;
+        //}
 
         bool set_uniform(Name name, void * value) {
             auto uniform = get_uniform(name);

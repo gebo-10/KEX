@@ -4,6 +4,7 @@
 #include "game_object.h"
 #include <kengine/util/mesh_importer.h>
 #include <kengine/util/texture_importer.h>
+#include <kengine/util/mat_glsl_importer.h>
 namespace kengine {
 	class RenderGraph;
 	typedef shared_ptr< RenderGraph> RenderGraphPtr;
@@ -26,6 +27,7 @@ namespace kengine {
 		TransformPtr comp_transform;
 		int rotate=0;
 		void init() {
+			
 			root = std::make_shared<GameObject>();
 
 			comp_transform = std::make_shared<Transform>();
@@ -33,10 +35,10 @@ namespace kengine {
 
 			auto comp_mesh = std::make_shared<MeshRender>();
 			comp_mesh->instance_count = 1;
-			comp_mesh->material= Env.assets_database.get_resource<Material>(NAME("Assets/Bundle/per_frag_diffuse.material"));
-
+			//comp_mesh->material= Env.assets_database.get_resource<Material>(NAME("Assets/Bundle/per_frag_diffuse.material"));
+			comp_mesh->material = MatGLSLImport::import("main/material/default.gm");
 			auto texture = TextureImporter::import("main/texture/miku.png");
-			comp_mesh->material->add_texture(2, texture);
+			comp_mesh->material->add_texture(1, texture);
 
 			//comp_mesh->mesh = Env.assets_database.get_resource<Mesh>(NAME("Assets/Bundle/box.fbx"));
 			comp_mesh->mesh = MeshImporter::import("main/mesh/miku.gltf");

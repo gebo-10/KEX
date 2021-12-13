@@ -23,7 +23,7 @@ namespace kengine {
 			scene = importer.ReadFile(pFile,
 				aiProcess_CalcTangentSpace |
 				aiProcess_Triangulate |
-				aiProcess_JoinIdenticalVertices |
+				//aiProcess_JoinIdenticalVertices |
 				aiProcess_SortByPType |
 				aiProcess_GenSmoothNormals
 			);
@@ -38,7 +38,7 @@ namespace kengine {
 			//info("mesh num: {}", scene->mNumMeshes);
 			//info("bone num: {}", ai_mesh->mNumBones);
 			//ai_mesh->mAnimMeshes
-
+			
 
 			auto mesh = std::make_shared<Mesh>();
 			load_position(ai_mesh, mesh);
@@ -49,7 +49,6 @@ namespace kengine {
 			}else{
 				load_indices_large(ai_mesh, mesh);
 			}
-			
 
 			importer.FreeScene();
 			info("MeshImporter: import success : {}", pFile);
@@ -107,7 +106,7 @@ namespace kengine {
 			info("  MeshImporter: indices count{}", index.size());
 			BufferPtr buf = std::make_shared<Buffer>(index.size() *  sizeof(unsigned short));
 			std::memcpy(buf->data, index.data(), buf->size);
-			mesh->set_indices(buf);
+			mesh->set_indices((PrimitiveType)ai_mesh->mPrimitiveTypes,buf);
 		}
 
 		static void load_indices_large(aiMesh* ai_mesh, MeshPtr mesh)
@@ -124,7 +123,7 @@ namespace kengine {
 			info("  MeshImporter: indices count{}", index.size());
 			BufferPtr buf = std::make_shared<Buffer>(index.size() * sizeof(unsigned int));
 			std::memcpy(buf->data, index.data(), buf->size);
-			mesh->set_indices(buf,GPUType::UNSIGNED_INT);
+			mesh->set_indices((PrimitiveType)ai_mesh->mPrimitiveTypes,buf,GPUType::UNSIGNED_INT);
 		}
 		
 	};
