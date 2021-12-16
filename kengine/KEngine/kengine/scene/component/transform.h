@@ -28,10 +28,11 @@ namespace kengine {
 				mat_local = glm::translate(identity, t) * glm::mat4_cast(Quaternion(radians(r))) * glm::scale(identity, s);
 				local_dirty = false;
 			}
+			
 			return;
 		}
 
-		mat4 matrix() {
+		mat4 &matrix() {
 			update_local_matrix();
 			return mat_local;
 		}

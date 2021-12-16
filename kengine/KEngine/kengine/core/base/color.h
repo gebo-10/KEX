@@ -184,7 +184,7 @@ namespace kengine {
 	#define color_thistle  			Color(0.85f, 0.75f, 0.85f)
 	#define color_tomato  			Color(1.00f, 0.39f, 0.28f)
 	#define color_turquoise  		Color(0.25f, 0.88f, 0.82f)
-	#define color_transparent  		Color(1.00f, 1.00f, 1.00f, 0.00f)
+	#define color_transparent  		Color(0.00f, 0.00f, 0.00f, 0.00f)
 	#define color_violet  			Color(0.93f, 0.51f, 0.93f)
 	#define color_wheat  			Color(0.96f, 0.87f, 0.70f)
 	#define color_white  			Color(1.00f, 1.00f, 1.00f)

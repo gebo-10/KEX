@@ -67,11 +67,12 @@ namespace kengine {
 			case kengine::TextureType::TEXTURE_2D:{
 				GPUID& old = texture_bind_point[point].texture_2d;
 				if (id == old) {
+					//texture->bind(point);
 					return;
 				}
 				else {
 					old = id;
-					texture->bind(id);
+					texture->bind(point);
 				}
 				break;
 			}

@@ -1,6 +1,6 @@
 #pragma once
 #include "scene.h"
-#include "../render/render.h"
+#include <kengine/util/render_graph_importer.h>
 namespace kengine {
 	class SceneManager
 	{
@@ -14,10 +14,12 @@ namespace kengine {
 		{
 		}
 
-		void init(Render & render) {
+		void init() {
 			scene = std::make_shared<Scene>();
-			scene->render_graph = render.default_rg();
+			//scene->render_graph = render.default_rg();
+			scene->render_graph = RenderGraphImporter::import("default");
 			scene->init();
+			
 		}
 		
 		void load_scene(PathID id) {}

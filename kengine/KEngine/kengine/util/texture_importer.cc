@@ -10,15 +10,15 @@ namespace kengine {
 		stbi_set_flip_vertically_on_load(true);
 		unsigned char* data = stbi_load_from_memory((ubyte*)tex.data(), tex.size(), &w, &h, &n, 0);
 		int size = w * h * n;
-		auto t = std::make_shared<Texture>();
-		t->buffers.push_back(std::make_shared<Buffer>(data, size, true));
 
-		TextureDesc &desc=t->desc;
+		TextureDesc desc;
 		desc.width = w;
 		desc.height = h;
 		desc.data_format = n == 3 ? TextureDataFormat::RGB: TextureDataFormat::RGBA;
 		desc.data_type = TextureDataType::UNSIGNED_BYTE;
-		desc.internal_format = TextureInternalFormat::RGBA;
+		desc.internal_format = TextureInternalFormat::RGBA8;
+		auto t = std::make_shared<Texture>(desc);
+		t->add_data(std::make_shared<Buffer>(data, size, true));
 		return t;
 	}
 }

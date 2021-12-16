@@ -4,6 +4,9 @@
 #include "pass/state_pass.h"
 #include "pass/draw_pass.h"
 #include "pass/fence_pass.h"
+#include "pass/copy_framebuffer_pass.h"
+#include "pass/blit_pass.h"
+
 
 #include "render_target.h"
 namespace kengine {
@@ -25,10 +28,13 @@ namespace kengine {
 		{
 		}
 		void exec(Scene& scene) {
+			CheckGLError
 			pipeline.common_uniform.time = vec4(Env.time.now, 0, 0, 0);
 			for (auto pass : passes) {
 				pass->exec(scene,pipeline);
 			}
+			pipeline.set_target(RenderTarget::ScreenTarget());
+			CheckGLError
 		}
 	};
 	typedef shared_ptr<RenderGraph> RenderGraphPtr;

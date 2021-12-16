@@ -50,6 +50,9 @@ namespace kengine {
 				load_indices_large(ai_mesh, mesh);
 			}
 
+			/*auto am=ai_mesh->mAnimMeshes[0];
+			am->*/
+
 			importer.FreeScene();
 			info("MeshImporter: import success : {}", pFile);
 			return mesh;

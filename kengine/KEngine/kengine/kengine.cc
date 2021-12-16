@@ -71,7 +71,7 @@ void KEngine::init(int width, int height) {
     glStencilMask(0xFFFFFFFF);*/
 
     render.init();
-    scene_manager.init(render);
+    scene_manager.init();
     on_view_size(width, height);
 }
 
@@ -80,7 +80,7 @@ void KEngine::update()
     //static int a = 0;
     //a++;
     Env.update();
-    info("fps:{}", Env.time.fps());
+    //info("fps:{}", Env.time.fps());
 
     //Env.profiler.fps_limit();
     //info("hello{}",a);

@@ -1,5 +1,4 @@
 #pragma once
-
 #include "kengine/resource/gpu/gpu_object.h"
 #include"resource.h"
 namespace kengine {

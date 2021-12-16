@@ -42,10 +42,10 @@ namespace kengine {
 	enum class TextureInternalFormat {
 		R8 = GL_R8, R8I, R8UI, R8_SNORM, R16I = GL_R16I, R16UI, R16F = GL_R16F, R32I = GL_R32I,
 		R32UI, R32F = GL_R32F, RG8, RG8I, RG8UI, RG8_SNORM, RG16I, RG16UI, RG16F,
-		RG32I = GL_RG32I, RG32UI, RG32F = GL_RG32F, RGB = GL_RGB, RGB5_A1, RGB565, RGB8, RGB8I,
+		RG32I = GL_RG32I, RG32UI, RG32F = GL_RG32F, RGB = GL_RGB, RGB5_A1 = GL_RGB5_A1 , RGB565, RGB8, RGB8I,
 		RGB8UI, RGB8_SNORM, RGB9_E5, RGB10_A2, RGB10_A2UI, RGB16I,
 		RGB16UI, RGB16F=GL_RGB16F, RGB32I, RGB32UI, RGB32F = GL_RGB32F, SRGB8, RGBA = GL_RGBA, RGBA4,
-		RGBA8, RGBA8I, RGBA8UI, RGBA8_SNORM, RGBA16I, RGBA16UI,
+		RGBA8=GL_RGBA8, RGBA8I, RGBA8UI, RGBA8_SNORM, RGBA16I, RGBA16UI,
 		RGBA16F = GL_RGBA16F, RGBA32I = GL_RGBA32I, RGBA32UI = GL_RGBA32UI, RGBA32F = GL_RGBA32F, SRGB8_ALPHA8,
 		R11F_G11F_B10F, 
 		DEPTH_COMPONENT16 = GL_DEPTH_COMPONENT16,
@@ -93,11 +93,11 @@ namespace kengine {
 	
 	enum class CubeMapFace {
 		TEXTURE_CUBE_MAP_POSITIVE_X = GL_TEXTURE_CUBE_MAP_POSITIVE_X,
-		TEXTURE_CUBE_MAP_POSITIVE_Y,
-		TEXTURE_CUBE_MAP_POSITIVE_Z,
-		TEXTURE_CUBE_MAP_NEGATIVE_X,
-		TEXTURE_CUBE_MAP_NEGATIVE_Y,
-		TEXTURE_CUBE_MAP_NEGATIVE_Z,
+		TEXTURE_CUBE_MAP_POSITIVE_Y = GL_TEXTURE_CUBE_MAP_POSITIVE_Y,
+		TEXTURE_CUBE_MAP_POSITIVE_Z = GL_TEXTURE_CUBE_MAP_POSITIVE_Z,
+		TEXTURE_CUBE_MAP_NEGATIVE_X = GL_TEXTURE_CUBE_MAP_NEGATIVE_X,
+		TEXTURE_CUBE_MAP_NEGATIVE_Y = GL_TEXTURE_CUBE_MAP_NEGATIVE_Y,
+		TEXTURE_CUBE_MAP_NEGATIVE_Z = GL_TEXTURE_CUBE_MAP_NEGATIVE_Z,
 	};
 	//enum class CompressedTextureFormat {}
 
@@ -117,7 +117,9 @@ namespace kengine {
 		bool compressed = false;
 		int width=64;
 		int height=64;
+		int depth = 1;
 		int board = 0;
+		int samples = 1;
 	};
 
 	class GPUTexture
@@ -126,13 +128,35 @@ namespace kengine {
 		TextureDesc m_desc;
 		GPUID gpu_id = -1;
 		GPUTexture(const TextureDesc &desc, const std::vector<BufferPtr>& buffers) {
+			assert(buffers.size() != 0);
+			CheckGLError
 			m_desc = desc;
-			glEnable((GLenum)desc.type);
+			//glEnable((GLenum)desc.type);
 			glGenTextures(1, &gpu_id);
 			glBindTexture((GLenum)desc.type, gpu_id);
 			texture_data(desc, buffers);
 			param(desc);
+			CheckGLError
+		}
 
+		GPUTexture(const TextureDesc& desc) {
+			m_desc = desc;
+			CheckGLError
+			//glEnable((GLenum)desc.type);
+			glGenTextures(1, &gpu_id);
+			glBindTexture((GLenum)desc.type, gpu_id);
+			if (desc.type == TextureType::TEXTURE_2D_MULTISAMPLE) {
+				//glTexStorage2DMultisample((GLenum)desc.type, desc.samples, (GLenum)desc.internal_format, desc.width, desc.height,false);//TODO boolean fixedsamplelocations
+			}
+			else if(desc.type == TextureType::TEXTURE_3D || desc.type == TextureType::TEXTURE_2D_ARRAY) {
+				//glTexStorage3D((GLenum)desc.type, 0, (GLenum)desc.internal_format, desc.width, desc.height, desc.depth);
+			}
+			else {
+				//glTexStorage2D((GLenum)desc.type, 0, (GLenum)desc.internal_format, desc.width, desc.height);
+				glTexImage2D((GLenum)desc.type, 0, (GLenum)desc.internal_format, desc.width, desc.height, desc.board, (GLenum)desc.data_format, (GLenum)desc.data_type, 0);
+			}
+			param(desc);
+			CheckGLError
 		}
 
 		~GPUTexture() {
@@ -178,11 +202,7 @@ namespace kengine {
 					glCompressedTexImage2D((GLenum)desc.type, 0, (GLenum)desc.internal_format, desc.width, desc.height, desc.board, buffers[0]->size, buffers[0]->data);
 				}
 				else {
-					if(buffers.size()==0){
-						glTexImage2D((GLenum)desc.type, 0, (GLenum)desc.internal_format, desc.width, desc.height, desc.board, (GLenum)desc.data_format, (GLenum)desc.data_type, nullptr);
-					}else{
-						glTexImage2D((GLenum)desc.type, 0, (GLenum)desc.internal_format, desc.width, desc.height, desc.board, (GLenum)desc.data_format, (GLenum)desc.data_type, buffers[0]->data);
-					}
+					glTexImage2D((GLenum)desc.type, 0, (GLenum)desc.internal_format, desc.width, desc.height, desc.board, (GLenum)desc.data_format, (GLenum)desc.data_type, buffers[0]->data);
 				}
 				break;
 			case kengine::TextureType::TEXTURE_CUBE_MAP:

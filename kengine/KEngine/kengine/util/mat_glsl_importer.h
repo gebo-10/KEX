@@ -8,14 +8,6 @@ namespace kengine {
 	class MatGLSLImport
 	{
 	public:
-		MatGLSLImport()
-		{
-		}
-
-		~MatGLSLImport()
-		{
-		}
-
 		static MaterialPtr import(const string & filename) {
 			sol::state lua;
 			lua.open_libraries(sol::lib::base);
@@ -71,7 +63,27 @@ namespace kengine {
 					material->add_uniform(location, type, &data);
 					break;
 				}
+				case ShaderDataType::VEC2: {
+					std::vector<float> data;
+					data.clear();
+					data.reserve(value_size); //TODO
+					for (int i = 0; i < value_size; i++) {
+						data.push_back((float)value[i + 1]);
+					}
+					material->add_uniform(location, type, data.data(), value_size / 2);
+					break;
+				}
 				case ShaderDataType::Color: {
+					std::vector<float> data;
+					data.clear();
+					data.reserve(value_size);
+					for (int i = 0; i < value_size; i++) {
+						data.push_back((float)value[i + 1]);
+					}
+					material->add_uniform(location, type, data.data(), value_size / 4);
+					break;
+				}
+				case ShaderDataType::VEC4: {
 					std::vector<float> data;
 					data.clear();
 					data.reserve(value_size);

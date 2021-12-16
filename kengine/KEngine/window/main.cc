@@ -49,6 +49,8 @@ int main()
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
     glfwWindowHint(GLFW_SAMPLES, 4);
     
+    //glfwWindowHint(GLFW_TRANSPARENT_FRAMEBUFFER, GLFW_TRUE);
+    //glfwWindowHint(GLFW_MOUSE_PASSTHROUGH, GLFW_TRUE);
     /* Create a windowed mode window and its OpenGL context */
     window = glfwCreateWindow(1024, 1024, "Hello World", NULL, NULL);
     if (!window)
@@ -57,7 +59,7 @@ int main()
         return -1;
     }
     //glfwSetWindowAttrib(window, GLFW_DECORATED, GLFW_FALSE);
-    /* Make the window's context current */
+    
     glfwMakeContextCurrent(window);
 
     GLenum result = glewInit();

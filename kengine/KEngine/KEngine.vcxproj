@@ -183,9 +183,9 @@
     <ClCompile Include="kengine\external\mio\single_include\mio\mio.cc" />
     <ClCompile Include="kengine\kengine.cc" />
     <ClCompile Include="kengine\platform\window\platform_window.cc" />
+    <ClCompile Include="kengine\scene\component\camera.cc" />
     <ClCompile Include="kengine\support\screen.cc" />
     <ClCompile Include="kengine\util\texture_importer.cc" />
-    <ClCompile Include="kengine\util\texture_importer.cpp" />
     <ClCompile Include="window\main.cc" />
   </ItemGroup>
   <ItemGroup>
@@ -197,6 +197,7 @@
     <ClInclude Include="kengine\core\math\glm_math.h" />
     <ClInclude Include="kengine\core\math\kmath.h" />
     <ClInclude Include="kengine\core\math\rect.h" />
+    <ClInclude Include="kengine\core\math\region.h" />
     <ClInclude Include="kengine\core\math\srt.h" />
     <ClInclude Include="kengine\environment.h" />
     <ClInclude Include="kengine\core\base\base.h" />
@@ -212,6 +213,7 @@
     <ClInclude Include="kengine\core\io\mmap.h" />
     <ClInclude Include="kengine\driver\graphics\opengl\driver_opengl.h" />
     <ClInclude Include="kengine\geometry\cube.h" />
+    <ClInclude Include="kengine\geometry\geometry.h" />
     <ClInclude Include="kengine\geometry\plane.h" />
     <ClInclude Include="kengine\gpgpu\gpgpu.h" />
     <ClInclude Include="kengine\interface\IConfig.h" />
@@ -245,6 +247,7 @@
     <ClInclude Include="kengine\render\render_graph\pass\blit_pass.h" />
     <ClInclude Include="kengine\render\render_graph\pass\camera_pass.h" />
     <ClInclude Include="kengine\render\render_graph\pass\clear_pass.h" />
+    <ClInclude Include="kengine\render\render_graph\pass\copy_framebuffer_pass.h" />
     <ClInclude Include="kengine\render\render_graph\pass\draw_pass.h" />
     <ClInclude Include="kengine\render\render_graph\pass\fence_pass.h" />
     <ClInclude Include="kengine\render\render_graph\pass\opacity_pass.h" />
@@ -271,6 +274,8 @@
     <ClInclude Include="kengine\resource\asset\loader\resource_loader.h" />
     <ClInclude Include="kengine\resource\asset\parser\asset_parser.h" />
     <ClInclude Include="kengine\resource\asset\parser\kbf_parser.h" />
+    <ClInclude Include="kengine\resource\buildin\box_mesh.h" />
+    <ClInclude Include="kengine\resource\buildin\plane_mesh.h" />
     <ClInclude Include="kengine\resource\gpu\gpu_buffer.h" />
     <ClInclude Include="kengine\resource\gpu\gpu_texture.h" />
     <ClInclude Include="kengine\resource\gpu\gpu_object.h" />
@@ -310,9 +315,12 @@
     <ClInclude Include="kengine\system\monitor\test_processor.h" />
     <ClInclude Include="kengine\system\render\render_system.h" />
     <ClInclude Include="kengine\system\system.h" />
+    <ClInclude Include="kengine\util\kglut.h" />
     <ClInclude Include="kengine\util\material_importer.h" />
     <ClInclude Include="kengine\util\mat_glsl_importer.h" />
     <ClInclude Include="kengine\util\mesh_importer.h" />
+    <ClInclude Include="kengine\util\render_graph_importer.h" />
+    <ClInclude Include="kengine\util\scene_importer.h" />
     <ClInclude Include="kengine\util\shader_importer.h" />
     <ClInclude Include="kengine\util\texture_importer.h" />
     <ClInclude Include="window\test_app.h" />

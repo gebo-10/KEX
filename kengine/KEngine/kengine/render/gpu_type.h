@@ -3,6 +3,7 @@
 //#include<map>
 #include <kengine/core/base/base.h>
 #include "graphics_api.h"
+#include <kengine/util/kglut.h>
 namespace kengine{
     enum class GPUType {
         BYTE = GL_BYTE,

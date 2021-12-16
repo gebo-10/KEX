@@ -17,7 +17,7 @@ namespace kengine{
 		}
 
 		bool operator !=(RectT& c) {
-			return this->x != c.x || this->y != c.y || this->w != c.w || this->h == c.h;
+			return this->x != c.x || this->y != c.y || this->w != c.w || this->h != c.h;
 		}
 
 		//void set(ivec2 pos, ivec2 size) {

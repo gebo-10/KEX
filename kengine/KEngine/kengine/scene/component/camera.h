@@ -1,5 +1,7 @@
 #pragma once
 #include"../component.h"
+#include "transform.h"
+#include <kengine/environment.h>
 namespace kengine {
 	enum class CameraType {
 		ORTHO,
@@ -88,6 +90,13 @@ namespace kengine {
 		void set_clear_color(Color color) {
 			clear_color = color;
 		}
+
+		Color& get_clear_color() {
+			return clear_color;
+		}
+
+		mat4 get_v();
+		
 	};
 	typedef shared_ptr<Camera> CameraPtr;
 }

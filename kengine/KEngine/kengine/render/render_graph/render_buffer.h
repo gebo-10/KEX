@@ -38,26 +38,29 @@ namespace kengine {
 		RGBA32UI,
 
 		SRGB8_ALPHA8,
-		STENCIL_INDEX8, 
-		DEPTH24_STENCIL8,
-		DEPTH32F_STENCIL8,
-		DEPTH_COMPONENT16,
-		DEPTH_COMPONENT24,
-		DEPTH_COMPONENT32F,
+		STENCIL_INDEX8 = GL_STENCIL_INDEX8,
+		DEPTH24_STENCIL8 = GL_DEPTH24_STENCIL8,
+		DEPTH32F_STENCIL8 = GL_DEPTH32F_STENCIL8,
+		DEPTH_COMPONENT = GL_DEPTH_COMPONENT,
+		DEPTH_COMPONENT16 = GL_DEPTH_COMPONENT16,
+		DEPTH_COMPONENT24 = GL_DEPTH_COMPONENT24,
+		DEPTH_COMPONENT32F = GL_DEPTH_COMPONENT32F,
 	};
 	class RenderBuffer
 	{
 	public:
 		GPUID gpu_id = 0;
-		RenderBuffer(int width,int height, int format, int msaa_samples=0)
+		int width=0;
+		int height = 0;
+		RenderBuffer(int width,int height, RenderBufferFormat format, int msaa_samples=0):width(width), height(height)
 		{
 			glGenRenderbuffers(1, &gpu_id);
 			glBindRenderbuffer(GL_RENDERBUFFER, gpu_id);
 			if (msaa_samples!=0) {
-				glRenderbufferStorageMultisample(GL_RENDERBUFFER, msaa_samples, format, width, height);
+				glRenderbufferStorageMultisample(GL_RENDERBUFFER, msaa_samples, (GLenum)format, width, height);
 			}
 			else {
-				glRenderbufferStorage(GL_RENDERBUFFER, format, width, height);
+				glRenderbufferStorage(GL_RENDERBUFFER, (GLenum)format, width, height);
 			}
 		}
 

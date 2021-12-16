@@ -122,6 +122,9 @@
     <Filter Include="kengine\core\collection">
       <UniqueIdentifier>{86fe1293-b3c3-4849-8955-5be81dc7f3f5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="kengine\resource\buildin">
+      <UniqueIdentifier>{a4a965f7-bc73-4f66-b923-4fe74397e547}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="window\main.cc">
@@ -142,11 +145,11 @@
     <ClCompile Include="kengine\support\screen.cc">
       <Filter>kengine\support</Filter>
     </ClCompile>
-    <ClCompile Include="kengine\util\texture_importer.cpp">
-      <Filter>window</Filter>
-    </ClCompile>
     <ClCompile Include="kengine\util\texture_importer.cc">
       <Filter>kengine\utiil</Filter>
+    </ClCompile>
+    <ClCompile Include="kengine\scene\component\camera.cc">
+      <Filter>kengine\scene\component</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -528,6 +531,30 @@
     </ClInclude>
     <ClInclude Include="kengine\core\collection\circle_queue.h">
       <Filter>kengine\core\collection</Filter>
+    </ClInclude>
+    <ClInclude Include="kengine\util\render_graph_importer.h">
+      <Filter>kengine\utiil</Filter>
+    </ClInclude>
+    <ClInclude Include="kengine\util\scene_importer.h">
+      <Filter>kengine\utiil</Filter>
+    </ClInclude>
+    <ClInclude Include="kengine\util\kglut.h">
+      <Filter>kengine\utiil</Filter>
+    </ClInclude>
+    <ClInclude Include="kengine\render\render_graph\pass\copy_framebuffer_pass.h">
+      <Filter>kengine\render\render_graph\pass</Filter>
+    </ClInclude>
+    <ClInclude Include="kengine\core\math\region.h">
+      <Filter>kengine\core\math</Filter>
+    </ClInclude>
+    <ClInclude Include="kengine\geometry\geometry.h">
+      <Filter>kengine\geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="kengine\resource\buildin\box_mesh.h">
+      <Filter>kengine\resource\buildin</Filter>
+    </ClInclude>
+    <ClInclude Include="kengine\resource\buildin\plane_mesh.h">
+      <Filter>kengine\resource\buildin</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -30,15 +30,16 @@ namespace kengine {
 			}
 		}
 
-		void draw(Matrix m, MeshPtr mesh, int count) {
-			//glDisable(GL_CULL_FACE);
-			//glFrontFace(GL_CW);
+		void draw(Matrix &m, MeshPtr mesh, int count=1) {
+			glEnable(GL_CULL_FACE);
+			glFrontFace(GL_CW);
 			//glEnable(GL_DEPTH_TEST);
 			//glEnable(GL_TEXTURE_2D);
 			//glEnable(GL_TEXTURE_2D_MULTISAMPLE);
 			//glEnable(GL_BLEND);
 			//glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 			//glDisable(GL_PRIMITIVE_RESTART_FIXED_INDEX);
+			//glDisable(GL_STENCIL_TEST);
 
 			material->set_model_matrix(m);
 			material->attach_uniform(bind_point_manager);
@@ -52,10 +53,12 @@ namespace kengine {
 				return;
 			}
 			target = t;
-			if (t == nullptr) {
-				glBindFramebuffer(GL_FRAMEBUFFER, 0);
-				return;
-			}
+			//if (t == nullptr) { //screen render target
+			//	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+			//	GLenum window_draw_buffers[] = { GL_BACK };
+			//	glDrawBuffers(1, window_draw_buffers);
+			//	return;
+			//}
 			t->bind();
 		}
 
