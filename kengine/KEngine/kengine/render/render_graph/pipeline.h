@@ -31,8 +31,8 @@ namespace kengine {
 		}
 
 		void draw(Matrix &m, MeshPtr mesh, int count=1) {
-			glEnable(GL_CULL_FACE);
-			glFrontFace(GL_CW);
+			//glEnable(GL_CULL_FACE);
+			//glFrontFace(GL_CW);
 			//glEnable(GL_DEPTH_TEST);
 			//glEnable(GL_TEXTURE_2D);
 			//glEnable(GL_TEXTURE_2D_MULTISAMPLE);
@@ -67,7 +67,9 @@ namespace kengine {
 				return;
 			}
 			material = m;
-			m->bind();
+			//m->bind();
+			m->set_dirty();
+			bind_point_manager.bind_shader(material->shader);
 		}
 
 		void set_state(PipelineStatePtr state) {

@@ -17,7 +17,7 @@ namespace kengine {
 		bool dirty=true;
 		Resource(){}
 		virtual ~Resource(){}
-		virtual void clone(){}
+		virtual shared_ptr<Resource> clone() { return nullptr; }
 	};
 	typedef shared_ptr<Resource> ResourcePtr;
 }

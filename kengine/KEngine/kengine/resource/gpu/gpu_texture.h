@@ -115,8 +115,8 @@ namespace kengine {
 		TextureWarpMode t_warp = TextureWarpMode::CLAMP_TO_EDGE;
 
 		bool compressed = false;
-		int width=64;
-		int height=64;
+		int width=0;
+		int height=0;
 		int depth = 1;
 		int board = 0;
 		int samples = 1;

@@ -33,6 +33,7 @@ namespace kengine {
 		~BindPointManager(){}
 
 		void bind_shader(ShaderPtr shader) {
+			shader->gpucache();
 			auto id = shader->gpu_shader->program_id;
 			if (id == shader_bind_point) return;
 			shader_bind_point = id;

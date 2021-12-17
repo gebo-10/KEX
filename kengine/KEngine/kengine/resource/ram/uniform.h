@@ -14,6 +14,14 @@ namespace kengine {
             buffer = std::make_shared<Buffer>(value_size);
         }
 
+        Uniform(const Uniform& o)   // ¿½±´¹¹Ôìº¯Êý
+        {
+            type = o.type;
+            location = o.location;
+            buffer = std::make_shared<Buffer>(o.buffer->size);
+            std::memcpy(buffer->data, o.buffer->data, buffer->size);
+        }
+
         void set(void* value) {
             if (value == nullptr) return;
             if (std::memcmp(buffer->data, value, buffer->size) == 0) return;
@@ -30,6 +38,24 @@ namespace kengine {
         //void set(float& value) {set(&value);}
         //void set(int& value) {set(&value);}
         //void set(uint& value) {set(&value);}
+        Uniform& operator= (const Uniform& o) {
+            type = o.type;
+            location = o.location;
+            buffer = std::make_shared<Buffer>(o.buffer->size);
+            std::memcpy(buffer->data, o.buffer->data, buffer->size);
+            return *this;
+        }
+        bool operator ==(const Uniform& o) {
+            assert(location == o.location);
+            if (o.buffer->size != buffer->size) return false;
+            return std::memcmp(buffer->data, o.buffer->data, buffer->size) == 0;
+        }
+
+        bool operator !=(const Uniform& o) {
+            assert(location == o.location);
+            if (o.buffer->size == buffer->size) return true;
+            return std::memcmp(buffer->data, o.buffer->data, buffer->size) != 0;
+        }
 
         void sync() {
             if (!dirty) return;

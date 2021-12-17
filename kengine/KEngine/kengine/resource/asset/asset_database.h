@@ -4,8 +4,15 @@
 #include "asset.h"
 #include "bundle/asset_bundle.h"
 #include "loader/asset_loader.h"
+#include "../buildin/plane_mesh.h"
 namespace kengine
 {
+	struct DefaultResource {
+		MeshPtr plane;
+		DefaultResource() {
+			plane= std::make_shared<PlaneMesh>();
+		}
+	};
 	class AssetsDatabase
 	{
 	public:
@@ -15,6 +22,8 @@ namespace kengine
 		//	return ad;
 		//}
 		//AssetLoader xxx;
+
+		DefaultResource default_resource;
 		AssetsDatabase()
 		{
 			assets.clear();

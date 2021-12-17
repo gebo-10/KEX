@@ -31,18 +31,36 @@ namespace kengine {
             //unbind();
         }
 
-        void bind() {
-            shader->bind();
+        Material(const Material& o) {  // ¿½±´¹¹Ôìº¯Êý
+            this->shader = o.shader;
+            this->uniforms.assign(o.uniforms.begin(), o.uniforms.end());
+            this->texture_uniforms.assign(o.texture_uniforms.begin(), o.texture_uniforms.end());
+            this->buffer_uniforms.assign(o.buffer_uniforms.begin(), o.buffer_uniforms.end());
         }
+
+        //void bind() {
+        //    shader->bind();
+        //}
         //void unbind() {
         //    shader->unbind();
         //}
+        void set_dirty() {
+            for (auto& uniform : uniforms) {
+                uniform.dirty = true;
+            }
+        }
 
         void attach_uniform(BindPointManager &bind_point_manager) {
             //bind_point_manager.bind_shader(shader);
             for (Uniform& uniform : uniforms) {
-                uniform.sync();
+                //uniform.sync();
+                if (uniform.dirty) {
+                    uniform.dirty = false;
+                    shader->set_uniform(uniform);
+                }
             }
+            shader->sync();
+
             for (auto & texture_uniform : texture_uniforms) {
                 texture_uniform.texture->gpucache();
                 bind_point_manager.bind_texture(texture_uniform.texture->gpu_texture, texture_uniform.bind_point);
@@ -65,7 +83,6 @@ namespace kengine {
         void set_model_matrix(Matrix M) {
             //int location = glGetUniformLocation(shader->gpu_id, "M");
             //glUniformMatrix4fv(0, 1, false,glm::value_ptr(M));
-            //glUniform1fv(0,16,(float *) &M);
             set_uniform(0, glm::value_ptr(M));
         }
 
@@ -102,7 +119,7 @@ namespace kengine {
         //}
 
         Uniform* get_uniform(int location) {
-            for (auto & uniform : uniforms) {
+            for (auto& uniform : uniforms) {
                 if (uniform.location == location) {
                     return &uniform;
                 }
@@ -110,13 +127,44 @@ namespace kengine {
             return nullptr;
         }
 
+        void set_uniforms(std::vector<Uniform> &uniforms) {
+            for (auto& uniform : uniforms) {
+                set_uniform(uniform.location, uniform.buffer->data);
+            }
+        }
 
         void add_texture(int bind_point,TexturePtr texture ) {
+            for (auto& uniform : texture_uniforms) {
+                if (uniform.bind_point == bind_point) {
+                    uniform.texture = texture;
+                    return;
+                }
+            }
             texture_uniforms.push_back(TextureUniform{ bind_point , texture});
         }
 
+        void add_textures(std::vector<TextureUniform> &uniforms) {
+            //texture_uniforms.clear();
+            //texture_uniforms.assign(uniforms.begin(), uniforms.end());
+            for (auto& uniform : uniforms) {
+                add_texture(uniform.bind_point, uniform.texture);
+            }
+        }
+
         void add_buffer(int bind_point, GPUBufferPtr buffer) {
+            for (auto& uniform : buffer_uniforms) {
+                if (uniform.bind_point == bind_point) {
+                    uniform.gpu_buffer = buffer;
+                    return;
+                }
+            }
             buffer_uniforms.push_back(BufferUniform{ bind_point , buffer });
+        }
+
+        void add_buffers(std::vector<BufferUniform>& uniforms) {
+            for (auto& uniform : uniforms) {
+                add_buffer(uniform.bind_point, uniform.gpu_buffer);
+            }
         }
     };
     typedef shared_ptr<Material> MaterialPtr;

@@ -16,7 +16,8 @@ namespace kengine {
 
 		RenderTarget(std::vector<Attachment>&& ats)
 		{
-			check_attachment_size(ats);
+			//TODO check same attachment
+			//check_attachment_size(ats); //以最小为准
 			attachments = std::move(ats);
 			glGenFramebuffers(1, &gpu_id);
 			glBindFramebuffer(GL_FRAMEBUFFER, gpu_id);
@@ -50,6 +51,20 @@ namespace kengine {
 					assert(false);
 				}
 			} 
+		}
+
+		TexturePtr get_texture(AttachmentPoint color_attachment_point= AttachmentPoint::COLOR_ATTACHMENT0) {
+			if (color_attachment_point < AttachmentPoint::COLOR_ATTACHMENT0 || color_attachment_point > AttachmentPoint::COLOR_ATTACHMENT9) {
+				error("RenderTarget.get_texture: error param");
+				return nullptr;
+			}
+			for (auto& attachment : attachments) {
+				if (color_attachment_point == attachment.attachment_point) {
+					return attachment.texture;
+				}
+			}
+			warn("RenderTarget.get_texture: get null");
+			return nullptr;
 		}
 
 		void bind(int target= GL_FRAMEBUFFER) {//GL_DRAW_FRAMEBUFFER GL_READ_FRAMEBUFFER GL_FRAMEBUFFER
