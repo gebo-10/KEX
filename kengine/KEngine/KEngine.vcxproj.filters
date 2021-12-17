@@ -130,9 +130,6 @@
     <ClCompile Include="window\main.cc">
       <Filter>window</Filter>
     </ClCompile>
-    <ClCompile Include="kengine\core\base\clist.cc">
-      <Filter>kengine\core\base</Filter>
-    </ClCompile>
     <ClCompile Include="kengine\kengine.cc">
       <Filter>kengine</Filter>
     </ClCompile>
@@ -151,6 +148,9 @@
     <ClCompile Include="kengine\scene\component\camera.cc">
       <Filter>kengine\scene\component</Filter>
     </ClCompile>
+    <ClCompile Include="kengine\core\collection\clist.cc">
+      <Filter>kengine\core\collection</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="window\test_app.h">
@@ -161,27 +161,6 @@
     </ClInclude>
     <ClInclude Include="kengine\kengine.h">
       <Filter>kengine</Filter>
-    </ClInclude>
-    <ClInclude Include="kengine\core\base\buffer.h">
-      <Filter>kengine\core\base</Filter>
-    </ClInclude>
-    <ClInclude Include="kengine\core\base\clist.h">
-      <Filter>kengine\core\base</Filter>
-    </ClInclude>
-    <ClInclude Include="kengine\core\base\color.h">
-      <Filter>kengine\core\base</Filter>
-    </ClInclude>
-    <ClInclude Include="kengine\core\base\log.h">
-      <Filter>kengine\core\base</Filter>
-    </ClInclude>
-    <ClInclude Include="kengine\core\base\memory.h">
-      <Filter>kengine\core\base</Filter>
-    </ClInclude>
-    <ClInclude Include="kengine\core\base\type.h">
-      <Filter>kengine\core\base</Filter>
-    </ClInclude>
-    <ClInclude Include="kengine\core\base\uid.h">
-      <Filter>kengine\core\base</Filter>
     </ClInclude>
     <ClInclude Include="kengine\platform\platform.h">
       <Filter>kengine\platform</Filter>
@@ -194,9 +173,6 @@
     </ClInclude>
     <ClInclude Include="kengine\platform\window\mmap.h">
       <Filter>kengine\platform\window</Filter>
-    </ClInclude>
-    <ClInclude Include="kengine\core\base\base.h">
-      <Filter>kengine\core\base</Filter>
     </ClInclude>
     <ClInclude Include="kengine\core\io\mmap.h">
       <Filter>kengine\core\io</Filter>
@@ -276,9 +252,6 @@
     <ClInclude Include="kengine\resource\asset\asset_database.h">
       <Filter>kengine\resource\asset</Filter>
     </ClInclude>
-    <ClInclude Include="kengine\core\base\guid.h">
-      <Filter>kengine\core\base</Filter>
-    </ClInclude>
     <ClInclude Include="kengine\profiler\profiler.h">
       <Filter>kengine\profiler</Filter>
     </ClInclude>
@@ -335,15 +308,6 @@
     </ClInclude>
     <ClInclude Include="kengine\kserialize\mesh_generated.h">
       <Filter>kengine\kserialize</Filter>
-    </ClInclude>
-    <ClInclude Include="kengine\core\base\ctree.h">
-      <Filter>kengine\core\base</Filter>
-    </ClInclude>
-    <ClInclude Include="kengine\core\base\link_object_alloc.h">
-      <Filter>kengine\core\base</Filter>
-    </ClInclude>
-    <ClInclude Include="kengine\core\base\object_alloc.h">
-      <Filter>kengine\core\base</Filter>
     </ClInclude>
     <ClInclude Include="kengine\scene\scene_manager.h">
       <Filter>kengine\scene</Filter>
@@ -555,6 +519,42 @@
     </ClInclude>
     <ClInclude Include="kengine\resource\buildin\plane_mesh.h">
       <Filter>kengine\resource\buildin</Filter>
+    </ClInclude>
+    <ClInclude Include="kengine\core\base\base.h">
+      <Filter>kengine\core\base</Filter>
+    </ClInclude>
+    <ClInclude Include="kengine\core\base\buffer.h">
+      <Filter>kengine\core\base</Filter>
+    </ClInclude>
+    <ClInclude Include="kengine\core\base\color.h">
+      <Filter>kengine\core\base</Filter>
+    </ClInclude>
+    <ClInclude Include="kengine\core\base\guid.h">
+      <Filter>kengine\core\base</Filter>
+    </ClInclude>
+    <ClInclude Include="kengine\core\base\log.h">
+      <Filter>kengine\core\base</Filter>
+    </ClInclude>
+    <ClInclude Include="kengine\core\base\memory.h">
+      <Filter>kengine\core\base</Filter>
+    </ClInclude>
+    <ClInclude Include="kengine\core\base\type.h">
+      <Filter>kengine\core\base</Filter>
+    </ClInclude>
+    <ClInclude Include="kengine\core\base\uid.h">
+      <Filter>kengine\core\base</Filter>
+    </ClInclude>
+    <ClInclude Include="kengine\core\collection\clist.h">
+      <Filter>kengine\core\collection</Filter>
+    </ClInclude>
+    <ClInclude Include="kengine\core\collection\ctree.h">
+      <Filter>kengine\core\collection</Filter>
+    </ClInclude>
+    <ClInclude Include="kengine\core\collection\link_object_alloc.h">
+      <Filter>kengine\core\collection</Filter>
+    </ClInclude>
+    <ClInclude Include="kengine\core\collection\object_alloc.h">
+      <Filter>kengine\core\collection</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

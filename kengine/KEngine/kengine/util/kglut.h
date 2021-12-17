@@ -1,7 +1,13 @@
 #pragma once
 #include <kengine/core/base/base.h>
 #include <kengine/render/graphics_api.h>
+
+#ifdef _DEBUG
 #define CheckGLError Kglut::check_gl_error();
+#else
+#define CheckGLError  
+#endif // _DEBUG
+
 namespace kengine {
 
 	class Kglut
