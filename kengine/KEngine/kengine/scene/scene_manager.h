@@ -17,7 +17,7 @@ namespace kengine {
 		void init() {
 			scene = std::make_shared<Scene>();
 			//scene->render_graph = render.default_rg();
-			scene->render_graph = RenderGraphImporter::import("default");
+			scene->render_graph = RenderGraphImporter::import_default();
 			scene->init();
 			
 		}

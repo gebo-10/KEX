@@ -96,10 +96,10 @@ namespace kengine {
         //    return false;
         //}
 
-        bool set_uniform(Name name, void * value) {
+        bool set_uniform(Name name, void * value,int size=-1) {
             auto uniform = get_uniform(name);
             if (uniform != nullptr) {
-                uniform->set(value);
+                uniform->set(value, size);
                 return true;
             }
             return false;

@@ -88,7 +88,7 @@ namespace kengine {
 			return render_graph;
 		}
 
-		static RenderGraphPtr import2(const string& filename) {
+		static RenderGraphPtr import_default() {
 			CheckGLError
 			RenderGraphPtr render_graph = std::make_shared<RenderGraph>();
 			auto state_pass = std::make_shared<StatePass>();
@@ -97,16 +97,17 @@ namespace kengine {
 			state_pass->states.push_back(std::make_shared<DepthTest>(true, CompareFunc::LESS));
 			render_graph->passes.push_back(state_pass);
 
-			render_graph->passes.push_back(std::make_shared<ClearPass>(true, true, true));
+			render_graph->passes.push_back(std::make_shared<ClearPass>(true, true, false));
 
 			auto dp1 = std::make_shared<DrawPass>();
-			dp1->target = nullptr;
+			dp1->target = SCREEN_TARGET;
+			dp1->camera_id = 1;
 			render_graph->passes.push_back(dp1);
 
-			render_graph->passes.push_back(std::make_shared<FencePass>());
-			auto dp2 = std::make_shared<DrawPass>();
-			dp2->camera_id = 1;
-			render_graph->passes.push_back(dp2);
+			//render_graph->passes.push_back(std::make_shared<FencePass>());
+			//auto dp2 = std::make_shared<DrawPass>();
+			//dp2->camera_id = 1;
+			//render_graph->passes.push_back(dp2);
 			return render_graph;
 		}
 

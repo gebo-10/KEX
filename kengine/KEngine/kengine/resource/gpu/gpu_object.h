@@ -70,7 +70,7 @@ namespace kengine{
 				auto layout_index = buffer.layout_index;
 				GPUBufferPtr gpu_buffer = std::make_shared<GPUBuffer>(buffer.buffer, GPUBufferType::ARRAY_BUFFER, buffer.hit);
 				glEnableVertexAttribArray((int) layout_index);
-				if (buffer.data_type >= GPUType::BYTE && buffer.data_type <= GPUType::INT) {
+				if (buffer.data_type >= GPUType::BYTE && buffer.data_type <= GPUType::UNSIGNED_INT) {
 					glVertexAttribIPointer((GLuint)layout_index, buffer.component_num, (GLenum)buffer.data_type, 0, (const GLvoid*)0);
 				}
 				else {

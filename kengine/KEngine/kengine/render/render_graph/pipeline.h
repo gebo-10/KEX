@@ -41,10 +41,31 @@ namespace kengine {
 			//glDisable(GL_PRIMITIVE_RESTART_FIXED_INDEX);
 			//glDisable(GL_STENCIL_TEST);
 
+			if (mesh->has_bone()) {
+				auto bone_matrix = mesh->get_bone_matrix();
+				material->set_uniform(5, glm::value_ptr(bone_matrix[0]), bone_matrix.size() *sizeof(mat4));
+			}
+			//if (mesh->has_bone()) {
+			//	auto bone_matrix = mesh->get_bone_matrix();
+			//	auto bone_buffer = std::make_shared<GPUBuffer>(bone_matrix.size() * sizeof(mat4), GPUBufferType::SHADER_STORAGE_BUFFER, GPUBufferHit::STATIC_DRAW);
+			//	auto p = bone_buffer->map(GPUBufferHit::WRITE_ONLY);
+			//	std::memcpy(p, glm::value_ptr(bone_matrix[0]), bone_matrix.size() * sizeof(mat4));
+			//	material->add_buffer(0, bone_buffer);
+			//}
 			material->set_model_matrix(m);
+			//material->set_model_matrix(mat4(1.0));
 			material->attach_uniform(bind_point_manager);
 			mesh->gpucache();
 			bind_point_manager.bind_vao(mesh->gpu_object);
+
+			//if (mesh->has_bone()) {
+			//	auto bone_matrix = mesh->get_bone_matrix();
+			//	glUniformMatrix4fv(5, 64, true, (GLfloat*)&bone_matrix[0][0][0]);
+			//}
+
+			
+
+			
 			mesh->draw(count);
 		}
 

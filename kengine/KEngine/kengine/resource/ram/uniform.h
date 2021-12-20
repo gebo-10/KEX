@@ -22,10 +22,12 @@ namespace kengine {
             std::memcpy(buffer->data, o.buffer->data, buffer->size);
         }
 
-        void set(void* value) {
+        void set(void* value, int size=-1) {
             if (value == nullptr) return;
-            if (std::memcmp(buffer->data, value, buffer->size) == 0) return;
-            std::memcpy(buffer->data, value, buffer->size);
+            assert(size <=(int) buffer->size);
+            int data_size=size == -1?buffer->size : size;
+            if (std::memcmp(buffer->data, value, data_size) == 0) return;
+            std::memcpy(buffer->data, value, data_size);
             dirty = true;
         }
 

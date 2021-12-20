@@ -52,6 +52,7 @@ namespace kengine {
 			{
 				sol::table uniform = item.second;
 				int location = uniform["location"];
+				int count = uniform["count"];
 				ShaderDataType type = uniform["type"];
 
 				sol::table value = uniform["value"];
@@ -63,36 +64,12 @@ namespace kengine {
 					material->add_uniform(location, type, &data);
 					break;
 				}
-				case ShaderDataType::VEC2: {
-					std::vector<float> data;
-					data.clear();
-					data.reserve(value_size); //TODO
-					for (int i = 0; i < value_size; i++) {
-						data.push_back((float)value[i + 1]);
-					}
-					material->add_uniform(location, type, data.data(), value_size / 2);
-					break;
-				}
-				case ShaderDataType::Color: {
-					std::vector<float> data;
-					data.clear();
-					data.reserve(value_size);
-					for (int i = 0; i < value_size; i++) {
-						data.push_back((float)value[i + 1]);
-					}
-					material->add_uniform(location, type, data.data(), value_size / 4);
-					break;
-				}
-				case ShaderDataType::VEC4: {
-					std::vector<float> data;
-					data.clear();
-					data.reserve(value_size);
-					for (int i = 0; i < value_size; i++) {
-						data.push_back((float)value[i + 1]);
-					}
-					material->add_uniform(location, type, data.data(), value_size / 4);
-					break;
-				}
+				case ShaderDataType::VEC2:
+				case ShaderDataType::Color:
+				case ShaderDataType::VEC3: 
+				case ShaderDataType::VEC4:
+				case ShaderDataType::MAT2:
+				case ShaderDataType::MAT3:
 				case ShaderDataType::MAT4: {
 					std::vector<float> data;
 					data.clear();
@@ -100,7 +77,8 @@ namespace kengine {
 					for (int i = 0; i < value_size; i++) {
 						data.push_back((float)value[i + 1]);
 					}
-					material->add_uniform(location, type, data.data(), value_size / 16);
+					material->add_uniform(location, type, nullptr, count);
+					material->set_uniform(location, data.data(), data.size() * sizeof(float));
 					break;
 				}
 				default:

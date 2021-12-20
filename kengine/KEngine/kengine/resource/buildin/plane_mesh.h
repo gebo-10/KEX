@@ -5,10 +5,17 @@ namespace kengine {
 	{
 	public:
 		float position[12] = {
-			-1.0f, -1.0f, 0.0f,
+			-1.0f, -1.0f, 1.0f,
 			-1.0f,  1.0f, 0.0f,
 			 1.0f, -1.0f, 0.0f,
-			 1.0f,  1.0f, 0.0f,
+			 1.0f,  1.0f, 1.0f,
+		};
+
+		float position1[12] = {
+			-1.0f, -1.0f, -1.0f,
+			-1.0f,  1.0f, 0.0f,
+			 1.0f, -1.0f, 0.0f,
+			 1.0f,  1.0f, -1.0f,
 		};
 
 		float color[12] = {
@@ -41,6 +48,12 @@ namespace kengine {
 			set_uv(0,std::make_shared<Buffer>((void*)uv, sizeof(uv), false));
 			set_normal(std::make_shared<Buffer>((void*)normal, sizeof(normal), false));
 			set_indices(PrimitiveType::TRIANGLES,std::make_shared<Buffer>((void*)indices, sizeof(indices), false));
+
+			MeshBuffer mbuf;
+			mbuf.layout_index = MeshBufferType::MORPH_POSITION;
+			mbuf.component_num = 3;
+			mbuf.buffer = std::make_shared<Buffer>((void*)position1, sizeof(position1), false);
+			add_buffer(std::move(mbuf));
 		}
 
 		~PlaneMesh()
