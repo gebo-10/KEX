@@ -39,9 +39,9 @@ namespace kengine {
             this->buffer_uniforms.assign(o.buffer_uniforms.begin(), o.buffer_uniforms.end());
         }
 
-        //void bind() {
-        //    shader->bind();
-        //}
+        void bind() {
+            shader->bind();
+        }
         //void unbind() {
         //    shader->unbind();
         //}
@@ -78,6 +78,7 @@ namespace kengine {
         //}
 
         void attach_uniform() {
+            shader->bind();
             for (Uniform& uniform : uniforms) {
                 if (uniform.dirty) {
                     uniform.dirty = false;

@@ -13,10 +13,10 @@ namespace kengine {
 			const aiScene* scene;
 			info("SkinImporter: {}", pFile);
 			scene = importer.ReadFile(pFile, aiProcess_Triangulate
-				| aiProcess_MakeLeftHanded
+				//| aiProcess_MakeLeftHanded
 				//aiProcess_CalcTangentSpace |
-				| aiProcess_SortByPType
-				| aiProcess_GenSmoothNormals
+				//| aiProcess_SortByPType
+				//| aiProcess_GenSmoothNormals
 				//aiProcess_LimitBoneWeights |
 				//aiProcess_JoinIdenticalVertices 
 			);
@@ -28,12 +28,12 @@ namespace kengine {
 			}
 
 			auto ai_mesh = scene->mMeshes[0];//TODO
-
-			auto skin = std::make_shared<MeshSkin>();
 			if (!ai_mesh->HasBones()) {
 				info("  SkinImporter: has no bone");
-				return;
+				return nullptr;
 			}
+			auto skin = std::make_shared<MeshSkin>();
+			
 
 			std::map<string, BonePtr> bones;
 			bones.clear();
@@ -52,8 +52,11 @@ namespace kengine {
 
 		static BonePtr load_bone_tree(const aiScene* scene, const aiNode* ai_node, std::map<string, BonePtr>& bones, MeshSkinPtr skin) {
 			string name = string(ai_node->mName.data);
-			BonePtr bone = bone = std::make_shared<Bone>();
+			BonePtr bone = std::make_shared<Bone>();
 			bone->bone_id = bones.size();
+			if (bones[name] != nullptr) {
+				error("same bone name");
+			}
 			bones[name] = bone;
 			skin->bones.push_back(bone);
 			//info("scene node name: {}", name);
@@ -61,7 +64,7 @@ namespace kengine {
 			bone->children.clear();
 			for (int i = 0; i < ai_node->mNumChildren; i++)
 			{
-				auto child = load_bone_tree(scene, ai_node->mChildren[i], bones);
+				auto child = load_bone_tree(scene, ai_node->mChildren[i], bones, skin);
 				bone->children.push_back(child);
 			}
 			return bone;
@@ -71,13 +74,10 @@ namespace kengine {
 			std::vector < std::vector <BoneWeight> > vertex_infos;
 			vertex_infos.resize(ai_mesh->mNumVertices);
 
-			for (uint i = 1; i <= ai_mesh->mNumBones; i++)
+			for (uint i = 0; i < ai_mesh->mNumBones; i++)
 			{
-				auto ai_bone = ai_mesh->mBones[i - 1];
-
-				auto ai_node = ai_bone->mNode;
-				string name = string(ai_bone->mName.data);
-				auto bone = bones[name];
+				auto ai_bone = ai_mesh->mBones[i];
+				auto bone = bones[string(ai_bone->mName.data)];
 			
 				bone->offset_matrix = mat4_cast(ai_bone->mOffsetMatrix);
 
@@ -85,7 +85,7 @@ namespace kengine {
 				{
 					auto info = ai_bone->mWeights[weight_index];
 					vertex_infos[info.mVertexId].push_back({ bone->bone_id,info.mWeight });
-					if (vertex_infos[info.mVertexId].size() > 8)
+					if (vertex_infos[info.mVertexId].size() > 16)
 					{
 						error("too much bone per vertex");
 					}
@@ -103,7 +103,7 @@ namespace kengine {
 
 		}
 
-		static BonePtr load_bone_animation(aiAnimation* aimation, MeshSkinPtr skin, std::map<string, BonePtr>& bones) {
+		static void load_bone_animation(aiAnimation* aimation, MeshSkinPtr skin, std::map<string, BonePtr>& bones) {
 			SRTKeyAnimation a;
 			a.duration = aimation->mDuration;
 			a.ticks_per_second = aimation->mTicksPerSecond;

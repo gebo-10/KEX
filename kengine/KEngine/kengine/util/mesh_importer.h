@@ -21,10 +21,10 @@ namespace kengine {
 			const aiScene* scene;
 			info("MeshImporter: {}", pFile);
 			scene = importer.ReadFile(pFile, aiProcess_Triangulate
-				| aiProcess_MakeLeftHanded
+				//| aiProcess_MakeLeftHanded
 				//aiProcess_CalcTangentSpace |
-				| aiProcess_SortByPType 
-				|aiProcess_GenSmoothNormals
+				//| aiProcess_SortByPType 
+				//|aiProcess_GenSmoothNormals
 				//aiProcess_LimitBoneWeights |
 				//aiProcess_JoinIdenticalVertices 
 			);

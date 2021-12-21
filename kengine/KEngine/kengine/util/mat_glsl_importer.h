@@ -31,7 +31,7 @@ namespace kengine {
 			if (compute_pos != text.npos) {
 				auto decl_pos = text.find("#decl");
 				auto compute = text.substr(compute_pos + 10, decl_pos - compute_pos - 10);
-				decl = text.substr(decl_pos + 10);
+				decl = text.substr(decl_pos + 7);
 				shader = std::make_shared<Shader>(compute);
 			}
 			else {

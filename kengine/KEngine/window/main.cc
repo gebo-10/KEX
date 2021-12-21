@@ -27,10 +27,12 @@
 
 #pragma comment(lib, "assimp.lib")
 #ifdef _DEBUG
+//#pragma comment(lib, "assimpd.lib")
 #pragma comment(lib, "zlibstaticd.lib")
 //#pragma comment(lib, "Effekseerd.lib")
 //#pragma comment(lib, "EffekseerRendererGL.lib")
 #else
+
 #pragma comment(lib, "zlibstatic.lib")
 #endif
 

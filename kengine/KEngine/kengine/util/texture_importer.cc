@@ -7,7 +7,7 @@ namespace kengine {
 	{
 		MapFile tex(filename);
 		int w, h, n;
-		stbi_set_flip_vertically_on_load(true);
+		stbi_set_flip_vertically_on_load(false);
 		unsigned char* data = stbi_load_from_memory((ubyte*)tex.data(), tex.size(), &w, &h, &n, 0);
 		int size = w * h * n;
 

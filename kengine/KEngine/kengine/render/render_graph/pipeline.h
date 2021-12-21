@@ -78,7 +78,7 @@ namespace kengine {
 			material = m;
 			//m->bind();
 			m->set_dirty();
-			bind_point_manager.bind_shader(material->shader);
+			//bind_point_manager.bind_shader(material->shader);
 		}
 
 		void set_state(PipelineStatePtr state) {

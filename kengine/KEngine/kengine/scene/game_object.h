@@ -3,6 +3,7 @@
 #include"component.h"
 #include "component/transform.h"
 #include "component/mesh_render.h"
+#include "component/mesh_skin.h"
 namespace kengine {
 	class GameObject
 	{
