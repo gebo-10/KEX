@@ -84,6 +84,7 @@ void KEngine::update()
 
     //Env.profiler.fps_limit();
     //info("hello{}",a);
+    Env.event_setvice.dispatch(EventType::OnUpdate, nullptr);
 
     render.update(*scene_manager.scene);
 }

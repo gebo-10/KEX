@@ -5,6 +5,7 @@ namespace kengine {
 		TRANSFORM,
 		MESH_RENDER,
 		MESH_MORPH,
+		MESH_SKIN,
 		CAMERA,
 	};
 	class GameObject;

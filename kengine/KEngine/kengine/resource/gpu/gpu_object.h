@@ -42,7 +42,7 @@ namespace kengine{
 	public:
 		GPUID gpu_id;
 		PrimitiveType primitive;
-		std::vector<GPUBufferPtr> gpu_buffers;
+		std::map<int,GPUBufferPtr> gpu_buffers;
 		int indices_size;
 		GPUType indices_type;
 		GPUObject(PrimitiveType primitive_type, MeshBuffer &indices_buffer, std::vector<MeshBuffer>& buffers):primitive(primitive_type)
@@ -63,7 +63,7 @@ namespace kengine{
 			indices_type = indices_buffer.data_type;
 			indices_size = indices_buffer.buffer->size / (indices_type == GPUType::UNSIGNED_SHORT ? 2 : 4);
 			GPUBufferPtr gpu_indices_buffer = std::make_shared<GPUBuffer>(indices_buffer.buffer, GPUBufferType::ELEMENT_ARRAY_BUFFER, indices_buffer.hit);
-			gpu_buffers.push_back(gpu_indices_buffer);
+			gpu_buffers[MeshBufferType::INDICES]=gpu_indices_buffer;
 
 			for (auto & buffer : buffers)
 			{
@@ -77,7 +77,8 @@ namespace kengine{
 					glVertexAttribPointer((GLuint)layout_index, buffer.component_num, (GLenum)buffer.data_type, buffer.need_normalized, 0, (const GLvoid*)0);
 				}
 				//else if(double) {glVertexAttribLPointer(); }//TODO
-				gpu_buffers.push_back(gpu_buffer);
+				//gpu_buffers.push_back(gpu_buffer);
+				gpu_buffers[buffer.layout_index] = gpu_buffer;
 			}
 			glBindVertexArray(0);
 		}
@@ -99,6 +100,10 @@ namespace kengine{
 		inline void draw_instance(int count) {
 			//bind();
 			glDrawElementsInstanced((GLenum)primitive, indices_size, (GLenum)indices_type, 0, count);
+		}
+
+		GPUBufferPtr get_buffer(int location) {
+			return gpu_buffers[location];
 		}
 	};
 	typedef shared_ptr<GPUObject> GPUObjectPtr;

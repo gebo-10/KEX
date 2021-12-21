@@ -25,6 +25,7 @@ namespace kengine {
 			}
 			component->go = this;
 			components.push_back(component);
+			component->on_attach();
 			return true;
 		}
 

@@ -189,6 +189,7 @@
     <ClCompile Include="window\main.cc" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="kengine\animation\animator.h" />
     <ClInclude Include="kengine\application.h" />
     <ClInclude Include="kengine\core\base\base.h" />
     <ClInclude Include="kengine\core\base\buffer.h" />
@@ -322,6 +323,7 @@
     <ClInclude Include="kengine\util\render_graph_importer.h" />
     <ClInclude Include="kengine\util\scene_importer.h" />
     <ClInclude Include="kengine\util\shader_importer.h" />
+    <ClInclude Include="kengine\util\skin_importer.h" />
     <ClInclude Include="kengine\util\texture_importer.h" />
     <ClInclude Include="window\test_app.h" />
   </ItemGroup>

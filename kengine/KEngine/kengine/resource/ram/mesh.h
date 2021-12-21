@@ -2,38 +2,38 @@
 #include "kengine/resource/gpu/gpu_object.h"
 #include"resource.h"
 namespace kengine {
-    struct BoneAnimation
-    {
-        int duration;
-        int ticks_per_second;
-        std::vector<SRT> keys;
+    //struct BoneAnimation
+    //{
+    //    int duration;
+    //    int ticks_per_second;
+    //    std::vector<SRT> keys;
 
-        mat4 learp(int i) {
-            //if (keys.size() == 0) return mat4(1.0);
-            int index = i % keys.size();
-            auto key = keys[index];
-            return key.matrix();
-        }
-    };
+    //    mat4 learp(int i) {
+    //        //if (keys.size() == 0) return mat4(1.0);
+    //        int index = i % keys.size();
+    //        auto key = keys[index];
+    //        return key.matrix();
+    //    }
+    //};
 
-    struct VertexBoneData {
-        uint bone_id;
-        float weight;
-    };
+    //struct VertexBoneData {
+    //    uint bone_id;
+    //    float weight;
+    //};
 
-    struct BoneNode
-    {
-        BoneNode* parent=nullptr;
-        std::vector< shared_ptr<BoneNode> > children;
-        string name;
-        uint bone_id=0;
-        mat4 local_matrix = mat4(1.0f);
-        mat4 offset_matrix = mat4(1.0f);
-        //mat4 final_matrix = mat4(1.0f);
-        mat4 global_inverse_matrix = mat4(1.0f);
-        BoneAnimation animation;
-    };
-    typedef shared_ptr<BoneNode> BoneNodePtr;
+    //struct BoneNode
+    //{
+    //    BoneNode* parent=nullptr;
+    //    std::vector< shared_ptr<BoneNode> > children;
+    //    string name;
+    //    uint bone_id=0;
+    //    mat4 local_matrix = mat4(1.0f);
+    //    mat4 offset_matrix = mat4(1.0f);
+    //    //mat4 final_matrix = mat4(1.0f);
+    //    mat4 global_inverse_matrix = mat4(1.0f);
+    //    BoneAnimation animation;
+    //};
+    //typedef shared_ptr<BoneNode> BoneNodePtr;
 
     class Mesh: public Resource {
     public:
@@ -42,10 +42,10 @@ namespace kengine {
         MeshBuffer indices_buffer;
         std::vector<MeshBuffer> mesh_buffers;
         
-        BoneNodePtr bone_root=nullptr;
+        //BoneNodePtr bone_root=nullptr;
 
-        std::vector<vec3> positions;
-        std::vector < std::vector <VertexBoneData> > vertex_infos;
+        //std::vector<vec3> positions;
+        //std::vector < std::vector <VertexBoneData> > vertex_infos;
 
         inline void gpucache( ) {
             if (gpu_object == nullptr || dirty) {
@@ -60,6 +60,12 @@ namespace kengine {
 
         inline void add_buffer(MeshBuffer&& mbuffer) {
             mesh_buffers.push_back( mbuffer );
+        }
+
+        BufferPtr get_buffer(int location) {
+            for (auto& mb : mesh_buffers) {
+                return mb.buffer;
+            }
         }
 
         void set_indices(PrimitiveType primitive_type, BufferPtr buffer, GPUType data_type = GPUType::UNSIGNED_SHORT) {
@@ -154,65 +160,65 @@ namespace kengine {
 
         //}
 
-        bool has_bone() {
-            return bone_root != nullptr;
-        }
+        //bool has_bone() {
+        //    return bone_root != nullptr;
+        //}
 
-        std::vector<mat4> get_bone_matrix() {
-            std::vector<mat4> bone_matrix;
-            bone_matrix.clear();
-            bone_matrix.resize(64);
+        //std::vector<mat4> get_bone_matrix() {
+        //    std::vector<mat4> bone_matrix;
+        //    bone_matrix.clear();
+        //    bone_matrix.resize(64);
 
-            //for (int i = 0; i < 64; i++) {
-            //    bone_matrix[i] = mat4(1.0);
-            //}
+        //    //for (int i = 0; i < 64; i++) {
+        //    //    bone_matrix[i] = mat4(1.0);
+        //    //}
 
-            get_bone_matrix(bone_root, mat4(1.0f) ,bone_matrix);
+        //    get_bone_matrix(bone_root, mat4(1.0f) ,bone_matrix);
 
-            //vec4 t(0, 0, 0, 1);
-            //mat4 m = glm::translate(mat4(1.0), vec3(1,2,3));
-            //vec3 t2 = m * t;
+        //    //vec4 t(0, 0, 0, 1);
+        //    //mat4 m = glm::translate(mat4(1.0), vec3(1,2,3));
+        //    //vec3 t2 = m * t;
 
-            //std::vector<vec3> new_pos;
-            //for (int i = 0; i < positions.size(); i++) {
-            //    vec4  old=vec4(positions[i],1);
-            //    
-            //    auto info = vertex_infos[i];
-            //    mat4 ft(0);
-            //    for (auto& w : info) {
-            //        ft+= bone_matrix[w.bone_id] * w.weight;
-            //    }
-            //    vec4  fpos = ft * old;
-            //    new_pos.push_back(fpos);
-            //}
+        //    //std::vector<vec3> new_pos;
+        //    //for (int i = 0; i < positions.size(); i++) {
+        //    //    vec4  old=vec4(positions[i],1);
+        //    //    
+        //    //    auto info = vertex_infos[i];
+        //    //    mat4 ft(0);
+        //    //    for (auto& w : info) {
+        //    //        ft+= bone_matrix[w.bone_id] * w.weight;
+        //    //    }
+        //    //    vec4  fpos = ft * old;
+        //    //    new_pos.push_back(fpos);
+        //    //}
 
-            //BufferPtr buf = std::make_shared<Buffer>(new_pos.size() * 3 * sizeof(float));
-            //std::memcpy(buf->data, new_pos.data(), buf->size);
-            //set_position(buf);
-            //dirty = true;
+        //    //BufferPtr buf = std::make_shared<Buffer>(new_pos.size() * 3 * sizeof(float));
+        //    //std::memcpy(buf->data, new_pos.data(), buf->size);
+        //    //set_position(buf);
+        //    //dirty = true;
 
-            return bone_matrix;
-        }
+        //    return bone_matrix;
+        //}
 
-        void get_bone_matrix(BoneNodePtr node, mat4 parent_mat,std::vector<mat4> &bone_matrix) {
-            //mat4 global_transform= parent_mat* node->local_matrix;
-            static float i = 0;
-            i += 0.1;
-            mat4 global_transform;
-            if (node->animation.keys.size() == 0) {
-                global_transform = parent_mat * node->local_matrix;
-            }
-            else {
-                global_transform = parent_mat * node->animation.learp(i);
-            }
+        //void get_bone_matrix(BoneNodePtr node, mat4 parent_mat,std::vector<mat4> &bone_matrix) {
+        //    //mat4 global_transform= parent_mat* node->local_matrix;
+        //    static float i = 0;
+        //    i += 0.1;
+        //    mat4 global_transform;
+        //    if (node->animation.keys.size() == 0) {
+        //        global_transform = parent_mat * node->local_matrix;
+        //    }
+        //    else {
+        //        global_transform = parent_mat * node->animation.learp(i);
+        //    }
 
-            mat4 m = node->global_inverse_matrix * global_transform * node->offset_matrix;
-            bone_matrix[node->bone_id]=m;
+        //    mat4 m = node->global_inverse_matrix * global_transform * node->offset_matrix;
+        //    bone_matrix[node->bone_id]=m;
 
-            for (auto child : node->children) {
-                get_bone_matrix(child, global_transform, bone_matrix);
-            }
-        }
+        //    for (auto child : node->children) {
+        //        get_bone_matrix(child, global_transform, bone_matrix);
+        //    }
+        //}
 
         void draw(int count=1) {
             //gpucache();

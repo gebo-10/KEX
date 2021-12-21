@@ -36,7 +36,7 @@ namespace kengine {
 			auto comp_mesh = std::make_shared<MeshRender>();
 			comp_mesh->instance_count = 1;
 			//comp_mesh->material= Env.assets_database.get_resource<Material>(NAME("Assets/Bundle/per_frag_diffuse.material"));
-			comp_mesh->material = MatGLSLImport::import("main/material/skin.mg");
+			comp_mesh->material = MatGLSLImport::import("main/material/default.mg");
 			//comp_mesh->material = MatGLSLImport::import("main/material/vertex_animation.mg");
 			//auto texture = TextureImporter::import("main/texture/miku.png");
 			auto texture = TextureImporter::import("main/texture/CesiumMan.jpg");

@@ -52,7 +52,8 @@ namespace kengine {
 			{
 				sol::table uniform = item.second;
 				int location = uniform["location"];
-				int count = uniform["count"];
+				int count = uniform.get_or("count", 1);
+				//int count = uniform["count"];
 				ShaderDataType type = uniform["type"];
 
 				sol::table value = uniform["value"];

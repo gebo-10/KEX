@@ -12,6 +12,7 @@ namespace kengine {
     };
 
     struct BufferUniform {
+        GPUBufferType type;
         int bind_point;
         GPUBufferPtr gpu_buffer;
     };
@@ -50,10 +51,34 @@ namespace kengine {
             }
         }
 
-        void attach_uniform(BindPointManager &bind_point_manager) {
-            //bind_point_manager.bind_shader(shader);
+        //void attach_uniform(BindPointManager &bind_point_manager) {
+        //    //bind_point_manager.bind_shader(shader);
+        //    for (Uniform& uniform : uniforms) {
+        //        //uniform.sync();
+        //        if (uniform.dirty) {
+        //            uniform.dirty = false;
+        //            shader->set_uniform(uniform);
+        //        }
+        //    }
+        //    shader->sync();
+
+        //    for (auto & texture_uniform : texture_uniforms) {
+        //        texture_uniform.texture->gpucache();
+        //        bind_point_manager.bind_texture(texture_uniform.texture->gpu_texture, texture_uniform.bind_point);
+        //    }
+
+        //    for (auto& buffer_uniform : buffer_uniforms) {
+        //        if (buffer_uniform.gpu_buffer->type == (int)GPUBufferType::UNIFORM_BUFFER) {
+        //            bind_point_manager.bind_ubo(buffer_uniform.gpu_buffer, buffer_uniform.bind_point);
+        //        }
+        //        else if (buffer_uniform.gpu_buffer->type == (int)GPUBufferType::SHADER_STORAGE_BUFFER) {
+        //            bind_point_manager.bind_ssbo(buffer_uniform.gpu_buffer, buffer_uniform.bind_point);
+        //        }
+        //    }
+        //}
+
+        void attach_uniform() {
             for (Uniform& uniform : uniforms) {
-                //uniform.sync();
                 if (uniform.dirty) {
                     uniform.dirty = false;
                     shader->set_uniform(uniform);
@@ -61,18 +86,13 @@ namespace kengine {
             }
             shader->sync();
 
-            for (auto & texture_uniform : texture_uniforms) {
+            for (auto& texture_uniform : texture_uniforms) {
                 texture_uniform.texture->gpucache();
-                bind_point_manager.bind_texture(texture_uniform.texture->gpu_texture, texture_uniform.bind_point);
+                texture_uniform.texture->gpu_texture->bind(texture_uniform.bind_point);
             }
 
             for (auto& buffer_uniform : buffer_uniforms) {
-                if (buffer_uniform.gpu_buffer->type == (int)GPUBufferType::UNIFORM_BUFFER) {
-                    bind_point_manager.bind_ubo(buffer_uniform.gpu_buffer, buffer_uniform.bind_point);
-                }
-                else if (buffer_uniform.gpu_buffer->type == (int)GPUBufferType::SHADER_STORAGE_BUFFER) {
-                    bind_point_manager.bind_ssbo(buffer_uniform.gpu_buffer, buffer_uniform.bind_point);
-                }
+                buffer_uniform.gpu_buffer->bind_to_point(buffer_uniform.bind_point, buffer_uniform.type);
             }
         }
 
@@ -144,26 +164,24 @@ namespace kengine {
         }
 
         void add_textures(std::vector<TextureUniform> &uniforms) {
-            //texture_uniforms.clear();
-            //texture_uniforms.assign(uniforms.begin(), uniforms.end());
             for (auto& uniform : uniforms) {
                 add_texture(uniform.bind_point, uniform.texture);
             }
         }
 
-        void add_buffer(int bind_point, GPUBufferPtr buffer) {
+        void add_buffer(GPUBufferType type, int bind_point, GPUBufferPtr buffer) {
             for (auto& uniform : buffer_uniforms) {
                 if (uniform.bind_point == bind_point) {
                     uniform.gpu_buffer = buffer;
                     return;
                 }
             }
-            buffer_uniforms.push_back(BufferUniform{ bind_point , buffer });
+            buffer_uniforms.push_back(BufferUniform{ type, bind_point , buffer });
         }
 
         void add_buffers(std::vector<BufferUniform>& uniforms) {
             for (auto& uniform : uniforms) {
-                add_buffer(uniform.bind_point, uniform.gpu_buffer);
+                add_buffer(uniform.type, uniform.bind_point, uniform.gpu_buffer);
             }
         }
     };

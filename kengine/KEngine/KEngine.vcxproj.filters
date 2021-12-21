@@ -125,6 +125,9 @@
     <Filter Include="kengine\resource\buildin">
       <UniqueIdentifier>{a4a965f7-bc73-4f66-b923-4fe74397e547}</UniqueIdentifier>
     </Filter>
+    <Filter Include="kengine\animation">
+      <UniqueIdentifier>{dc9153d8-293a-4048-85d3-38b026163293}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="window\main.cc">
@@ -555,6 +558,12 @@
     </ClInclude>
     <ClInclude Include="kengine\core\collection\object_alloc.h">
       <Filter>kengine\core\collection</Filter>
+    </ClInclude>
+    <ClInclude Include="kengine\animation\animator.h">
+      <Filter>kengine\animation</Filter>
+    </ClInclude>
+    <ClInclude Include="kengine\util\skin_importer.h">
+      <Filter>kengine\utiil</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
