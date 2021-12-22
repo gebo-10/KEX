@@ -62,10 +62,10 @@ void main()
 	float diff = max(dot(norm, -lightDir), 0.0);
 	vec3 diffuse = diff * light_color.xyz;
 	
-	color =texture(texture0,texture_coord);
+	//color =texture(texture0,texture_coord);
 	//color = vec4(diffuse,1.0f)*0.7+c*0.3;
 	//color =texture(texture0,texture_coord)*0.5+ vec4(diffuse*sin(time.x*5.0),1.0f);
-	//color =texture(texture0,texture_coord)*0.5+ vec4(diffuse,1.0f);
+	color =texture(texture0,texture_coord)*0.5+ vec4(diffuse,1.0f)*0.5;
 	//color = c;
 	//color=vec4(0.3,0.9,0.1,0.0);
    

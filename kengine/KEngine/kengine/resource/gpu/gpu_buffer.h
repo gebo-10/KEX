@@ -73,7 +73,8 @@ namespace kengine
         	    return false;
             }
             glBindBuffer(type, gpu_id);
-            glBufferSubData(type, 0, size, buffer->data);
+            //glBufferSubData(type, 0, size, buffer->data);
+            glBufferData(type, buffer->size, buffer->data, memery_hint);
             return true;
         }
 

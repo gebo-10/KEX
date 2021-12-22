@@ -5,6 +5,6 @@ namespace kengine {
 	class TextureImporter
 	{
 	public:
-		static TexturePtr import(const string &filename);
+		static TexturePtr import(const string &filename, bool flip = false);
 	};
 }

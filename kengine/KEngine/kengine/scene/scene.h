@@ -40,19 +40,18 @@ namespace kengine {
 			comp_mesh->material = MatGLSLImport::import("main/material/default.mg");
 			//comp_mesh->material = MatGLSLImport::import("main/material/vertex_animation.mg");
 			//auto texture = TextureImporter::import("main/texture/miku.png");
-			auto texture = TextureImporter::import("main/texture/bird.jpg"); 
+			auto texture = TextureImporter::import("main/texture/CesiumMan.jpg",true); 
 			comp_mesh->material->add_texture(1, texture);
 
 			//comp_mesh->mesh = Env.assets_database.get_resource<Mesh>(NAME("Assets/Bundle/box.fbx"));
-			comp_mesh->mesh = MeshImporter::import("main/mesh/bird.FBX");
+			comp_mesh->mesh = MeshImporter::import("main/mesh/CesiumMan.gltf");
 			//comp_mesh->mesh = std::make_shared<PlaneMesh>();
 
 			root->add_component(comp_mesh);
 
 
-			auto skin = SkinImporter::import("main/mesh/bird.FBX");
-			skin->mesh = comp_mesh->mesh;
-			skin->compute_material= MatGLSLImport::import("main/material/bone_transform.cs.mg");
+			auto skin = SkinImporter::import("main/mesh/CesiumMan.gltf");
+			skin->init(comp_mesh->mesh, MatGLSLImport::import("main/material/bone_transform.cs.mg") );
 			root->add_component(skin);
 
 			objs.push_back(root);
@@ -82,7 +81,7 @@ namespace kengine {
 				camera_go->add_component(camera);
 
 				auto camera_transform = std::make_shared<Transform>();
-				camera_transform->set_translate(vec3(0, -0, -50));
+				camera_transform->set_translate(vec3(0, -0, -5));
 				//camera_transform->set_rotate(vec3(0, 180, 0));
 				camera_go->add_component(camera_transform);
 				cameras.push_back(camera_go);
@@ -97,7 +96,7 @@ namespace kengine {
 
 		std::vector<GameObjectPtr>& cull() {
 			rotate += 1;
-			comp_transform->set_rotate(vec3(0, rotate, 0));
+			comp_transform->set_rotate(vec3(90, rotate, 0));
 			return objs;
 		}
 	private:

@@ -13,7 +13,7 @@ namespace kengine {
 			const aiScene* scene;
 			info("SkinImporter: {}", pFile);
 			scene = importer.ReadFile(pFile, aiProcess_Triangulate
-				//| aiProcess_MakeLeftHanded
+				| aiProcess_MakeLeftHanded
 				//aiProcess_CalcTangentSpace |
 				//| aiProcess_SortByPType
 				//| aiProcess_GenSmoothNormals
@@ -38,11 +38,15 @@ namespace kengine {
 			std::map<string, BonePtr> bones;
 			bones.clear();
 			skin->global_inverse_matrix = glm::inverse(mat4_cast(scene->mRootNode->mTransformation));
-			auto root = load_bone_tree(scene, scene->mRootNode, bones, skin);
-			skin->bone_root = root;
+			load_bone_tree(scene->mRootNode, bones);
 			load_bone_data(ai_mesh, skin, bones);
 			for (int i = 0; i < scene->mNumAnimations; i++) {
 				load_bone_animation(scene->mAnimations[i], skin, bones);
+			}
+
+			skin->bones.resize(bones.size());
+			for (auto& [name, bone] : bones) {
+				skin->bones[bone->bone_id] = bone;
 			}
 
 			importer.FreeScene();
@@ -50,21 +54,22 @@ namespace kengine {
 			return skin;
 		}
 
-		static BonePtr load_bone_tree(const aiScene* scene, const aiNode* ai_node, std::map<string, BonePtr>& bones, MeshSkinPtr skin) {
+		static BonePtr load_bone_tree(const aiNode* ai_node, std::map<string, BonePtr>& bones) {
 			string name = string(ai_node->mName.data);
 			BonePtr bone = std::make_shared<Bone>();
 			bone->bone_id = bones.size();
-			if (bones[name] != nullptr) {
+			if (bones.find(name) != bones.end()) {
 				error("same bone name");
 			}
 			bones[name] = bone;
-			skin->bones.push_back(bone);
 			//info("scene node name: {}", name);
 			bone->local_matrix = mat4_cast(ai_node->mTransformation);
+			bone->animation_matrix = bone->local_matrix;
+
 			bone->children.clear();
 			for (int i = 0; i < ai_node->mNumChildren; i++)
 			{
-				auto child = load_bone_tree(scene, ai_node->mChildren[i], bones, skin);
+				auto child = load_bone_tree(ai_node->mChildren[i], bones);
 				bone->children.push_back(child);
 			}
 			return bone;

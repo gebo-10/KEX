@@ -49,19 +49,16 @@ void main()
 
 	for (int i = 0; i<16; i++) {	
 		BoneWeight weight=bone_data.weights[i];
-	    if(weight.bone_id==-1){
-	    	break;
-	    }
-
-	    bone_transform+=bone_matrix[weight.bone_id] * weight.weight;
+	    if(weight.bone_id==-1){break;}
+	    bone_transform+=bone_matrix[weight.bone_id*2]* bone_matrix[weight.bone_id*2+1]* weight.weight;
 	}
 
 	//mat4 bone_transform=global_inverse_matrix;
-	//tmp=global_inverse_matrix*bone_transform*tmp;
-	tmp=bone_transform*tmp;
-	t.x=tmp.x;
-	t.y=tmp.y;
-	t.z=tmp.z;
+	tmp=global_inverse_matrix*bone_transform*tmp;
+	//tmp=bone_transform*tmp;
+	t.x=tmp.x/tmp.w;
+	t.y=tmp.y/tmp.w;
+	t.z=tmp.z/tmp.w;
 	out_position[index]=t;
 }
 //////////////////////////////////////////////////////////////////////////////

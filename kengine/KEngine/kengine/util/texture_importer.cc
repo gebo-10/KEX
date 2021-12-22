@@ -3,11 +3,11 @@
 #define STB_IMAGE_IMPLEMENTATION
 #include <stb/stb_image.h>
 namespace kengine {
-	TexturePtr kengine::TextureImporter::import(const string& filename)
+	TexturePtr kengine::TextureImporter::import(const string& filename,bool flip)
 	{
 		MapFile tex(filename);
 		int w, h, n;
-		stbi_set_flip_vertically_on_load(false);
+		stbi_set_flip_vertically_on_load(flip);
 		unsigned char* data = stbi_load_from_memory((ubyte*)tex.data(), tex.size(), &w, &h, &n, 0);
 		int size = w * h * n;
 
