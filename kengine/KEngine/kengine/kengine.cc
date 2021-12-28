@@ -77,16 +77,14 @@ void KEngine::init(int width, int height) {
 
 void KEngine::update()
 {
-    //static int a = 0;
-    //a++;
     Env.update();
-    //info("fps:{}", Env.time.fps());
+    ui.new_frame();
 
-    //Env.profiler.fps_limit();
-    //info("hello{}",a);
     Env.event_setvice.dispatch(EventType::OnUpdate, nullptr);
 
     render.update(*scene_manager.scene);
+
+    ui.end_frame();
 }
 
 void KEngine::quit()

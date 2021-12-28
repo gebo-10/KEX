@@ -128,6 +128,12 @@
     <Filter Include="kengine\animation">
       <UniqueIdentifier>{dc9153d8-293a-4048-85d3-38b026163293}</UniqueIdentifier>
     </Filter>
+    <Filter Include="kengine\ui">
+      <UniqueIdentifier>{fc901ed4-0157-4ed1-a969-3f1c1befc938}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="kengine\ui\imgui">
+      <UniqueIdentifier>{dc597779-61df-4187-8e44-f8b292a30c41}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="window\main.cc">
@@ -153,6 +159,27 @@
     </ClCompile>
     <ClCompile Include="kengine\core\collection\clist.cc">
       <Filter>kengine\core\collection</Filter>
+    </ClCompile>
+    <ClCompile Include="kengine\ui\imgui\imgui.cpp">
+      <Filter>kengine\ui\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="kengine\ui\imgui\imgui_demo.cpp">
+      <Filter>kengine\ui\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="kengine\ui\imgui\imgui_draw.cpp">
+      <Filter>kengine\ui\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="kengine\ui\imgui\imgui_tables.cpp">
+      <Filter>kengine\ui\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="kengine\ui\imgui\imgui_widgets.cpp">
+      <Filter>kengine\ui\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="kengine\ui\imgui\imgui_impl_glfw.cpp">
+      <Filter>kengine\ui\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="kengine\ui\imgui\imgui_impl_opengl3.cpp">
+      <Filter>kengine\ui\imgui</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -564,6 +591,39 @@
     </ClInclude>
     <ClInclude Include="kengine\util\skin_importer.h">
       <Filter>kengine\utiil</Filter>
+    </ClInclude>
+    <ClInclude Include="kengine\render\render_graph\pass\lambda_pass.h">
+      <Filter>kengine\render\render_graph\pass</Filter>
+    </ClInclude>
+    <ClInclude Include="kengine\ui\imgui\imstb_truetype.h">
+      <Filter>kengine\ui\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="kengine\ui\imgui\imconfig.h">
+      <Filter>kengine\ui\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="kengine\ui\imgui\imgui.h">
+      <Filter>kengine\ui\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="kengine\ui\imgui\imgui_internal.h">
+      <Filter>kengine\ui\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="kengine\ui\imgui\imstb_rectpack.h">
+      <Filter>kengine\ui\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="kengine\ui\imgui\imstb_textedit.h">
+      <Filter>kengine\ui\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="kengine\ui\ui.h">
+      <Filter>kengine\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="kengine\ui\imgui\imgui_impl_glfw.h">
+      <Filter>kengine\ui\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="kengine\ui\imgui\imgui_impl_opengl3.h">
+      <Filter>kengine\ui\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="kengine\ui\imgui\imgui_impl_opengl3_loader.h">
+      <Filter>kengine\ui\imgui</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

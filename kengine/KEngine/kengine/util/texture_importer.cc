@@ -1,9 +1,11 @@
 #include "texture_importer.h"
 #include <kengine/core/io/mmap.h>
 #define STB_IMAGE_IMPLEMENTATION
+#define STB_IMAGE_WRITE_IMPLEMENTATION
+#include <stb/stb_image_write.h>
 #include <stb/stb_image.h>
 namespace kengine {
-	TexturePtr kengine::TextureImporter::import(const string& filename,bool flip)
+	TexturePtr TextureImporter::import(const string& filename,bool flip)
 	{
 		MapFile tex(filename);
 		int w, h, n;
@@ -20,5 +22,9 @@ namespace kengine {
 		auto t = std::make_shared<Texture>(desc);
 		t->add_data(std::make_shared<Buffer>(data, size, true));
 		return t;
+	}
+	void TextureImporter::save(const string& path,int width, int height, int component, void * data)
+	{
+		stbi_write_png(path.c_str(),width,height,component,data,0);
 	}
 }

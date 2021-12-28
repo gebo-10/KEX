@@ -10,6 +10,7 @@
 #include "render/render.h"
 #include "system/monitor/monitor.h"
 #include <kengine/scene/scene_manager.h>
+#include <kengine/ui/ui.h>
 namespace kengine
 {
 	class KEngine {
@@ -23,6 +24,7 @@ namespace kengine
 		
 		Render render;
 		SceneManager scene_manager;
+		UI ui;
 		Monitor monitor;
 
 		void init(int width, int height);

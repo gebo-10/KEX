@@ -111,7 +111,7 @@ namespace kengine {
 			return render_graph;
 		}
 
-		static RenderGraphPtr import_blur_rg(const string& filename) {
+		static RenderGraphPtr import_blur_rg() {
 			CheckGLError
 			RenderGraphPtr render_graph = std::make_shared<RenderGraph>();
 			auto state_pass = std::make_shared<StatePass>();
@@ -181,9 +181,30 @@ namespace kengine {
 				material->add_texture(0, blur_x_target->get_texture());
 				material->set_uniform(3, glm::value_ptr(dir_y));
 				auto blur_y = std::make_shared<BlitPass>(SCREEN_TARGET, material);
+				//auto blur_y = std::make_shared<BlitPass>(blur_y_target, material);
 				render_graph->passes.push_back(blur_y);
 			}
+			//{
+			//	auto pass = std::make_shared<LambdaPass>([](Scene& scene, Pipeline& pipeline) {
+			//		glReadBuffer(GL_COLOR_ATTACHMENT0);
+			//		auto buffer = std::make_shared<Buffer>(1024 * 1024 * 4);
+			//		glReadPixels(0, 0, 1024, 1024, GL_RGBA, GL_UNSIGNED_BYTE, buffer->data);
+			//		TextureImporter::save("xxx.png", 1024, 1024, 4, buffer->data);
+			//	});
+			//	render_graph->passes.push_back(pass);
+			//}
 
+			//{
+			//	auto state_pass = std::make_shared<StatePass>();
+			//	state_pass->states.push_back(std::make_shared<ClearValue>(color_pink, 1.0f, 0));
+			//	state_pass->states.push_back(std::make_shared<DepthTest>(true, CompareFunc::LEQUAL));
+			//	render_graph->passes.push_back(state_pass);
+
+			//	auto dp1 = std::make_shared<DrawPass>();
+			//	dp1->target = SCREEN_TARGET;
+			//	dp1->camera_id = 1;
+			//	render_graph->passes.push_back(dp1);
+			//}
 			return render_graph;
 		}
 	};

@@ -7,6 +7,7 @@
 #include <kengine/util/mat_glsl_importer.h>
 #include <kengine/util/skin_importer.h>
 #include <kengine/resource/buildin/plane_mesh.h>
+
 namespace kengine {
 	class RenderGraph;
 	typedef shared_ptr< RenderGraph> RenderGraphPtr;
@@ -44,15 +45,15 @@ namespace kengine {
 			comp_mesh->material->add_texture(1, texture);
 
 			//comp_mesh->mesh = Env.assets_database.get_resource<Mesh>(NAME("Assets/Bundle/box.fbx"));
-			comp_mesh->mesh = MeshImporter::import("main/mesh/CesiumMan.gltf");
+			comp_mesh->mesh = MeshImporter::import("main/mesh/planet.obj");
 			//comp_mesh->mesh = std::make_shared<PlaneMesh>();
 
 			root->add_component(comp_mesh);
 
 
-			auto skin = SkinImporter::import("main/mesh/CesiumMan.gltf");
-			skin->init(comp_mesh->mesh, MatGLSLImport::import("main/material/bone_transform.cs.mg") );
-			root->add_component(skin);
+			//auto skin = SkinImporter::import("main/mesh/CesiumMan.gltf");
+			//skin->init(comp_mesh->mesh, MatGLSLImport::import("main/material/bone_transform.cs.mg") );
+			//root->add_component(skin);
 
 			objs.push_back(root);
 
@@ -77,11 +78,11 @@ namespace kengine {
 				CameraPtr camera = std::make_shared<Camera>();
 				camera->set_type(CameraType::PERSPECTIVE);
 				camera->set_view_rect(0, 0, 1, 1);
-				camera->set_clear_color(color_blue);
+				camera->set_clear_color(color_white);
 				camera_go->add_component(camera);
 
 				auto camera_transform = std::make_shared<Transform>();
-				camera_transform->set_translate(vec3(0, -0, -5));
+				camera_transform->set_translate(vec3(0, -0, -15));
 				//camera_transform->set_rotate(vec3(0, 180, 0));
 				camera_go->add_component(camera_transform);
 				cameras.push_back(camera_go);

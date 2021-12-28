@@ -6,7 +6,7 @@
 #include "pass/fence_pass.h"
 #include "pass/copy_framebuffer_pass.h"
 #include "pass/blit_pass.h"
-
+#include "pass/lambda_pass.h"
 
 #include "render_target.h"
 namespace kengine {

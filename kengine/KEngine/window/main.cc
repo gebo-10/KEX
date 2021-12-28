@@ -45,9 +45,30 @@ kengine::KEngine* engine=nullptr;
 //#include <EffekseerRendererGL/EffekseerRendererGL.h>
 
 
-void effect() {
-    
+void init_imgui(GLFWwindow* window) {
+    // Setup Dear ImGui context
+    IMGUI_CHECKVERSION();
+    ImGui::CreateContext();
+    ImGuiIO& io = ImGui::GetIO(); (void)io;
+    //io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;     // Enable Keyboard Controls
+    //io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
+
+    // Setup Dear ImGui style
+    ImGui::StyleColorsDark();
+    //ImGui::StyleColorsClassic();
+
+    // Setup Platform/Renderer backends
+    ImGui_ImplGlfw_InitForOpenGL(window, true);
+    ImGui_ImplOpenGL3_Init("#version 130");
 }
+
+void destory_imgui() {
+    ImGui_ImplOpenGL3_Shutdown();
+    ImGui_ImplGlfw_Shutdown();
+    ImGui::DestroyContext();
+}
+
+
 int main()
 {
     GLFWwindow* window;
@@ -81,8 +102,9 @@ int main()
     }
 
     glfwSetWindowSizeCallback(window, [](GLFWwindow* window, int width, int height)->void {engine->on_view_size(width,height); });
+    init_imgui(window);
     engine->init(1024, 1024);
-
+    
 
     while (!glfwWindowShouldClose(window))
     {
@@ -95,13 +117,11 @@ int main()
         //glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT |GL_STENCIL_BUFFER_BIT);
 
         engine->update();
-        /* Swap front and back buffers */
         glfwSwapBuffers(window);
-
-        /* Poll for and process events */
         glfwPollEvents();
     }
     engine->quit();
+    destory_imgui();
     glfwTerminate();
     return 0;
 }
