@@ -1,5 +1,5 @@
 #include "camera.h"
-#include "../game_object.h"
+#include "../object.h"
 namespace kengine {
 	mat4 Camera::get_v()
 	{

@@ -345,7 +345,7 @@
     <ClInclude Include="kengine\scene\component.h">
       <Filter>kengine\scene</Filter>
     </ClInclude>
-    <ClInclude Include="kengine\scene\game_object.h">
+    <ClInclude Include="kengine\scene\object.h">
       <Filter>kengine\scene</Filter>
     </ClInclude>
     <ClInclude Include="kengine\scene\component\camera.h">

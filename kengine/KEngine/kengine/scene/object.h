@@ -5,18 +5,18 @@
 #include "component/mesh_render.h"
 #include "component/mesh_skin.h"
 namespace kengine {
-	class GameObject
+	class Object
 	{
 	public:
 		//uint32 id;
-		GameObject * parent;
-		std::vector< shared_ptr<GameObject> > children;
+		Object * parent;
+		std::vector< shared_ptr<Object> > children;
 		std::vector<ComponentPtr> components;
-		GameObject()
+		Object()
 		{
 		}
 
-		virtual ~GameObject()
+		virtual ~Object()
 		{
 		}
 
@@ -39,11 +39,11 @@ namespace kengine {
 			return nullptr;
 		}
 
-		shared_ptr<GameObject> get_child(int index) {
+		shared_ptr<Object> get_child(int index) {
 			return children[index];
 		}
 
-		void add_child(shared_ptr<GameObject> child) {
+		void add_child(shared_ptr<Object> child) {
 			child->parent = this;
 			children.push_back(child);
 		}
@@ -51,6 +51,6 @@ namespace kengine {
 	private:
 
 	};
-	typedef shared_ptr<GameObject> GameObjectPtr;
-	typedef weak_ptr<GameObject> GameObjectWptr;
+	typedef shared_ptr<Object> ObjectPtr;
+	typedef weak_ptr<Object> ObjectWptr;
 }

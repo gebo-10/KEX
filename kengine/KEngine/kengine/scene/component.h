@@ -7,13 +7,14 @@ namespace kengine {
 		MESH_MORPH,
 		MESH_SKIN,
 		CAMERA,
+		LIGHT,
 	};
-	class GameObject;
+	class Object;
 	class Component
 	{
 	public:
 		ComponentType type;
-		GameObject* go;
+		Object* go;
 		Component(ComponentType t):type(t)
 		{
 		}

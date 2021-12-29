@@ -26,7 +26,7 @@ namespace kengine {
 		int event_id;
 		Camera() :Component(ComponentType::CAMERA) {
 			set_view_rect(0, 0, 1, 1);
-			Env.event_setvice.listen(EventType::OnViewSize, [this](Event* e) {
+			Env.event_service.listen(EventType::OnViewSize, [this](Event* e) {
 				//OnViewSize* event = (OnViewSize*)e;
 				//width = event->width;
 				//height = event->height;
@@ -34,7 +34,7 @@ namespace kengine {
 			});
 		}
 		~Camera() {
-			Env.event_setvice.unlisten(EventType::OnViewSize, event_id);
+			Env.event_service.unlisten(EventType::OnViewSize, event_id);
 		}
 
 		mat4 get_p() {

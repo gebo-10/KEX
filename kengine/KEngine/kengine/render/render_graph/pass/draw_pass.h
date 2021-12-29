@@ -9,9 +9,9 @@ namespace kengine {
 		RenderTargetPtr target=nullptr;
 
 		int camera_id=0;
-		std::function<std::vector<GameObjectPtr>()> cull;
-		std::function<std::vector<GameObjectPtr>()> filter;
-		std::function<std::vector<GameObjectPtr>()> sort;
+		std::function<std::vector<ObjectPtr>()> cull;
+		std::function<std::vector<ObjectPtr>()> filter;
+		std::function<std::vector<ObjectPtr>()> sort;
 
 		virtual void exec(Scene& scene, Pipeline& pipeline) {
 			pipeline.set_target(target);

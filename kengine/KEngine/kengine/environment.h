@@ -40,7 +40,7 @@ namespace kengine
 
 		NameService name_service;
 		AsyncService async_service;
-		EventService event_setvice;
+		EventService event_service;
 		AssetsDatabase assets_database;
 	};
 }

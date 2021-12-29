@@ -57,10 +57,10 @@ namespace kengine {
 
         MeshSkin() :Component(ComponentType::MESH_SKIN) {}
         ~MeshSkin(){
-            Env.event_setvice.unlisten(EventType::OnUpdate, event_id);
+            Env.event_service.unlisten(EventType::OnUpdate, event_id);
         }
         virtual void on_attach() {
-            event_id= Env.event_setvice.listen(EventType::OnUpdate, [this](Event* e) {
+            event_id= Env.event_service.listen(EventType::OnUpdate, [this](Event* e) {
                 update();
             });
         }

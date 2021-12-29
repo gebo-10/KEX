@@ -80,7 +80,7 @@ void KEngine::update()
     Env.update();
     ui.new_frame();
 
-    Env.event_setvice.dispatch(EventType::OnUpdate, nullptr);
+    Env.event_service.dispatch(EventType::OnUpdate, nullptr);
 
     render.update(*scene_manager.scene);
 
@@ -101,7 +101,7 @@ void KEngine::on_view_size(int width, int height)
     OnViewSize e;
     e.width = width;
     e.height = height;
-    Env.event_setvice.dispatch(EventType::OnViewSize, &e);
+    Env.event_service.dispatch(EventType::OnViewSize, &e);
 }
 
 
