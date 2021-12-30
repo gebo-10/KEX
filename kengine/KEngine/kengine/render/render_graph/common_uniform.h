@@ -1,16 +1,19 @@
 #pragma once
 #include <kengine/core/math/kmath.h>
+#include <kengine/scene/scene.h>
 namespace kengine {
 
 	//#pragma pack(4)
 	struct CommonUniform { //alignas
 	public:
 		vec4 time;
-		vec4	light_dir;
-		Color	light_color;
-		Matrix v;
-		Matrix p;
-		Matrix pv;
+		CameraData camears[8];
+		LightData lights[16];
+		//vec4	light_dir;
+		//Color	light_color;
+		//Matrix v;
+		//Matrix p;
+		//Matrix pv;
 
 		GPUBufferPtr uniform_buffer = nullptr;
 		void sync() {

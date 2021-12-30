@@ -12,11 +12,10 @@ namespace kengine {
 	public:
 		LightType type;
 		bool accept_cull=false;  //是否视锥体裁剪
-		//vec3 position;  // 灯的位置  transform 提供
-		//vec3 direction; // 方向光源
-		vec3 ambient;
-		vec3 diffuse;
-		vec3 specular;
+
+		Color ambient;
+		Color diffuse;
+		Color specular;
 
 		float constant; // 衰减常数  //vec4
 		float linear;   // 衰减一次系数

@@ -12,7 +12,7 @@ namespace kengine {
 		{
 		}
 
-		virtual void exec(Scene& scene, Pipeline& pipeline) {
+		virtual void exec(Scene& scene, RenderDataPtr render_data, Pipeline& pipeline) {
 			//glFinish();
 			GLsync sync = glFenceSync(GL_SYNC_GPU_COMMANDS_COMPLETE, 0);
 			glClientWaitSync(sync, 0, 1000000);

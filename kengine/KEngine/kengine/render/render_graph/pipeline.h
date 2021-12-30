@@ -28,9 +28,14 @@ namespace kengine {
 					state->setup();
 				}
 			}
+
+			Env.event_service.listen(EventType::OnViewSize, [this](Event* e) {
+				states[(int)PipelineStateType::VIEW_PORT]->setup();
+				states[(int)PipelineStateType::SCISSOR_STATE]->setup();
+			});
 		}
 
-		void draw(Matrix &m, MeshPtr mesh, int count=1) {
+		void draw(int camera_id,Matrix &m, MeshPtr mesh, int count=1) {
 			//glEnable(GL_CULL_FACE);
 			//glFrontFace(GL_CW);
 			//glEnable(GL_DEPTH_TEST);
@@ -47,6 +52,7 @@ namespace kengine {
 			//}
 
 			material->set_model_matrix(m);
+			material->set_uniform(1, &camera_id);
 			//material->set_model_matrix(mat4(1.0));
 			
 			//material->attach_uniform(bind_point_manager);

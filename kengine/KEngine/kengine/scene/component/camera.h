@@ -23,18 +23,15 @@ namespace kengine {
 
 		Color clear_color;
 
-		int event_id;
+
 		Camera() :Component(ComponentType::CAMERA) {
 			set_view_rect(0, 0, 1, 1);
 			Env.event_service.listen(EventType::OnViewSize, [this](Event* e) {
-				//OnViewSize* event = (OnViewSize*)e;
-				//width = event->width;
-				//height = event->height;
 				dirty = true;
 			});
 		}
 		~Camera() {
-			Env.event_service.unlisten(EventType::OnViewSize, event_id);
+			
 		}
 
 		mat4 get_p() {
@@ -95,7 +92,7 @@ namespace kengine {
 			return clear_color;
 		}
 
-		mat4 get_v();
+		//mat4 get_v();
 		
 	};
 	typedef shared_ptr<Camera> CameraPtr;

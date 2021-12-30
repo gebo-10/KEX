@@ -12,7 +12,7 @@ namespace kengine {
 	public:
 		Pass(){}
 		virtual ~Pass(){}
-		virtual void exec(Scene& scene, Pipeline& pipeline) = 0;
+		virtual void exec(Scene& scene, RenderDataPtr render_data, Pipeline& pipeline) = 0;
 	private:
 
 	};

@@ -23,6 +23,10 @@ namespace kengine {
 			
 		}
 		
+		void update() {
+			scene->update();
+		}
+
 		void load_scene(PathID id) {}
 		void unload_scene(){}
 

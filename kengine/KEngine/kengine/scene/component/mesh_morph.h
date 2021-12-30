@@ -13,10 +13,7 @@ namespace kengine {
 		std::vector<float> blend_key;
 		MeshMorph() :Component(ComponentType::MESH_MORPH)
 		{
-			Env.event_service.listen(EventType::OnUpdate, [this](Event* e) {
-				
-				
-			});
+
 		}
 
 		~MeshMorph()

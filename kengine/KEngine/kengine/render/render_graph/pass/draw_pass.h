@@ -6,54 +6,28 @@ namespace kengine {
 	{
 	public:
 		std::vector<TexturePtr> input;
-		RenderTargetPtr target=nullptr;
+		RenderTargetPtr target= SCREEN_TARGET;
 
 		int camera_id=0;
-		std::function<std::vector<ObjectPtr>()> cull;
-		std::function<std::vector<ObjectPtr>()> filter;
-		std::function<std::vector<ObjectPtr>()> sort;
+		//std::function<std::vector<ObjectPtr>()> cull;
+		//std::function<std::vector<ObjectPtr>()> filter;
+		//std::function<std::vector<ObjectPtr>()> sort;
 
-		virtual void exec(Scene& scene, Pipeline& pipeline) {
+		virtual void exec(Scene& scene, RenderDataPtr render_data, Pipeline& pipeline) {
 			pipeline.set_target(target);
-			auto camera = scene.get_camera(camera_id);
-			pipeline.set_state(std::make_shared<ViewPortState>(camera->get_view_port() ) );
+			auto camera = render_data->camera_datas[camera_id];
+			pipeline.set_state(std::make_shared<ViewPortState>(camera.viewport) );
 
-			//pipeline.set_state(std::make_shared<ScissorState>(true, camera->get_view_port() ));
-			pipeline.set_state(std::make_shared<ClearValue>(camera->get_clear_color(), 1.0f, 0));
+			pipeline.set_state(std::make_shared<ScissorState>(true, camera.viewport));
+			pipeline.set_state(std::make_shared<ClearValue>(camera.clear_color, 1.0f, 0));
 			glClear(GL_COLOR_BUFFER_BIT| GL_DEPTH_BUFFER_BIT);
 
-			pipeline.common_uniform.v = camera->get_v();
-			pipeline.common_uniform.p = camera->get_p();
-			pipeline.common_uniform.pv = pipeline.common_uniform.p * pipeline.common_uniform.v;
-
-			pipeline.common_uniform.light_dir =  vec4(-1, -1, 1, 0);
-			pipeline.common_uniform.light_color = color_purple;
-
-			pipeline.sync_common_uniform();
-
-			//auto ssbo = std::make_shared<GPUBuffer>(100 * sizeof(float), GPUBufferType::SHADER_STORAGE_BUFFER, GPUBufferHit::DYNAMIC_DRAW);
-			//ssbo->bind_to_point(GPUBufferType::SHADER_STORAGE_BUFFER, 10);
-
-			auto objs = scene.cull();
-			//float* res2=nullptr;
-			for (auto obj : objs) {
-				TransformPtr t= std::dynamic_pointer_cast<Transform> ( obj-> get_component(ComponentType::TRANSFORM) );
-				MeshRenderPtr m = std::dynamic_pointer_cast<MeshRender> (obj->get_component(ComponentType::MESH_RENDER));
-				//res2 = (float*)m->mesh->mesh_buffer[MeshBufferType::POSITION].buffer->data;
-				pipeline.use_material(m->material);
-				pipeline.draw(t->matrix(), m->mesh,m->instance_count);
+			int index = 0;
+			for (auto &data : render_data->mesh_datas) {
+				pipeline.use_material(data.material);
+				pipeline.draw(camera_id, data.matrix, data.mesh, data.instance);
+				index++;
 			}
-
-			//glMemoryBarrier(GL_SHADER_IMAGE_ACCESS_BARRIER_BIT);
-			//glFinish();
-			//
-			//float* res = (float*)ssbo->map(GPUBufferHit::READ_ONLY);
-			//
-			//for (int i = 0; i <24; i++)
-			//{
-			//	std::cout << res[i*4+0] << " " << res[i * 4 + 1] << " " << res[i * 4 + 2] << " " << res[i * 4 + 3] << std::endl;
-			//	std::cout << res2[i * 3 + 0] << " " << res2[i * 3 + 1] << " " << res2[i * 3 + 2] << std::endl;
-			//}
 			return;
 		}
 	};

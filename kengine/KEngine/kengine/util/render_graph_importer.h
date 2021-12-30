@@ -23,7 +23,7 @@ namespace kengine {
 			render_graph->passes.push_back(std::make_shared<ClearPass>(true, true, false));
 
 			auto dp2 = std::make_shared<DrawPass>();
-			dp2->camera_id = 1;
+			dp2->camera_id = 0;
 
 			TextureDesc desc;
 			desc.width = 1024;
@@ -93,7 +93,7 @@ namespace kengine {
 			RenderGraphPtr render_graph = std::make_shared<RenderGraph>();
 			auto state_pass = std::make_shared<StatePass>();
 			state_pass->states.push_back(std::make_shared<ScissorState>(true, Rectf(0, 0, 1, 1)));
-			state_pass->states.push_back(std::make_shared<ClearValue>(color_transparent, 1.0f, 0));
+			state_pass->states.push_back(std::make_shared<ClearValue>(color_black, 1.0f, 0));
 			state_pass->states.push_back(std::make_shared<DepthTest>(true, CompareFunc::LESS));
 			render_graph->passes.push_back(state_pass);
 
@@ -101,7 +101,7 @@ namespace kengine {
 
 			auto dp1 = std::make_shared<DrawPass>();
 			dp1->target = SCREEN_TARGET;
-			dp1->camera_id = 1;
+			dp1->camera_id = 0;
 			render_graph->passes.push_back(dp1);
 
 			//render_graph->passes.push_back(std::make_shared<FencePass>());
@@ -122,7 +122,7 @@ namespace kengine {
 			render_graph->passes.push_back(std::make_shared<ClearPass>(true, true, false));
 
 			auto dp2 = std::make_shared<DrawPass>();
-			dp2->camera_id = 1;
+			dp2->camera_id = 0;
 
 			TextureDesc desc;
 			desc.width = 1024;

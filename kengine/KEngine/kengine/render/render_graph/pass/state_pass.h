@@ -10,7 +10,7 @@ namespace kengine {
 		{
 		}
 
-		virtual void exec(Scene& scene, Pipeline& pipeline) {
+		virtual void exec(Scene& scene, RenderDataPtr render_data, Pipeline& pipeline) {
 			for (auto state : states) {
 				pipeline.set_state(state);
 			}

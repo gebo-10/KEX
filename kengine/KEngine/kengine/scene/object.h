@@ -4,11 +4,13 @@
 #include "component/transform.h"
 #include "component/mesh_render.h"
 #include "component/mesh_skin.h"
+#include "component/light.h"
 namespace kengine {
 	class Object
 	{
 	public:
 		//uint32 id;
+		bool active=true;
 		Object * parent;
 		std::vector< shared_ptr<Object> > children;
 		std::vector<ComponentPtr> components;

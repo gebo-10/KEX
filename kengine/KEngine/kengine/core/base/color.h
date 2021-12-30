@@ -39,6 +39,9 @@ namespace kengine {
 			return this->r != c.r || this->g != c.g || this->b != c.b || this->a != c.a;
 		}
 
+		Color operator *(float scale) {
+			return Color(r * scale, g * scale, b * scale, a * scale);
+		}
 
 		void to_hsl() {}
 		RGBA get_component() {}

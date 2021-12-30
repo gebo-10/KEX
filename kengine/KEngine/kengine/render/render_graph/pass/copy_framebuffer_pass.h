@@ -27,7 +27,7 @@ namespace kengine {
 			dist_region(dist_region),
 			component(component),
 			filter(filter){}
-		void exec(Scene& scene, Pipeline& pipeline) override {
+		void exec(Scene& scene, RenderDataPtr render_data, Pipeline& pipeline) override {
 			glBindFramebuffer(GL_READ_FRAMEBUFFER, src->gpu_id);
 			glBindFramebuffer(GL_DRAW_FRAMEBUFFER, dist->gpu_id);
 			glBlitFramebuffer(src_region.x0, src_region.y0, src_region.x1, src_region.y1, dist_region.x0, dist_region.y0, dist_region.x1, dist_region.y1,(GLbitfield)component, filter);

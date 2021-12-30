@@ -80,8 +80,9 @@ void KEngine::update()
     Env.update();
     ui.new_frame();
 
-    Env.event_service.dispatch(EventType::OnUpdate, nullptr);
 
+    Env.event_service.dispatch(EventType::OnUpdate, nullptr);
+    scene_manager.update();
     render.update(*scene_manager.scene);
 
     ui.end_frame();

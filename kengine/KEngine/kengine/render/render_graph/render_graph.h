@@ -30,8 +30,12 @@ namespace kengine {
 		void exec(Scene& scene) {
 			CheckGLError
 			pipeline.common_uniform.time = vec4(Env.time.now, 0, 0, 0);
+			RenderDataPtr render_data = scene.cull();
+			std::memcpy(pipeline.common_uniform.camears, render_data->camera_datas.data(), sizeof(CameraData) * render_data->camera_datas.size());
+			std::memcpy(pipeline.common_uniform.lights, render_data->light_datas.data(), sizeof(LightData) * render_data->light_datas.size());
+			pipeline.sync_common_uniform();
 			for (auto pass : passes) {
-				pass->exec(scene,pipeline);
+				pass->exec(scene, render_data, pipeline);
 			}
 			pipeline.set_target(RenderTarget::ScreenTarget());
 			CheckGLError

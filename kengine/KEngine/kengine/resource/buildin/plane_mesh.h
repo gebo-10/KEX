@@ -5,10 +5,10 @@ namespace kengine {
 	{
 	public:
 		float position[12] = {
-			-1.0f, -1.0f, 1.0f,
+			-1.0f, -1.0f, 0.0f,
 			-1.0f,  1.0f, 0.0f,
 			 1.0f, -1.0f, 0.0f,
-			 1.0f,  1.0f, 1.0f,
+			 1.0f,  1.0f, 0.0f,
 		};
 
 		float position1[12] = {

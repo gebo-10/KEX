@@ -11,7 +11,7 @@ namespace kengine {
 
 		}
 		
-		void exec(Scene& scene, Pipeline& pipeline) override {
+		void exec(Scene& scene, RenderDataPtr render_data, Pipeline& pipeline) override {
 			fun(scene, pipeline);
 		}
 	};

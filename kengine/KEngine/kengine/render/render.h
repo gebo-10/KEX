@@ -29,7 +29,7 @@ namespace kengine {
 			render_graph->passes.push_back(std::make_shared<DrawPass>());
 			render_graph->passes.push_back(std::make_shared<FencePass>());
 			auto dp2=std::make_shared<DrawPass>();
-			dp2->camera_id = 1;
+			dp2->camera_id = 0;
 			render_graph->passes.push_back(dp2);
 
 			//{
