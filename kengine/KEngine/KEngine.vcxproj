@@ -312,6 +312,8 @@
     <ClInclude Include="kengine\scene\object.h" />
     <ClInclude Include="kengine\scene\scene.h" />
     <ClInclude Include="kengine\scene\scene_manager.h" />
+    <ClInclude Include="kengine\script\lua_engine.h" />
+    <ClInclude Include="kengine\script\register_type.h" />
     <ClInclude Include="kengine\service\async_service.h" />
     <ClInclude Include="kengine\service\event_service.h" />
     <ClInclude Include="kengine\service\name_service.h" />

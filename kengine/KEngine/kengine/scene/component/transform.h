@@ -6,13 +6,11 @@ namespace kengine {
 	{
 	private:
 		bool local_dirty = true;
-		//bool global_dirty = true;
 		vec3  t{ 0 };
 		vec3  r{ 0 };
 		vec3  s{ 1 };
 		
 		Matrix mat_local;
-		//Matrix mat_global;
 	public:
 		Transform():Component(ComponentType::TRANSFORM)
 		{

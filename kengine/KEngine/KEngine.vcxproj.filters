@@ -134,6 +134,9 @@
     <Filter Include="kengine\ui\imgui">
       <UniqueIdentifier>{dc597779-61df-4187-8e44-f8b292a30c41}</UniqueIdentifier>
     </Filter>
+    <Filter Include="kengine\script">
+      <UniqueIdentifier>{d56f5fd4-5093-40c4-90eb-df7637dba1e0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="window\main.cc">
@@ -624,6 +627,12 @@
     </ClInclude>
     <ClInclude Include="kengine\ui\imgui\imgui_impl_opengl3_loader.h">
       <Filter>kengine\ui\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="kengine\script\lua_engine.h">
+      <Filter>kengine\script</Filter>
+    </ClInclude>
+    <ClInclude Include="kengine\script\register_type.h">
+      <Filter>kengine\script</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

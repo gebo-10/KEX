@@ -11,6 +11,7 @@
 #include "system/monitor/monitor.h"
 #include <kengine/scene/scene_manager.h>
 #include <kengine/ui/ui.h>
+#include <kengine/script/lua_engine.h>
 namespace kengine
 {
 	class KEngine {
@@ -26,7 +27,7 @@ namespace kengine
 		SceneManager scene_manager;
 		UI ui;
 		Monitor monitor;
-
+		LuaEngine lua_engine;
 		void init(int width, int height);
 		void update();
 		void quit();

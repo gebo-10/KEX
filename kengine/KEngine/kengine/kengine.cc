@@ -72,6 +72,7 @@ void KEngine::init(int width, int height) {
 
     render.init();
     scene_manager.init();
+    lua_engine.init();
     on_view_size(width, height);
 }
 
@@ -79,7 +80,7 @@ void KEngine::update()
 {
     Env.update();
     ui.new_frame();
-
+    lua_engine.update();
 
     Env.event_service.dispatch(EventType::OnUpdate, nullptr);
     scene_manager.update();
