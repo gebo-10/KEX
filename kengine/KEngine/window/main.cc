@@ -4,7 +4,11 @@
 #pragma  comment(lib,"Psapi.lib")
 #pragma  comment(lib,"Userenv.lib")
 
-#pragma comment(lib,"lua_slib.lib")
+//#pragma comment(lib,"lua_slib.lib")
+
+#pragma comment(lib,"lua51.lib")
+#pragma comment(lib,"luajit.lib")
+
 #pragma comment(lib, "uv_a.lib")
 #pragma comment(lib, "glew32s.lib")
 #pragma comment(lib, "glfw3.lib")

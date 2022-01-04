@@ -4,6 +4,8 @@
 #include <kengine/core/base/base.h>
 #include <kengine/environment.h>
 #include "register_type.h"
+#include "auto_register.h"
+typedef int (*cb)(int);
 namespace kengine {
 	class LuaEngine
 	{
@@ -27,8 +29,13 @@ namespace kengine {
 				sol::lib::string
 				//sol::lib::utf8
 			);
+			lua["kengine"] = lua.create_table();
 
-			RegisteLuaType::reg_all(lua);
+			//lua["test"] = test;
+			sol::table kengine_table= lua["kengine"];
+			RegisteLuaType::reg_all(kengine_table);
+
+			reg_component(kengine_table);
 
 			string search_path = ".\\script\\";
 			std::string package_path = lua["package"]["path"];
@@ -44,6 +51,11 @@ namespace kengine {
 			init_function.error_handler = lua["OnError"];
 			init_function();
 
+		}
+		static void test(std::unordered_map<string,Color> cs) {
+			for (auto &[name,c] : cs) {
+				info("{}{}",name, c.r);
+			}
 		}
 		static void panic(sol::optional<std::string> maybe_msg) {
 			if (maybe_msg) {

@@ -184,7 +184,9 @@
     <ClCompile Include="kengine\kengine.cc" />
     <ClCompile Include="kengine\platform\window\platform_window.cc" />
     <ClCompile Include="kengine\scene\component\camera.cc" />
+    <ClCompile Include="kengine\script\reg_component.cc" />
     <ClCompile Include="kengine\support\screen.cc" />
+    <ClCompile Include="kengine\ui\cimgui.cpp" />
     <ClCompile Include="kengine\ui\imgui\imgui.cpp" />
     <ClCompile Include="kengine\ui\imgui\imgui_demo.cpp" />
     <ClCompile Include="kengine\ui\imgui\imgui_draw.cpp" />
@@ -314,6 +316,7 @@
     <ClInclude Include="kengine\scene\scene_manager.h" />
     <ClInclude Include="kengine\script\lua_engine.h" />
     <ClInclude Include="kengine\script\register_type.h" />
+    <ClInclude Include="kengine\script\auto_registe.h" />
     <ClInclude Include="kengine\service\async_service.h" />
     <ClInclude Include="kengine\service\event_service.h" />
     <ClInclude Include="kengine\service\name_service.h" />
@@ -326,6 +329,7 @@
     <ClInclude Include="kengine\system\monitor\test_processor.h" />
     <ClInclude Include="kengine\system\render\render_system.h" />
     <ClInclude Include="kengine\system\system.h" />
+    <ClInclude Include="kengine\ui\cimgui.h" />
     <ClInclude Include="kengine\ui\imgui\imconfig.h" />
     <ClInclude Include="kengine\ui\imgui\imgui.h" />
     <ClInclude Include="kengine\ui\imgui\imgui_impl_glfw.h" />

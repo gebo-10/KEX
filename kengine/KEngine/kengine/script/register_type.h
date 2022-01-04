@@ -12,25 +12,25 @@ namespace kengine {
 		~RegisteLuaType()
 		{
 		}
-		static void reg_all(sol::state& lua) {
+		static void reg_all(sol::table& lua) {
 			reg_color(lua);
 			reg_rect(lua);
 		}
-		static void reg_color(sol::state & lua) {
+		static void reg_color(sol::table& lua) {
 			sol::usertype<Color> type = lua.new_usertype<Color>("Color",
 				// 3 constructors
 				sol::constructors<Color(), 
 				Color(float r, float g, float b, float a),
-				Color(float r, float g, float b)>()
+				Color(float, float, float)>()
 			);
-		
+			
 			type["r"] = &Color::r;
 			type["g"] = &Color::g;
 			type["b"] = &Color::b;
 			type["a"] = &Color::a;
 		}
 
-		static void reg_rect(sol::state& lua) {
+		static void reg_rect(sol::table& lua) {
 			{
 				sol::usertype<Rect> type = lua.new_usertype<Rect>("Rect",
 					sol::constructors<Rect(),

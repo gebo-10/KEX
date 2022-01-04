@@ -184,6 +184,12 @@
     <ClCompile Include="kengine\ui\imgui\imgui_impl_opengl3.cpp">
       <Filter>kengine\ui\imgui</Filter>
     </ClCompile>
+    <ClCompile Include="kengine\ui\cimgui.cpp">
+      <Filter>kengine\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="kengine\script\reg_component.cc">
+      <Filter>kengine\script</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="window\test_app.h">
@@ -632,6 +638,12 @@
       <Filter>kengine\script</Filter>
     </ClInclude>
     <ClInclude Include="kengine\script\register_type.h">
+      <Filter>kengine\script</Filter>
+    </ClInclude>
+    <ClInclude Include="kengine\ui\cimgui.h">
+      <Filter>kengine\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="kengine\script\auto_registe.h">
       <Filter>kengine\script</Filter>
     </ClInclude>
   </ItemGroup>
