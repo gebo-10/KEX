@@ -184,7 +184,8 @@
     <ClCompile Include="kengine\kengine.cc" />
     <ClCompile Include="kengine\platform\window\platform_window.cc" />
     <ClCompile Include="kengine\scene\component\camera.cc" />
-    <ClCompile Include="kengine\script\reg_component.cc" />
+    <ClCompile Include="kengine\script\auto_registe.cc" />
+    <ClCompile Include="kengine\script\reg_kengine.cc" />
     <ClCompile Include="kengine\support\screen.cc" />
     <ClCompile Include="kengine\ui\cimgui.cpp" />
     <ClCompile Include="kengine\ui\imgui\imgui.cpp" />

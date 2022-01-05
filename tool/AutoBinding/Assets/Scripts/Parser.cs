@@ -12,7 +12,7 @@ namespace AutoMetaData
         public static void DumpAST(string file)//Application.streamingAssetsPath + "/person.h"
         {
             var index = clang.createIndex(0, 0);
-            string[] command_line_args = { "-x", "c++" };
+            string[] command_line_args = { "-x", "c++" , "-std=c++17" };
             CXTranslationUnit unit = clang.parseTranslationUnit(index, file, command_line_args, command_line_args.Length, out CXUnsavedFile unsaved_files, 0, 0);
             CXCursor cursor = clang.getTranslationUnitCursor(unit);
 
@@ -48,7 +48,10 @@ namespace AutoMetaData
                     case CXCursorKind.CXCursor_StructDecl:
                         {
                             var meta = ParserClass(c, parent, client_data);
-                            meta_database.class_list.Add(meta.name, meta);
+                            if(meta.values.Count>0 || meta.methods.Count > 0)
+                            {
+                                meta_database.class_list.Add(meta.name, meta);
+                            }
                             return CXChildVisitResult.CXChildVisit_Continue;
                         }
                         break;
@@ -85,16 +88,26 @@ namespace AutoMetaData
             class_meta_data.name = cxtype.ToString();
             Debug.Log("Class = " + class_meta_data.name);
 
+            bool public_sign = false;
+
             CXClientData clentData = new CXClientData();
             clang.visitChildren(c, (CXCursor field_cursor, CXCursor parent, IntPtr client_data) => {
                 if (clang.getCursorKind(field_cursor) == CXCursorKind.CXCursor_CXXBaseSpecifier)
                 {
                     class_meta_data.parent = clang.getCursorType(field_cursor).ToString();
                     return CXChildVisitResult.CXChildVisit_Recurse;
+                }else if(clang.getCursorKind(field_cursor) == CXCursorKind.CXCursor_CXXAccessSpecifier)
+                {
+                    var access=clang.getCXXAccessSpecifier(field_cursor);
+                    public_sign = access == CX_CXXAccessSpecifier.CX_CXXPublic;
+                    return CXChildVisitResult.CXChildVisit_Continue;
                 }
                 else
                 {
-                    ParserClassField(ref class_meta_data, field_cursor);
+                    if (public_sign)
+                    {
+                        ParserClassField(ref class_meta_data, field_cursor);
+                    }
                     return CXChildVisitResult.CXChildVisit_Continue;
                 }
 
@@ -125,7 +138,20 @@ namespace AutoMetaData
                         f.isstatic = clang.CXXMethod_isStatic(field_cursor) == 1;
                         f.isvirtual = clang.CXXMethod_isVirtual(field_cursor) == 1;
                         f.decl = field_type.ToString();
-                        class_meta_data.methods.Add(f);
+                        if(class_meta_data.name== "kengine::AssetBundle" && field_name == "load_asset")
+                        {
+                            f.name = field_name;
+                        }
+                        if (!class_meta_data.methods.ContainsKey(field_name))
+                        {
+                            List<MethodField> method_list = new List<MethodField>();
+                            method_list.Add(f);
+                            class_meta_data.methods.Add(field_name, method_list);
+                        }
+                        else
+                        {
+                            class_meta_data.methods[field_name].Add(f);
+                        }
                         break;
                     }
                 case CXCursorKind.CXCursor_Constructor:

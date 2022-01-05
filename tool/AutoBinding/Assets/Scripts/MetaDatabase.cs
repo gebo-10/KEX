@@ -74,8 +74,8 @@ namespace AutoMetaData
         public bool isvirtual;
         public bool isstatic;
         public MethodType type;
-        public ValueField return_type;
-        public List<ValueField> args=new List<ValueField>();
+        //public ValueField return_type;
+        //public List<ValueField> args=new List<ValueField>();
     }
     [Serializable]
     public class ClassMateData
@@ -84,7 +84,8 @@ namespace AutoMetaData
         public string parent;
         public List<MethodField> constructor=new List<MethodField>();
         public List<ValueField> values=new List<ValueField>();
-        public List<MethodField> methods=new List<MethodField>();
+        public Dictionary<string, List<MethodField> > methods=new Dictionary<string, List<MethodField> >();
+        //public List<MethodField> methods=new List<MethodField>();
     }
     [Serializable]
     public class EnumItem

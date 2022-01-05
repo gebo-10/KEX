@@ -35,7 +35,7 @@ namespace kengine {
 			sol::table kengine_table= lua["kengine"];
 			RegisteLuaType::reg_all(kengine_table);
 
-			reg_component(kengine_table);
+			reg_all(kengine_table);
 
 			string search_path = ".\\script\\";
 			std::string package_path = lua["package"]["path"];

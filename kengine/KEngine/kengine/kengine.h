@@ -1,5 +1,5 @@
 #pragma once
-#include "core/base/type.h"
+#include <kengine/core/base/base.h>
 //#include"core/config/config.h"
 //#include"core/debug/debug.h"
 //#include"core/debug/memory_monitor.h"

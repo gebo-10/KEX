@@ -12,42 +12,49 @@ namespace AutoMetaData
 	{
 		public static StreamWriter header_file_write;
 		public static StreamWriter cc_file_write;
-		public static void BeginGenerator()
+		public static void BeginGenerator(string out_dir)
         {
-			string filename = Application.streamingAssetsPath + "/auto_registe.h";
+			string filename = out_dir + "auto_registe.h";
 			File.Delete(filename);
 			File.Create(filename).Dispose();
 			header_file_write = new StreamWriter(filename);
 			header_file_write.WriteLine("#pragma once");
 			header_file_write.WriteLine("#include<sol.hpp>");
+			header_file_write.WriteLine("namespace kengine {");
 			header_file_write.WriteLine("extern void reg_all(sol::table& lua);");
 
-			filename = Application.streamingAssetsPath + "/auto_registe.cc";
+			filename = out_dir + "auto_registe.cc";
 			File.Delete(filename);
 			File.Create(filename).Dispose();
 			cc_file_write = new StreamWriter(filename);
 			cc_file_write.WriteLine("#include \"auto_registe.h\"");
+			cc_file_write.WriteLine("namespace kengine {");
 			cc_file_write.WriteLine("void reg_all(sol::table& lua){");
 		}
 
 		public static void EndGenerator()
 		{
+			header_file_write.WriteLine("}");
 			header_file_write.Flush();
 			header_file_write.Close();
 
+			cc_file_write.WriteLine("}");
 			cc_file_write.WriteLine("}");
 			cc_file_write.Flush();
 			cc_file_write.Close();
 		}
 		public static void GeneratorSol(MetaDatabase meta_database,string filename)
 		{
-			FileInfo file_info = new FileInfo(filename);
-			string tag = file_info.Name.Replace(".cc", "");
-			File.Delete(filename);
+            FileInfo file_info = new FileInfo(filename);
+            string tag = file_info.Name.Replace(".cc", "");
+            File.Delete(filename);
 			File.Create(filename).Dispose();
 			StreamWriter sr = new StreamWriter(filename);
 			sr.WriteLine("#include \"auto_registe.h\"");
-			sr.WriteLine("#include <{0}>" ,meta_database.filename);
+			string inc = meta_database.filename;
+			inc = inc.Substring(23);
+			sr.WriteLine("#include <{0}>" , inc);
+			sr.WriteLine("namespace kengine {");
 			sr.WriteLine("void {0}(sol::table& lua) {{", tag);
 
 			header_file_write.WriteLine("extern void {0}(sol::table& lua);", tag);
@@ -63,20 +70,18 @@ namespace AutoMetaData
 			}
 			
 			sr.WriteLine("}");
+			sr.WriteLine("}");
 			sr.Flush();
 			sr.Close();
 		}
 
 		public static void GeneratorClass(StreamWriter sr, ClassMateData data)
 		{
-			sr.WriteLine(string.Format("		sol::usertype<{0}> type = lua.new_usertype<{0}>(\"{0}\",",data.name));
-			if(data.parent != null)
+			string class_name = data.name.Substring(9);
+			sr.WriteLine(string.Format("		sol::usertype<{0}> type = lua.new_usertype<{0}>(\"{1}\"", data.name,class_name));
+            if (data.constructor.Count > 0)
 			{
-				sr.WriteLine(string.Format("			sol::base_classes, sol::bases<{0}>()", data.parent)); 
-			}
-			if(data.constructor.Count > 0)
-			{
-				sr.WriteLine("			sol::constructors <");
+				sr.WriteLine("			,sol::constructors <");
 				for(int i = 0; i < data.constructor.Count; i++)
 				{
 					var constructor = data.constructor[i];
@@ -94,6 +99,10 @@ namespace AutoMetaData
 
 				sr.WriteLine("			> ()");
 			}
+			if (data.parent != null)
+			{
+				sr.WriteLine(string.Format("			,sol::base_classes, sol::bases<{0}>()", data.parent));
+			}
 			sr.WriteLine("		);");
 
 			foreach(var field in data.values)
@@ -103,7 +112,21 @@ namespace AutoMetaData
 
 			foreach (var field in data.methods)
 			{
-				sr.WriteLine(string.Format("        type[\"{0}\"] = &{1}::{0};", field.name, data.name));
+				var method_name= field.Key;
+				if (field.Value.Count == 1)
+                {
+					sr.WriteLine(string.Format("        type[\"{0}\"] = &{1}::{0};", method_name, data.name));
+                }
+                else
+                {
+					sr.WriteLine("        type[\"{0}\"] =sol::overload(", method_name);
+					foreach(var method in field.Value)
+                    {
+						sr.WriteLine(string.Format("			sol::resolve <{2}>(&{1}::{0})", method.name, data.name,method.decl));
+					}
+					sr.WriteLine("        );");
+				}
+				
 			}
 
 		}
