@@ -4,7 +4,7 @@
 #include <kengine/core/base/base.h>
 #include <kengine/environment.h>
 #include "register_type.h"
-#include "auto_register.h"
+#include "auto_registe.h"
 typedef int (*cb)(int);
 namespace kengine {
 	class LuaEngine

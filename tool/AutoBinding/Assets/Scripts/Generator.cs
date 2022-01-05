@@ -51,7 +51,7 @@ namespace AutoMetaData
 			sr.WriteLine("void {0}(sol::table& lua) {{", tag);
 
 			header_file_write.WriteLine("extern void {0}(sol::table& lua);", tag);
-			cc_file_write.WriteLine("	void {0}(lua);", tag);
+			cc_file_write.WriteLine("	{0}(lua);", tag);
 
 			foreach (var item in meta_database.class_list)
 			{
