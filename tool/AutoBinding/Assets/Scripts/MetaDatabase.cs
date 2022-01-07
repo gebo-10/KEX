@@ -82,6 +82,7 @@ namespace AutoMetaData
     {
         public string name;
         public string parent;
+        public bool is_absolate;
         public List<MethodField> constructor=new List<MethodField>();
         public List<ValueField> values=new List<ValueField>();
         public Dictionary<string, List<MethodField> > methods=new Dictionary<string, List<MethodField> >();
@@ -92,6 +93,7 @@ namespace AutoMetaData
     {
         public string name;
         public int value;
+        public string type;
     }
     [Serializable]
     public class EnumMateData

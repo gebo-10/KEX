@@ -69,6 +69,14 @@ namespace AutoMetaData
 				sr.WriteLine("	}");
 			}
 			
+			foreach(var item in meta_database.enum_list)
+            {
+				sr.WriteLine("	{");
+				GeneratorEnum(sr, item.Value);
+				sr.WriteLine("	}");
+			}
+
+
 			sr.WriteLine("}");
 			sr.WriteLine("}");
 			sr.Flush();
@@ -134,6 +142,14 @@ namespace AutoMetaData
 
 		public static void GeneratorEnum(StreamWriter sr,EnumMateData data)
 		{
+			string name = data.name.Substring(9);
+			sr.WriteLine("		lua.new_enum(\"{0}\"", name);
+			foreach(var item in data.fields)
+            {
+				sr.WriteLine("		,\"{0}\", {1}::{2}", item.name,item.type,item.name);
+			}
+
+			sr.WriteLine("		);");
 		}
 		//public static void GeneratorFunction(StreamWriter sr,)
 		//{

@@ -87,7 +87,7 @@ namespace AutoMetaData
             CXType cxtype = clang.getCursorType(c);
             class_meta_data.name = cxtype.ToString();
             Debug.Log("Class = " + class_meta_data.name);
-
+            
             bool public_sign = false;
 
             CXClientData clentData = new CXClientData();
@@ -137,6 +137,10 @@ namespace AutoMetaData
                         f.type = MethodType.Member;
                         f.isstatic = clang.CXXMethod_isStatic(field_cursor) == 1;
                         f.isvirtual = clang.CXXMethod_isVirtual(field_cursor) == 1;
+                        if (clang.CXXMethod_isPureVirtual(field_cursor) == 1)
+                        {
+                            class_meta_data.is_absolate = true;
+                        }
                         f.decl = field_type.ToString();
                         if(class_meta_data.name== "kengine::AssetBundle" && field_name == "load_asset")
                         {
@@ -179,6 +183,7 @@ namespace AutoMetaData
                 EnumItem enum_item = new EnumItem();
                 enum_item.name = clang.getCursorSpelling(field_cursor).ToString();
                 enum_item.value = (int)clang.getEnumConstantDeclValue(field_cursor);
+                enum_item.type = clang.getCursorType(field_cursor).ToString();
                 enum_meta_data.fields.Add(enum_item);
                 return CXChildVisitResult.CXChildVisit_Continue;
             }, clentData);

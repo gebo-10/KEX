@@ -18,6 +18,10 @@ function Init()
 	for k,v in pairs(_G) do
 		print(k,v)
 	end
+
+	for k,v in pairs(kengine) do
+		print(k,v)
+	end
 end
 
 function Update()

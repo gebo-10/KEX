@@ -1,9 +1,6 @@
 #include <iostream>
 #include "kengine.h"
-#include "platform/platform.h"
-#include "profiler/profiler.h"
-#include "core/io/kengine_io.h"
-#include "gpgpu/gpgpu.h"
+
 
 
 //#include "rapidjson/document.h"
@@ -111,7 +108,7 @@ void KEngine::on_view_size(int width, int height)
 
 kengine::KEngine& GetKEngineInstance()
 {
-    auto e= new KEngine();
+    static KEngine *e= new KEngine();
     return *e;
 }
 

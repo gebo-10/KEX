@@ -245,7 +245,7 @@ void reg_kengine(sol::table& lua) {
         type["size"] = &kengine::AssetBundle::size;
         type["serialize"] = &kengine::AssetBundle::serialize;
         type["deserialize_info"] = &kengine::AssetBundle::deserialize_info;
-        //type["load_asset"] = &kengine::AssetBundle::load_asset;
+        type["load_asset"] = &kengine::AssetBundle::load_asset;
 	}
 	{
 		sol::usertype<kengine::AssetLoader> type = lua.new_usertype<kengine::AssetLoader>("AssetLoader"
@@ -278,7 +278,7 @@ void reg_kengine(sol::table& lua) {
 		);
         type["default_resource"] = &kengine::AssetsDatabase::default_resource;
         type["load_asset"] = &kengine::AssetsDatabase::load_asset;
-        //type["load_bundle"] = &kengine::AssetsDatabase::load_bundle;
+        type["load_bundle"] = &kengine::AssetsDatabase::load_bundle;
         type["unload_bundle"] = &kengine::AssetsDatabase::unload_bundle;
         type["load_bundle_asset"] = &kengine::AssetsDatabase::load_bundle_asset;
 	}
@@ -301,10 +301,10 @@ void reg_kengine(sol::table& lua) {
 		);
         type["loop"] = &kengine::AsyncService::loop;
         type["update"] = &kengine::AsyncService::update;
-   //     type["work"] =sol::overload(
-			//sol::resolve <void (void *, int)>(&kengine::AsyncService::work)
-			//sol::resolve <void (kengine::AsyncWork *)>(&kengine::AsyncService::work)
-   //     );
+        type["work"] =sol::overload(
+			sol::resolve <void (void *, int)>(&kengine::AsyncService::work)
+			sol::resolve <void (kengine::AsyncWork *)>(&kengine::AsyncService::work)
+        );
         type["work_cb"] = &kengine::AsyncService::work_cb;
         type["after_work_cb"] = &kengine::AsyncService::after_work_cb;
 	}
@@ -585,7 +585,6 @@ void reg_kengine(sol::table& lua) {
 			> ()
 		);
         type["init"] = &kengine::Render::init;
-        type["default_rg"] = &kengine::Render::default_rg;
         type["update"] = &kengine::Render::update;
 	}
 	{
@@ -637,6 +636,200 @@ void reg_kengine(sol::table& lua) {
         type["update"] = &kengine::KEngine::update;
         type["quit"] = &kengine::KEngine::quit;
         type["on_view_size"] = &kengine::KEngine::on_view_size;
+	}
+	{
+		lua.new_enum("Endian"
+		,"Little", kengine::Endian::Little
+		,"Big", kengine::Endian::Big
+		);
+	}
+	{
+		lua.new_enum("AssetType"
+		,"TEXTURE", kengine::AssetType::TEXTURE
+		,"SHADER", kengine::AssetType::SHADER
+		,"MATERIAL", kengine::AssetType::MATERIAL
+		,"MESH", kengine::AssetType::MESH
+		,"MODEL", kengine::AssetType::MODEL
+		,"PREFABS", kengine::AssetType::PREFABS
+		);
+	}
+	{
+		lua.new_enum("EventType"
+		,"OnViewSize", kengine::EventType::OnViewSize
+		,"OnUpdate", kengine::EventType::OnUpdate
+		);
+	}
+	{
+		lua.new_enum("GPUType"
+		,"BYTE", kengine::GPUType::BYTE
+		,"UNSIGNED_BYTE", kengine::GPUType::UNSIGNED_BYTE
+		,"SHORT", kengine::GPUType::SHORT
+		,"UNSIGNED_SHORT", kengine::GPUType::UNSIGNED_SHORT
+		,"INT", kengine::GPUType::INT
+		,"UNSIGNED_INT", kengine::GPUType::UNSIGNED_INT
+		,"FLOAT", kengine::GPUType::FLOAT
+		,"HALF_FLOAT", kengine::GPUType::HALF_FLOAT
+		,"FIXED", kengine::GPUType::FIXED
+		,"INT_2_10_10_10_REV", kengine::GPUType::INT_2_10_10_10_REV
+		,"UNSIGNED_INT_2_10_10_10_REV", kengine::GPUType::UNSIGNED_INT_2_10_10_10_REV
+		);
+	}
+	{
+		lua.new_enum("PrimitiveType"
+		,"POINTS", kengine::PrimitiveType::POINTS
+		,"LINES", kengine::PrimitiveType::LINES
+		,"LINE_LOOP", kengine::PrimitiveType::LINE_LOOP
+		,"LINE_STRIP", kengine::PrimitiveType::LINE_STRIP
+		,"TRIANGLES", kengine::PrimitiveType::TRIANGLES
+		,"TRIANGLE_STRIP", kengine::PrimitiveType::TRIANGLE_STRIP
+		,"QUADS", kengine::PrimitiveType::QUADS
+		,"QUAD_STRIP", kengine::PrimitiveType::QUAD_STRIP
+		,"PRIMITIVE_MAX", kengine::PrimitiveType::PRIMITIVE_MAX
+		);
+	}
+	{
+		lua.new_enum("ShaderDataType"
+		,"INT", kengine::ShaderDataType::INT
+		,"UINT", kengine::ShaderDataType::UINT
+		,"FLOAT", kengine::ShaderDataType::FLOAT
+		,"VEC2", kengine::ShaderDataType::VEC2
+		,"VEC3", kengine::ShaderDataType::VEC3
+		,"VEC4", kengine::ShaderDataType::VEC4
+		,"MAT2", kengine::ShaderDataType::MAT2
+		,"MAT3", kengine::ShaderDataType::MAT3
+		,"MAT4", kengine::ShaderDataType::MAT4
+		,"Color", kengine::ShaderDataType::Color
+		,"MAX", kengine::ShaderDataType::MAX
+		);
+	}
+	{
+		lua.new_enum("PipelineStateType"
+		,"CULL_FACE", kengine::PipelineStateType::CULL_FACE
+		,"POLYGON_OFFSET_FILL", kengine::PipelineStateType::POLYGON_OFFSET_FILL
+		,"LINE_WIDTH", kengine::PipelineStateType::LINE_WIDTH
+		,"SCISSOR_STATE", kengine::PipelineStateType::SCISSOR_STATE
+		,"SAMPLE_COVERAGE", kengine::PipelineStateType::SAMPLE_COVERAGE
+		,"BLEND_MODE", kengine::PipelineStateType::BLEND_MODE
+		,"DEPRH_TEST", kengine::PipelineStateType::DEPRH_TEST
+		,"STENCIL_TEST", kengine::PipelineStateType::STENCIL_TEST
+		,"DITHER", kengine::PipelineStateType::DITHER
+		,"CLEAR_VALUE", kengine::PipelineStateType::CLEAR_VALUE
+		,"FRAMEBUFFER_MASK", kengine::PipelineStateType::FRAMEBUFFER_MASK
+		,"DEPTH_RANGE", kengine::PipelineStateType::DEPTH_RANGE
+		,"VIEW_PORT", kengine::PipelineStateType::VIEW_PORT
+		,"PIPELINE_STATE_TYPE_NUM", kengine::PipelineStateType::PIPELINE_STATE_TYPE_NUM
+		);
+	}
+	{
+		lua.new_enum("Face"
+		,"NONE", kengine::Face::NONE
+		,"FRONT", kengine::Face::FRONT
+		,"BACK", kengine::Face::BACK
+		,"FRONT_AND_BACK", kengine::Face::FRONT_AND_BACK
+		);
+	}
+	{
+		lua.new_enum("CompareFunc"
+		,"NONE", kengine::CompareFunc::NONE
+		,"NEVER", kengine::CompareFunc::NEVER
+		,"ALWAYS", kengine::CompareFunc::ALWAYS
+		,"LESS", kengine::CompareFunc::LESS
+		,"GREATER", kengine::CompareFunc::GREATER
+		,"EQUAL", kengine::CompareFunc::EQUAL
+		,"LEQUAL", kengine::CompareFunc::LEQUAL
+		,"GEQUAL", kengine::CompareFunc::GEQUAL
+		,"NOTEQUAL", kengine::CompareFunc::NOTEQUAL
+		);
+	}
+	{
+		lua.new_enum("RenderBufferFormat"
+		,"R8", kengine::RenderBufferFormat::R8
+		,"R8I", kengine::RenderBufferFormat::R8I
+		,"R8UI", kengine::RenderBufferFormat::R8UI
+		,"R16I", kengine::RenderBufferFormat::R16I
+		,"R16UI", kengine::RenderBufferFormat::R16UI
+		,"R32I", kengine::RenderBufferFormat::R32I
+		,"R32UI", kengine::RenderBufferFormat::R32UI
+		,"RG8", kengine::RenderBufferFormat::RG8
+		,"RG8I", kengine::RenderBufferFormat::RG8I
+		,"RG8UI", kengine::RenderBufferFormat::RG8UI
+		,"RG16I", kengine::RenderBufferFormat::RG16I
+		,"RG16UI", kengine::RenderBufferFormat::RG16UI
+		,"RG32I", kengine::RenderBufferFormat::RG32I
+		,"RG32UI", kengine::RenderBufferFormat::RG32UI
+		,"RGB8", kengine::RenderBufferFormat::RGB8
+		,"RGB565", kengine::RenderBufferFormat::RGB565
+		,"RGB_A1", kengine::RenderBufferFormat::RGB_A1
+		,"RGB_A2", kengine::RenderBufferFormat::RGB_A2
+		,"RGB", kengine::RenderBufferFormat::RGB
+		,"RGB10_A2UI", kengine::RenderBufferFormat::RGB10_A2UI
+		,"RGBA", kengine::RenderBufferFormat::RGBA
+		,"RGBA4", kengine::RenderBufferFormat::RGBA4
+		,"RGBA8", kengine::RenderBufferFormat::RGBA8
+		,"RGBA8I", kengine::RenderBufferFormat::RGBA8I
+		,"RGBA8UI", kengine::RenderBufferFormat::RGBA8UI
+		,"RGBA16I", kengine::RenderBufferFormat::RGBA16I
+		,"RGBA16UI", kengine::RenderBufferFormat::RGBA16UI
+		,"RGBA32I", kengine::RenderBufferFormat::RGBA32I
+		,"RGBA32UI", kengine::RenderBufferFormat::RGBA32UI
+		,"SRGB8_ALPHA8", kengine::RenderBufferFormat::SRGB8_ALPHA8
+		,"STENCIL_INDEX8", kengine::RenderBufferFormat::STENCIL_INDEX8
+		,"DEPTH24_STENCIL8", kengine::RenderBufferFormat::DEPTH24_STENCIL8
+		,"DEPTH32F_STENCIL8", kengine::RenderBufferFormat::DEPTH32F_STENCIL8
+		,"DEPTH_COMPONENT", kengine::RenderBufferFormat::DEPTH_COMPONENT
+		,"DEPTH_COMPONENT16", kengine::RenderBufferFormat::DEPTH_COMPONENT16
+		,"DEPTH_COMPONENT24", kengine::RenderBufferFormat::DEPTH_COMPONENT24
+		,"DEPTH_COMPONENT32F", kengine::RenderBufferFormat::DEPTH_COMPONENT32F
+		);
+	}
+	{
+		lua.new_enum("AttachmentPoint"
+		,"DEPTH", kengine::AttachmentPoint::DEPTH
+		,"STENCIL", kengine::AttachmentPoint::STENCIL
+		,"DEPTH_STENCIL", kengine::AttachmentPoint::DEPTH_STENCIL
+		,"COLOR_ATTACHMENT0", kengine::AttachmentPoint::COLOR_ATTACHMENT0
+		,"COLOR_ATTACHMENT1", kengine::AttachmentPoint::COLOR_ATTACHMENT1
+		,"COLOR_ATTACHMENT2", kengine::AttachmentPoint::COLOR_ATTACHMENT2
+		,"COLOR_ATTACHMENT3", kengine::AttachmentPoint::COLOR_ATTACHMENT3
+		,"COLOR_ATTACHMENT4", kengine::AttachmentPoint::COLOR_ATTACHMENT4
+		,"COLOR_ATTACHMENT5", kengine::AttachmentPoint::COLOR_ATTACHMENT5
+		,"COLOR_ATTACHMENT6", kengine::AttachmentPoint::COLOR_ATTACHMENT6
+		,"COLOR_ATTACHMENT7", kengine::AttachmentPoint::COLOR_ATTACHMENT7
+		,"COLOR_ATTACHMENT8", kengine::AttachmentPoint::COLOR_ATTACHMENT8
+		,"COLOR_ATTACHMENT9", kengine::AttachmentPoint::COLOR_ATTACHMENT9
+		);
+	}
+	{
+		lua.new_enum("AttachmentType"
+		,"TEXTURE", kengine::AttachmentType::TEXTURE
+		,"RENDER_BUFFER", kengine::AttachmentType::RENDER_BUFFER
+		);
+	}
+	{
+		lua.new_enum("BindPointType"
+		,"VAO", kengine::BindPointType::VAO
+		,"Texture", kengine::BindPointType::Texture
+		,"SSBO", kengine::BindPointType::SSBO
+		,"UBO", kengine::BindPointType::UBO
+		,"MAX", kengine::BindPointType::MAX
+		);
+	}
+	{
+		lua.new_enum("FrameBufferComponent"
+		,"COLOR", kengine::FrameBufferComponent::COLOR
+		,"DEPTH", kengine::FrameBufferComponent::DEPTH
+		,"STENCIL", kengine::FrameBufferComponent::STENCIL
+		,"COLOR_DEPTH", kengine::FrameBufferComponent::COLOR_DEPTH
+		,"COLOR_STENCIL", kengine::FrameBufferComponent::COLOR_STENCIL
+		,"DEPTH_STENCIL", kengine::FrameBufferComponent::DEPTH_STENCIL
+		,"COLOR_DEPTH_STENCIL", kengine::FrameBufferComponent::COLOR_DEPTH_STENCIL
+		);
+	}
+	{
+		lua.new_enum("MonitorCommandType"
+		,"Test", kengine::MonitorCommandType::Test
+		,"Num", kengine::MonitorCommandType::Num
+		);
 	}
 }
 }
