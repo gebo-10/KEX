@@ -19,7 +19,7 @@ namespace kengine {
 		BufferPtr recv_buffer;
 		BufferPtr recv_buffer_view=nullptr;
 
-		MonitorProcessor * processor[(int)MonitorCommandType::Num];
+		std::unique_ptr<MonitorProcessor> processor[(int)MonitorCommandType::Num];
 		Monitor()
 		{
 			async_work.clear = false;
@@ -43,12 +43,10 @@ namespace kengine {
 		{
 			zmq_close(zmq_responder);
 			zmq_ctx_destroy(zmq_context);
-			
-			for (auto p : processor){delete p;}
 		}
 
 		void init_processor() {
-			processor[(int)MonitorCommandType::Test] = new TestProcessor();
+			processor[(int)MonitorCommandType::Test] = std::make_unique<TestProcessor>();
 		}
 
 		static void zmq_recv_work(void * data) {

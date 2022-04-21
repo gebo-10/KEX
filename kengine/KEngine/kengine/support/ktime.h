@@ -29,7 +29,7 @@ namespace kengine
 
 		void init()
 		{
-			max_fps = 50;
+			max_fps = 150;
 			interval = 1000.0f / max_fps;
 			start = std::chrono::system_clock::now();
 			last = start;
@@ -59,7 +59,7 @@ namespace kengine
 				//	sleep_time-=0.1f;
 				//}
 				float sleep_time = (interval - elapsed)/2.0f ;
-				std::this_thread::sleep_for(std::chrono::milliseconds( static_cast<long long>(sleep_time) ) );
+				//std::this_thread::sleep_for(std::chrono::milliseconds( static_cast<long long>(sleep_time) ) );
 			}
 			
 		}

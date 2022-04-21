@@ -10,6 +10,16 @@
 #include<stack>
 #include<functional>
 #include<cassert>
+
+#define makes(T, ...) std::make_shared <T>(__VA_ARGS__)
+#define makeu(T, ...) std::make_unique <T>(__VA_ARGS__)
+
+#define REG(NAME) \
+	typedef NAME * NAME##Ptr; \
+    typedef std::shared_ptr<NAME> NAME##SPtr; \
+    typedef std::unique_ptr<NAME> NAME##UPtr; \
+    typedef std::weak_ptr<NAME> NAME##WPtr; \
+
 namespace kengine {
     typedef char byte;
     typedef unsigned char ubyte;

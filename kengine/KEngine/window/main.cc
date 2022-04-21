@@ -48,7 +48,6 @@ kengine::KEngine* engine=nullptr;
 //#include <Effekseer/Effekseer.h>
 //#include <EffekseerRendererGL/EffekseerRendererGL.h>
 
-
 void init_imgui(GLFWwindow* window) {
     // Setup Dear ImGui context
     IMGUI_CHECKVERSION();
@@ -97,7 +96,7 @@ int main()
     //glfwSetWindowAttrib(window, GLFW_DECORATED, GLFW_FALSE);
     
     glfwMakeContextCurrent(window);
-
+    glfwSwapInterval(0);
     GLenum result = glewInit();
     if (result != GLEW_OK)
     {

@@ -9,7 +9,7 @@ using System.IO;
 public class Main : MonoBehaviour
 {
     public FileListConfig file_config;
-    public string out_dir;
+    public string out_dir;//D:/KEX/kengine/KEngine/kengine/script/
     void Start()
     {
         //Parser.DumpAST(Application.streamingAssetsPath + "/component.h");

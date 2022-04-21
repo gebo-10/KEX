@@ -57,7 +57,7 @@ namespace kengine {
 		static BonePtr load_bone_tree(const aiNode* ai_node, std::map<string, BonePtr>& bones) {
 			string name = string(ai_node->mName.data);
 			BonePtr bone = std::make_shared<Bone>();
-			bone->bone_id = bones.size();
+			bone->bone_id = (int)bones.size();
 			if (bones.find(name) != bones.end()) {
 				error("same bone name");
 			}

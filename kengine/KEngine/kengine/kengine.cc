@@ -85,6 +85,7 @@ void KEngine::update()
     scene_manager.update();
     render.update(*scene_manager.scene);
 
+    ui.test();
     ui.end_frame();
 }
 

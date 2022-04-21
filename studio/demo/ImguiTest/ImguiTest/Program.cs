@@ -4,6 +4,8 @@ using Silk.NET.Input;
 using Silk.NET.OpenGL;
 using Silk.NET.OpenGL.Extensions.ImGui;
 using ImGuiNET;
+using System.Text;
+
 namespace Kengine
 {
     class Program
@@ -11,6 +13,7 @@ namespace Kengine
         static float a = 10;
         static void Main(string[] args)
         {
+            File.Create("xxx.txt");
             // Create a Silk.NET window as usual
             using var window = Window.Create(WindowOptions.Default);
 
@@ -27,6 +30,14 @@ namespace Kengine
                     window, // pass in our window
                     inputContext = window.CreateInput() // create an input context
                 );
+
+                var io = ImGui.GetIO();
+                io.Fonts.Clear();
+                //ImFontPtr font = io.Fonts.AddFontFromFileTTF("font/DroidSans.ttf", 20);
+                ////ImGui.PushFont(font);
+                //io.Fonts.Build();
+
+
             };
 
             // Handle resizes
@@ -39,25 +50,34 @@ namespace Kengine
             // The render function
             window.Render += delta =>
             {
+                
                 // Make sure ImGui is up-to-date
                 controller.Update((float)delta);
 
+
+                
                 // This is where you'll do any rendering beneath the ImGui context
                 // Here, we just have a blank screen.
                 gl.ClearColor(Color.FromArgb(255, (int)(.45f * 255), (int)(.55f * 255), (int)(.60f * 255)));
                 gl.Clear((uint)ClearBufferMask.ColorBufferBit);
 
+
+                
                 // This is where you'll do all of your ImGUi rendering
                 // Here, we're just showing the ImGui built-in demo window.
-                ImGuiNET.ImGui.ShowDemoWindow();
+                //ImGuiNET.ImGui.ShowDemoWindow();
                 ImGui.Begin("xxx");
                 ImGui.SliderFloat("xx", ref a, -10, 100);
                 ImGui.SliderAngle("hah", ref a);
                 ImGui.Text("haha");
+
+
+                ImGui.Text("我的");
                 ImGui.Text(string.Format("Application average {0}",  ImGui.GetIO().Framerate));
                 ImGui.End();
                 // Make sure ImGui renders too!
                 controller.Render();
+
             };
 
             // The closing function

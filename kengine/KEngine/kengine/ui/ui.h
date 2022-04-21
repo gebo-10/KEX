@@ -17,7 +17,11 @@ namespace kengine {
 		UI(){}
 		~UI(){}
 
-		void init() { }
+		void init() {
+            ImGuiIO& io = ImGui::GetIO();
+            io.Fonts->AddFontFromFileTTF("main/font/DroidSans.ttf", 20);
+            io.Fonts->Build();
+        }
 
         void new_frame() {
             ImGui_ImplOpenGL3_NewFrame();

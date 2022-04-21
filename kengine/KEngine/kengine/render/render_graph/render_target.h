@@ -8,33 +8,18 @@ namespace kengine {
 	public:
 		GPUID gpu_id = 0;
 		std::vector<Attachment> attachments;
-		std::vector<GLenum> draw_buffers;
 
-		RenderTarget() { //screen
-			//draw_buffers.push_back(GL_BACK);
+		RenderTarget(std::vector<Attachment>& ats)
+		{
+			attachments = std::move(ats);
+			create();
 		}
-
 		RenderTarget(std::vector<Attachment>&& ats)
 		{
 			//TODO check same attachment
 			//check_attachment_size(ats); //以最小为准
 			attachments = std::move(ats);
-			glGenFramebuffers(1, &gpu_id);
-			glBindFramebuffer(GL_FRAMEBUFFER, gpu_id);
-			CheckGLError
-			for (auto attachment : attachments) {
-				attachment.attach();
-				if (attachment.attachment_point >= AttachmentPoint::COLOR_ATTACHMENT0 && attachment.attachment_point <= AttachmentPoint::COLOR_ATTACHMENT9) {
-					draw_buffers.push_back((GLenum)attachment.attachment_point);
-				}
-			}
-			glDrawBuffers(draw_buffers.size(), draw_buffers.data());
-
-			CheckGLError
-			glBindTexture(GL_TEXTURE_2D, 0);
-			glBindRenderbuffer(GL_RENDERBUFFER, 0);
-			glBindFramebuffer(GL_FRAMEBUFFER, 0);
-			assert(glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE);
+			create();
 		}
 
 		~RenderTarget()
@@ -90,12 +75,34 @@ namespace kengine {
 		}
 
 		static shared_ptr<RenderTarget> ScreenTarget() {
-			static shared_ptr<RenderTarget> screen = std::make_shared<RenderTarget>();
-			return screen;
+			static RenderTarget* screen = new RenderTarget();
+			static std::shared_ptr<RenderTarget> screen_ptr(screen);
+			return screen_ptr;
 		}
 		
 	private:
-		
+		RenderTarget() { //screen
+			//draw_buffers.push_back(GL_BACK);
+		}
+		void create() {
+			glGenFramebuffers(1, &gpu_id);
+			glBindFramebuffer(GL_FRAMEBUFFER, gpu_id);
+			CheckGLError
+				std::vector<GLenum> draw_buffers;
+			for (auto attachment : attachments) {
+				attachment.attach();
+				if (attachment.attachment_point >= AttachmentPoint::COLOR_ATTACHMENT0 && attachment.attachment_point <= AttachmentPoint::COLOR_ATTACHMENT9) {
+					draw_buffers.push_back((GLenum)attachment.attachment_point);
+				}
+			}
+			glDrawBuffers(draw_buffers.size(), draw_buffers.data());
+
+			CheckGLError
+				glBindTexture(GL_TEXTURE_2D, 0);
+			glBindRenderbuffer(GL_RENDERBUFFER, 0);
+			glBindFramebuffer(GL_FRAMEBUFFER, 0);
+			assert(glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE);
+		}
 	};
 	typedef shared_ptr<RenderTarget> RenderTargetPtr;
 }

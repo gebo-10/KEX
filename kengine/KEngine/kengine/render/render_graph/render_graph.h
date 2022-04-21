@@ -14,9 +14,9 @@ namespace kengine {
 	{
 	public:
 		Pipeline pipeline;
-		std::vector<RenderBufferPtr> render_buffers;
-		std::vector<TexturePtr> textures;
-		std::vector<RenderTargetPtr> targets;
+		std::vector<RenderBufferPtr> render_buffers; //unique ptr
+		std::vector<TexturePtr> textures; //shared ptr
+		std::vector<RenderTargetPtr> targets; //unique ptr
 
 		std::vector<PassPtr> passes;
 		

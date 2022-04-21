@@ -29,6 +29,7 @@ namespace kengine {
 			desc.width = 1024;
 			desc.height = 1024;
 			desc.internal_format = TextureInternalFormat::RGBA8;
+
 			dp2->target = std::make_shared<RenderTarget>(std::vector<Attachment>{
 				{ AttachmentPoint::COLOR_ATTACHMENT0, std::make_shared<Texture>(desc) },
 				{ AttachmentPoint::DEPTH, std::make_shared<RenderBuffer>(1024, 1024, RenderBufferFormat::DEPTH_COMPONENT) },
@@ -44,10 +45,10 @@ namespace kengine {
 			//auto blit_to_screen = std::make_shared<BlitPass>(SCREEN_TARGET, material);
 			//render_graph->passes.push_back(blit_to_screen);
 
-
-			auto blur_x_target = std::make_shared<RenderTarget>(std::vector<Attachment>{
+			auto ats = std::vector<Attachment>{
 				{AttachmentPoint::COLOR_ATTACHMENT0, std::make_shared<Texture>(desc)},
-			});
+			};
+			auto blur_x_target = std::make_shared<RenderTarget>(ats);
 
 			auto blur_y_target = std::make_shared<RenderTarget>(std::vector<Attachment>{
 				{AttachmentPoint::COLOR_ATTACHMENT0, std::make_shared<Texture>(desc)},
