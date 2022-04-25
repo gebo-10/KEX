@@ -11,8 +11,8 @@ namespace KUI
     {
         public static YogaConfig yogaConfig = new YogaConfig();
         
-        public static float x;
-        public static float y;
-        public static Window root;
+        //public static float x;
+        //public static float y;
+        //public static Window root;
     }
 }

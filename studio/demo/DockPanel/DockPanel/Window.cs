@@ -5,6 +5,8 @@ using Facebook.Yoga;
 using GLFW;
 using SkiaSharp;
 using System.Runtime.InteropServices;
+using System.Numerics;
+
 namespace KUI
 {
     public class Window
@@ -15,16 +17,20 @@ namespace KUI
         private SKSurface surface;
 
         public Control control;
-        private bool opening=false;
 
         public static List<Control> controls = new List<Control>();
+
+        bool mouseStay = false;
+        Vector2 lastPress;
+
+        Vector2 mousePosition;
         public Window()
         {
             control = new Control(100,100);
         }
-        public void Open(int width, int height, string title)
+        public void Open(int width, int height, string title, bool decorated=true)
         {
-            Glfw.WindowHint(Hint.Decorated, false);
+            Glfw.WindowHint(Hint.Decorated, decorated);
             window = new NativeWindow(width, height, title);
            
             context = GenerateSkiaContext(window);
@@ -32,8 +38,7 @@ namespace KUI
             OnSize(new Size(width,height) );
             Render();
             SubscribeToWindowEvents();
-            opening = true;
-            while (opening)
+            while (!Glfw.WindowShouldClose(window))
             {
                 Glfw.WaitEvents();
             }
@@ -42,7 +47,6 @@ namespace KUI
         public void Close()
         {
             window.Close();
-            opening = false;
         }
 
         private void OnSize(Size size)
@@ -62,23 +66,18 @@ namespace KUI
         }
         public void Layout(Size size)
         {
-            //layout.Width = size.Width;
-            //layout.Height=size.Height;
-            //layout.CalculateLayout();
             control.layout.CalculateLayout();
-            //control.Layout(size.Width, size.Height);
-            
         }
         public void Render()
         {
             canvas.Clear(SKColor.Parse("#F0F0F0"));
+
             var rect = new Rect();
             rect.x = 0;
             rect.y = 0;
             rect.width =control.layout.LayoutWidth;
             rect.height = control.layout.LayoutHeight;
             control.Render(canvas, rect);
-           // RenderYoga(layout);
 
             canvas.Flush();
             window.SwapBuffers();
@@ -98,7 +97,7 @@ namespace KUI
         private void Window_Closed(object? sender, EventArgs e)
         {
             Console.WriteLine("CLOSE");
-            opening = false;
+            //opening = false;
         }
 
         private  GRContext GenerateSkiaContext(NativeWindow nativeWindow)
@@ -141,17 +140,6 @@ namespace KUI
             return SKSurface.Create(skiaContext, backendRenderTarget, GRSurfaceOrigin.BottomLeft, SKImageInfo.PlatformColorType);
         }
 
-        private SKSurface GenerateSkiaSurface2(GRContext skiaContext, Size surfaceSize)
-        {
-            //var glInfo = new GRGlTextureInfo(0, 0);
-            //var backendRenderTarget = new GRBackendTexture(surfaceSize.Width,
-            //                                                    surfaceSize.Height,
-            //                                                    false,
-            //                                                    glInfo);
-            //return SKSurface.Create(skiaContext, backendRenderTarget, GRSurfaceOrigin.BottomLeft, SKImageInfo.PlatformColorType);
-            return SKSurface.Create(surfaceSize.Width, surfaceSize.Height, SKColorType.Rgba8888,SKAlphaType.Opaque);
-        }
-
         #region Window Events Handlers
 
         private void OnWindowsSizeChanged(object sender, SizeChangeEventArgs e)
@@ -166,19 +154,19 @@ namespace KUI
 
         private void OnWindowMouseMoved(object sender, MouseMoveEventArgs e)
         {
-            Env.x = (float)e.X;
-            Env.y = (float)e.Y;
+            lastPress = Vector2.Zero;
+
+            mousePosition.X = (float)e.X;
+            mousePosition.Y = (float)e.Y;
             Event ent = new Event();
-            ent.x = (float)e.X;
-            ent.y = (float)e.Y;
+            ent.position = mousePosition;
             ent.type = Event.Type.PointMove;
             List<Control> currentControls = new List<Control>();
             
             control.DispitchEvent(ent, ref currentControls);
 
             Event leaveEvent = new Event();
-            leaveEvent.x = (float)e.X;
-            leaveEvent.y = (float)e.Y;
+            leaveEvent.position = mousePosition;
             leaveEvent.type = Event.Type.PointLeave;
             var leave = controls.Except(currentControls);
             foreach (Control c in leave)
@@ -187,8 +175,7 @@ namespace KUI
             }
 
             Event inEvent = new Event();
-            inEvent.x = (float)e.X;
-            inEvent.y = (float)e.Y;
+            inEvent.position = mousePosition;
             inEvent.type = Event.Type.PointIn;
             var inControls = currentControls.Except(controls);
             foreach (Control c in inControls)
@@ -207,90 +194,40 @@ namespace KUI
         }
         private void OnMouseButton(object? sender, MouseButtonEventArgs e)
         {
-            
-            Event ent = new Event();
-            ent.x = Env.x;
-            ent.y = Env.x;
-            ent.type = Event.Type.PointDown;
-            ent.button = (int)e.Button;
-            ent.action = (Event.PointAction)e.Action;
-            if(controls.Count <= 0)
+            if (controls.Count <= 0)
             {
                 return;
             }
-            var c=controls.Last();
-            c.OnEvent(ent);
+            var hit = controls.Last();
+
+            Event ent = new Event();
+            ent.position = mousePosition;
+            ent.button = (int)e.Button;
+
+            if(e.Action== InputState.Press)
+            {
+                ent.type = Event.Type.PointDown;
+                lastPress = mousePosition;
+                mouseStay = true;
+            }
+            else if (e.Action == InputState.Release)
+            {
+                if(mouseStay && lastPress== mousePosition)
+                {
+                    ent.type = Event.Type.PointClick;
+                    hit.OnEvent(ent);
+                }
+                lastPress = Vector2.Zero;
+                ent.type = Event.Type.PointUp;
+                mouseStay = false;
+            }
+            hit.OnEvent(ent);
         }
         private void OnMouseLeave(object? sender, EventArgs e)
         {
             controls.Clear();
         }
         #endregion
-
-
-        //private void YogaLayout()
-        //{
-        //    config = new YogaConfig();
-
-        //    layout = new YogaNode(config);
-        //    layout.Wrap = YogaWrap.Wrap;
-        //    layout.Height = 100;
-
-
-        //    YogaNode root_child0 = new YogaNode(config);
-        //    root_child0.Width = 30;
-        //    root_child0.Height = 30;
-        //    layout.Insert(0, root_child0);
-
-        //    YogaNode root_child1 = new YogaNode(config);
-        //    root_child1.Width = 30;
-        //    root_child1.Height = 30;
-        //    layout.Insert(1, root_child1);
-        //    layout.CalculateLayout();
-        //    Console.WriteLine(root_child1.LayoutY);
-        //    Console.WriteLine(root_child1.LayoutX);
-
-
-        //    YogaNode root_child2 = new YogaNode(config);
-        //    root_child2.Width = 30;
-        //    root_child2.Height = 30;
-        //    layout.Insert(2, root_child2);
-
-        //    YogaNode root_child3 = new YogaNode(config);
-        //    root_child3.Width = 30;
-        //    root_child3.Height = 30;
-        //    layout.Insert(3, root_child3);
-
-        //    for (int i = 4; i < 20; i++)
-        //    {
-        //        YogaNode c = new YogaNode(config);
-        //        c.Width = 30;
-        //        c.Height = 30;
-
-        //        layout.AddChild(c);
-        //        YogaNode c1 = new YogaNode(config);
-        //        c1.Width = 12;
-        //        c1.Height = 12;
-        //        c.AddChild(c1);
-
-                
-        //    }
-
-        //    layout.StyleDirection = YogaDirection.LTR;
-        //    layout.CalculateLayout();
-        //}
-
-        //private void RenderYoga(YogaNode layout)
-        //{
-        //    var headerPaint = new SKPaint { Color = SKColor.Parse("#3399EE"), Style = SKPaintStyle.Stroke, IsAntialias = true };
-        //    canvas.DrawRect(layout.LayoutX, layout.LayoutY, layout.LayoutWidth, layout.LayoutHeight, headerPaint);
-
-        //    for (int i = 0; i < layout.Count; i++)
-        //    {
-        //        var child = layout[i];
-        //        RenderYoga(child);
-        //    }
-        //}
 
     }
 }

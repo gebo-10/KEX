@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -18,17 +19,9 @@ namespace KUI
             PointUp,
             PointClick,
         }
-        public enum PointAction
-        {
-            Release,
-            Press,
-            Repeat,
-        }
         public Type type;
-        public float x;
-        public float y;
+        public Vector2 position;
         public int button;
-        public PointAction action;
     }
     public class EventSystem
     {

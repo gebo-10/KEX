@@ -18,10 +18,6 @@ namespace KUI
 	public delegate void EventProcesser(Event e);
 	public class Control
 	{
-		[DllImport("user32.dll")]
-		// GetCursorPos() makes everything possible
-		static extern bool GetCursorPos(ref Point lpPoint);
-
 		public int id=0;
 		public bool active;
 		public bool visible;
@@ -62,7 +58,6 @@ namespace KUI
         {
 			layout.Control = this;
 			OnRender += (SKCanvas canvas, Rect rect) => {
-				
 				if (catched)
                 {
 					var p = new SKPaint { Color = SKColor.Parse("#3399EE"), Style = SKPaintStyle.Fill, IsAntialias = true };
@@ -83,62 +78,62 @@ namespace KUI
 			OnBubbling += (Event e) => {
 				//Console.WriteLine("bubbling" + id); 
 			};
-			OnEvent += (Event e) => { 
-				Console.WriteLine("Event" + id +"   "+ e.type);
-				switch (e.type)
-				{
-					case Event.Type.PointMove:
-                        if (drag && Glfw.GetMouseButton(Env.root.window,MouseButton.Left)== InputState.Press)
-                        {
-                            //Point defPnt = new Point();
-                            //GetCursorPos(ref defPnt);
-                            //Glfw.SetWindowPosition(Env.root.window, defPnt.X + offset.X, defPnt.Y + offset.Y);
-                        }
-						break;
-					case Event.Type.PointIn:
-						catched = true;
-						break;
-					case Event.Type.PointLeave:
-						//drag = false;
-						catched = false;
-						break;
-					case Event.Type.PointDown:
-						if(e.action== Event.PointAction.Press)
-                        {
-							drag = true;
-							Point defPnt = new Point();
-							GetCursorPos(ref defPnt);
-							int x, y;
-							Glfw.GetWindowPosition(Env.root.window, out x, out y);
-							offset.X= x-defPnt.X;
-							offset.Y= y-defPnt.Y;
+			OnEvent += (Event e) => { };
+				//OnEvent += (Event e) => { 
+				//	Console.WriteLine("Event" + id +"   "+ e.type);
+				//	switch (e.type)
+				//	{
+				//		case Event.Type.PointMove:
+				//                     if (drag && Glfw.GetMouseButton(Env.root.window,MouseButton.Left)== InputState.Press)
+				//                     {
+				//                         //Point defPnt = new Point();
+				//                         //GetCursorPos(ref defPnt);
+				//                         //Glfw.SetWindowPosition(Env.root.window, defPnt.X + offset.X, defPnt.Y + offset.Y);
+				//                     }
+				//			break;
+				//		case Event.Type.PointIn:
+				//			catched = true;
+				//			break;
+				//		case Event.Type.PointLeave:
+				//			//drag = false;
+				//			catched = false;
+				//			break;
+				//		case Event.Type.PointDown:
+				//			drag = true;
+				//			Point defPnt = new Point();
+				//			GetCursorPos(ref defPnt);
+				//			int x, y;
+				//			Glfw.GetWindowPosition(Env.root.window, out x, out y);
+				//			offset.X= x-defPnt.X;
+				//			offset.Y= y-defPnt.Y;
 
-                            Thread t2 = new Thread(() =>
-                            {
-                                while (drag)
-                                {
-                                    Point defPnt = new Point();
-                                    GetCursorPos(ref defPnt);
-                                    Glfw.SetWindowPosition(Env.root.window, defPnt.X + offset.X, defPnt.Y + offset.Y);
-                                    //Thread.Sleep(30);
-                                }
-                            });//创建线程
-                            t2.Start();
-                        }
-						if (e.action== Event.PointAction.Release)
-                        {
-							drag = false;
-						}
-						Console.WriteLine(e.action);
-						//Thread t2 = new Thread(() => {
-      //                      var w = new Window();
-      //                      w.Open(100, 100, "hahah",Env.root.window);
-      //                  });//创建线程
-						//t2.Start();
-						break;
-				}
-			};
-		}
+				//                     Thread t2 = new Thread(() =>
+				//                     {
+				//                         while (drag)
+				//                         {
+				//                             Point defPnt = new Point();
+				//                             GetCursorPos(ref defPnt);
+				//                             Glfw.SetWindowPosition(Env.root.window, defPnt.X + offset.X, defPnt.Y + offset.Y);
+				//                             //Thread.Sleep(30);
+				//                         }
+				//                     });//创建线程
+				//                     t2.Start();
+
+				//			break;
+				//		case Event.Type.PointUp:
+				//			drag = false;
+				//			break;
+				//		case Event.Type.PointClick:
+				//                     Thread t3 = new Thread(() =>
+				//                     {
+				//                         var w = new Window();
+				//                         w.Open(100, 100, "hahah");
+				//                     });
+				//                     t3.Start();
+				//                     break;
+				//	}
+				//};
+			}
 		
 		public virtual void AddChild(Control control)
 		{
@@ -170,7 +165,7 @@ namespace KUI
 
 		public bool DispitchEvent(Event e, ref List<Control> controls)//,List<Control> controls
 		{
-			if (e.x > absPosition.X && e.x < absPosition.X + layout.LayoutWidth && e.y > absPosition.Y && e.y < absPosition.Y + layout.LayoutHeight)
+			if (e.position.X > absPosition.X && e.position.X < absPosition.X + layout.LayoutWidth && e.position.Y > absPosition.Y && e.position.Y < absPosition.Y + layout.LayoutHeight)
 			{
 				controls.Add(this);
 				OnCatch(e);
@@ -195,16 +190,5 @@ namespace KUI
             }
 		}
 
-
-		//public void Layout(float width,float height)
-  //      {
-
-		//	layout.CalculateLayout(width, height);
-  //          for (int i = 0; i < layout.Count; i++)
-  //          {
-		//		layout[i].Control.Layout (layout.LayoutWidth,layout.LayoutHeight);
-  //          }
-			
-		//}
 	}
 }

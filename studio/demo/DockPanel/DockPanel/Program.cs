@@ -1,7 +1,7 @@
 ﻿using KUI;
 using Facebook.Yoga;
 var w = new Window();
-Env.root = w;
+
 w.control.layout.Wrap = YogaWrap.Wrap;
 w.control.layout.FlexDirection = YogaFlexDirection.Row;
 //w.control.layout.StyleDirection = YogaDirection.LTR;
