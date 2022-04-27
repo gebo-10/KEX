@@ -10,9 +10,7 @@ namespace KUI
     public class Env
     {
         public static YogaConfig yogaConfig = new YogaConfig();
-        
-        //public static float x;
-        //public static float y;
-        //public static Window root;
+        public static bool dockStatus=false;
+        public static Window dockWindow = null;
     }
 }

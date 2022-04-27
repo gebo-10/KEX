@@ -1,39 +1,78 @@
 ﻿using KUI;
 using Facebook.Yoga;
+//Env.yogaConfig.PointScaleFactor = 100f;
+
 var w = new Window();
-
-w.control.layout.Wrap = YogaWrap.Wrap;
-w.control.layout.FlexDirection = YogaFlexDirection.Row;
+//w.control.layout.Wrap = YogaWrap.Wrap;
+w.control.layout.FlexDirection = YogaFlexDirection.Column;
+//w.control.layout.Display = YogaDisplay.Flex;
 //w.control.layout.StyleDirection = YogaDirection.LTR;
-for (int i = 0; i < 2; i++)
 {
-    var c1 = new Control(40+i*5, 40 + i * 5);
-    w.control.AddChild(c1);
-    c1.id = i+1;
-    //c1.layout.Wrap = YogaWrap.Wrap;
-    c1.layout.AlignItems = YogaAlign.Center;
-    c1.layout.JustifyContent = YogaJustify.Center;
-    //c1.layout.FlexDirection = YogaFlexDirection.Row;
-    c1.layout.Margin = 10;
-    {
-        var c2 = new Control(50, 50);
-        c2.id = i + 1 + 100;
-        c1.AddChild(c2);
-
-        var c21 = new Control(20, 20);
-        c2.id = i + 1 + 100+2000;
-        c2.AddChild(c21);
-    }
-    {
-        var c2 = new Control(10, 10);
-        c2.id = i + 1 + 100 + 1000;
-        c1.AddChild(c2);
-
-        //c2.layout.Display = YogaDisplay.None;
-    }
-
+    var dragRegion = new DragRegion();
+    dragRegion.layout.Height = 30;
+    dragRegion.layout.Width = YogaValue.Auto();
+    //dragRegion.layout.MinWidth = 200;
+    w.control.AddChild(dragRegion);
 }
-w.Open(500, 500, "haha");
+{
+    var content = new Control();
+    content.layout.Height = YogaValue.Auto();
+    content.layout.Width = YogaValue.Auto();
+    content.layout.FlexGrow = 1;
+    content.layout.Margin = 5;
+    //content.layout.BorderWidth = 5;
+    content.layout.FlexDirection = YogaFlexDirection.Row;
+    //w.control.layout.Wrap = YogaWrap.NoWrap;
+    w.control.AddChild(content);
+    {
+        var content1 = new Control();
+        content1.layout.Height = YogaValue.Auto();
+        content1.layout.Width =200;
+        content1.layout.Margin = 5;
+        content.AddChild(content1);
+    }
+    {
+        //var content1 = new DockRegion();
+        var content1 = new Control();
+        content1.layout.Height = YogaValue.Auto();
+        content1.layout.Width = YogaValue.Auto();
+        content1.layout.Margin = 5;
+        content1.layout.FlexGrow= 1;
+        content.AddChild(content1);
+    }
+}
+
+
+
+//for (int i = 0; i < 2; i++)
+//{
+//    var c1 = new Control(40 + i * 5, 40 + i * 5);
+//    w.control.AddChild(c1);
+//    c1.id = i + 1;
+//    //c1.layout.Wrap = YogaWrap.Wrap;
+//    c1.layout.AlignItems = YogaAlign.Center;
+//    c1.layout.JustifyContent = YogaJustify.Center;
+//    //c1.layout.FlexDirection = YogaFlexDirection.Row;
+//    c1.layout.Margin = 10;
+//    {
+//        var c2 = new Control(50, 50);
+//        c2.id = i + 1 + 100;
+//        c1.AddChild(c2);
+
+//        var c21 = new Control(20, 20);
+//        c2.id = i + 1 + 100 + 2000;
+//        c2.AddChild(c21);
+//    }
+//    {
+//        var c2 = new Control(10, 10);
+//        c2.id = i + 1 + 100 + 1000;
+//        c1.AddChild(c2);
+
+//        //c2.layout.Display = YogaDisplay.None;
+//    }
+
+//}
+w.Open(500, 500, "haha",false,true);
 
 //namespace Glfw.Skia
 //{
@@ -46,7 +85,7 @@ w.Open(500, 500, "haha");
 
 //    class Program
 //    {
-//        private static NativeWindow window;
+//        private static NativeWindow nativeWindow;
 //        private static SKCanvas canvas;
 
 //        private static Keys? lastKeyPressed;
@@ -61,17 +100,17 @@ w.Open(500, 500, "haha");
 
 //        static void Main(string[] args)
 //        {
-//            using (Program.window = new NativeWindow(1800, 600, "Skia Example"))
+//            using (Program.nativeWindow = new NativeWindow(1800, 600, "Skia Example"))
 //            {
 //                Program.SubscribeToWindowEvents();
 
-//                using (var context = Program.GenerateSkiaContext(Program.window))
+//                using (var context = Program.GenerateSkiaContext(Program.nativeWindow))
 //                {
-//                    using (var skiaSurface = Program.GenerateSkiaSurface(context, Program.window.ClientSize))
+//                    using (var skiaSurface = Program.GenerateSkiaSurface(context, Program.nativeWindow.ClientSize))
 //                    {
 //                        Program.canvas = skiaSurface.Canvas;
 //                        YogaLayout();
-//                        while (!Program.window.IsClosing)
+//                        while (!Program.nativeWindow.IsClosing)
 //                        {
 //                            Program.Render();
 //                            Glfw.WaitEvents();
@@ -83,10 +122,10 @@ w.Open(500, 500, "haha");
 
 //        private static void SubscribeToWindowEvents()
 //        {
-//            Program.window.SizeChanged += Program.OnWindowsSizeChanged;
-//            Program.window.Refreshed += Program.OnWindowRefreshed;
-//            Program.window.KeyPress += Program.OnWindowKeyPress;
-//            Program.window.MouseMoved += Program.OnWindowMouseMoved;
+//            Program.nativeWindow.SizeChanged += Program.OnWindowsSizeChanged;
+//            Program.nativeWindow.Refreshed += Program.OnWindowRefreshed;
+//            Program.nativeWindow.KeyPress += Program.OnWindowKeyPress;
+//            Program.nativeWindow.MouseMoved += Program.OnWindowMouseMoved;
 //        }
 
 //        private static GRContext GenerateSkiaContext(NativeWindow nativeWindow)
@@ -145,7 +184,7 @@ w.Open(500, 500, "haha");
 //            //Program.canvas.DrawText("Press Enter to Exit.", 10, 160, exitInfoPaint);
 
 //            Program.canvas.Flush();
-//            Program.window.SwapBuffers();
+//            Program.nativeWindow.SwapBuffers();
 //        }
 
 //        #region Window Events Handlers
@@ -163,7 +202,7 @@ w.Open(500, 500, "haha");
 //            Program.lastKeyPressed = e.Key;
 //            if (e.Key == Keys.Enter || e.Key == Keys.NumpadEnter)
 //            {
-//                Program.window.Close();
+//                Program.nativeWindow.Close();
 //            }
 //        }
 
