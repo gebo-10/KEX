@@ -7,7 +7,9 @@
 #include <kengine/util/skin_importer.h>
 #include <kengine/resource/buildin/plane_mesh.h>
 #include <kengine/scene/object.h>
-
+#include <kengine/font/font.h>
+#include "logic/arcball_monitor.h"
+#include "logic/grid_map.h"
 namespace kengine {
 	struct CameraData {
 		//int camera_id;
@@ -70,32 +72,74 @@ namespace kengine {
 		int rotate=0;
 		void init() {
 			root = std::make_shared<Object>();
+			//{
 
-			auto object1 = std::make_shared<Object>();
-			comp_transform = std::make_shared<Transform>();
-			object1->add_component(comp_transform);
+			//auto object1 = std::make_shared<Object>();
+			//comp_transform = std::make_shared<Transform>();
+			//object1->add_component(comp_transform);
 
-			auto comp_mesh = std::make_shared<MeshRender>();
-			comp_mesh->instance_count = 1;
-			//comp_mesh->material= Env.assets_database.get_resource<Material>(NAME("Assets/Bundle/per_frag_diffuse.material"));
-			comp_mesh->material = MatGLSLImport::import("main/material/default.mg");
-			//comp_mesh->material = MatGLSLImport::import("main/material/vertex_animation.mg");
-			//auto texture = TextureImporter::import("main/texture/miku.png");
-			auto texture = TextureImporter::import("main/texture/CesiumMan.jpg",true); 
-			comp_mesh->material->add_texture(1, texture);
+			//auto comp_mesh = std::make_shared<MeshRender>();
+			//comp_mesh->instance_count = 1;
+			////comp_mesh->material= Env.assets_database.get_resource<Material>(NAME("Assets/Bundle/per_frag_diffuse.material"));
+			//comp_mesh->material = MatGLSLImport::import("main/material/default.mg");
+			////comp_mesh->material = MatGLSLImport::import("main/material/vertex_animation.mg");
+			////auto texture = TextureImporter::import("main/texture/miku.png");
+			//auto texture = TextureImporter::import("main/texture/CesiumMan.jpg",true); 
+			//comp_mesh->material->add_texture(1, texture);
 
-			//comp_mesh->mesh = Env.assets_database.get_resource<Mesh>(NAME("Assets/Bundle/box.fbx"));
-			//comp_mesh->mesh = MeshImporter::import("main/mesh/planet.obj");
-			comp_mesh->mesh = std::make_shared<PlaneMesh>();
+			////comp_mesh->mesh = Env.assets_database.get_resource<Mesh>(NAME("Assets/Bundle/box.fbx"));
+			////comp_mesh->mesh = MeshImporter::import("main/mesh/planet.obj");
+			//comp_mesh->mesh = std::make_shared<PlaneMesh>();
 
-			object1->add_component(comp_mesh);
+			//object1->add_component(comp_mesh);
 
 
-			//auto skin = SkinImporter::import("main/mesh/CesiumMan.gltf");
-			//skin->init(comp_mesh->mesh, MatGLSLImport::import("main/material/bone_transform.cs.mg") );
-			//object1->add_component(skin);
+			////auto skin = SkinImporter::import("main/mesh/CesiumMan.gltf");
+			////skin->init(comp_mesh->mesh, MatGLSLImport::import("main/material/bone_transform.cs.mg") );
+			////object1->add_component(skin);
 
-			root->add_child(object1);
+			//root->add_child(object1);
+			//}
+
+			//{
+			//	auto ui = std::make_shared<Object>();
+			//	auto tr = std::make_shared<Transform>();
+			//	tr->set_translate(vec3(0,1,0));
+			//	ui->add_component(tr);
+
+			//	auto comp_mesh = std::make_shared<MeshRender>();
+			//	comp_mesh->instance_count = 1;
+			//	comp_mesh->material = MatGLSLImport::import("main/material/texture.mg");
+
+			//	Font font;
+			//	auto texture = font.GetStrTexture("x");
+			//	comp_mesh->material->add_texture(1, texture);
+
+			//	comp_mesh->mesh = std::make_shared<PlaneMesh>();
+
+			//	ui->add_component(comp_mesh);
+			//	root->add_child(ui);
+			//}
+
+
+			//{
+			//	auto go = std::make_shared<Object>();
+			//	auto tr = std::make_shared<Transform>();
+			//	tr->set_translate(vec3(0, 1, 0));
+			//	go->add_component(tr);
+
+			//	auto comp_mesh = std::make_shared<MeshRender>();
+			//	comp_mesh->instance_count = 1;
+			//	comp_mesh->material = MatGLSLImport::import("main/material/grid.mg");
+
+			//	auto texture = TextureImporter::import("main/texture/CesiumMan.jpg", true);
+			//	comp_mesh->material->add_texture(1, texture);
+
+			//	comp_mesh->mesh = std::make_shared<PlaneMesh>();
+
+			//	go->add_component(comp_mesh);
+			//	root->add_child(go);
+			//}
 
 			/// ///////////////////////////////////////////////////////////////
 			{
@@ -108,81 +152,141 @@ namespace kengine {
 
 				auto camera_transform = std::make_shared<Transform>();
 				camera_transform->set_translate(vec3(0, 1, -5));
-				//camera_transform->set_rotate(vec3(0, 180, 0));
+				camera_transform->set_rotate(vec3(0, 20, 0));
 				camera_go->add_component(camera_transform);
 				//cameras.push_back(camera_go);
-				root->add_child(camera_go);
-			}
-			/// ///////////////////////////////////////////////////////////////
-			{
-				ObjectPtr camera_go = std::make_shared<Object>();
-				CameraPtr camera;
-				camera = std::make_shared<Camera>();
-				camera->set_type(CameraType::PERSPECTIVE);
-				camera->set_view_rect(0.5, 0.5, 0.5, 0.5);
-				camera->set_clear_color(color_green);
-				camera_go->add_component(camera);
 
-				auto camera_transform = std::make_shared<Transform>();
-				camera_transform->set_translate(vec3(0, 0.5, -4));
-				camera_go->add_component(camera_transform);
-				//cameras.push_back(camera_go);
+				auto arc = std::make_shared<ArcballMonitor>();
+				camera_go->add_component(arc);
+
 				root->add_child(camera_go);
 			}
 			/// ///////////////////////////////////////////////////////////////
+			//{
+			//	ObjectPtr camera_go = std::make_shared<Object>();
+			//	CameraPtr camera;
+			//	camera = std::make_shared<Camera>();
+			//	camera->set_type(CameraType::PERSPECTIVE);
+			//	camera->set_view_rect(0.5, 0.5, 0.5, 0.5);
+			//	camera->set_clear_color(color_green);
+			//	camera_go->add_component(camera);
+
+			//	auto camera_transform = std::make_shared<Transform>();
+			//	camera_transform->set_translate(vec3(0, 0.5, -4));
+			//	camera_go->add_component(camera_transform);
+			//	//cameras.push_back(camera_go);
+			//	root->add_child(camera_go);
+			//}
+			/// ///////////////////////////////////////////////////////////////
+			//{
+			//	ObjectPtr object = std::make_shared<Object>();
+			//	auto light = std::make_shared<Light>();
+			//	light->type = LightType::Directional;
+			//	light->ambient = color_green *0.2 ;
+			//	light->diffuse = color_pink;
+			//	light->specular = color_red;
+			//	object->add_component(light);
+
+			//	auto transform = std::make_shared<Transform>();
+			//	//transform->set_translate(vec3(0, 0, 0));
+			//	transform->set_rotate(vec3(0, -90, 45) );
+			//	object->add_component(transform);
+			//	root->add_child(object);
+			//}
+			/// ///////////////////////////////////////////////////////////////
+			//{
+			//	ObjectPtr light_root = std::make_shared<Object>();
+			//	{
+			//		auto transform = std::make_shared<Transform>();
+			//		//transform->set_translate(vec3(0, 0, 0));
+			//		//transform->set_rotate(vec3(0, -90, 45));
+			//		light_root->add_component(transform);
+			//		light_transform = transform; //test
+			//	}
+			//	root->add_child(light_root);
+
+			//	ObjectPtr object = std::make_shared<Object>();
+			//	auto light = std::make_shared<Light>();
+			//	light->type = LightType::Point;
+			//	light->ambient = color_green * 0.2;
+			//	light->diffuse = color_pink;
+			//	light->specular = color_red;
+			//	object->add_component(light);
+
+			//	auto transform = std::make_shared<Transform>();
+			//	transform->set_translate(vec3(2, 0, 0));
+			//	//transform->set_rotate(vec3(0, -90, 45));
+			//	object->add_component(transform);
+			//	
+			//	light_root->add_child(object);
+			//}
 			{
 				ObjectPtr object = std::make_shared<Object>();
-				auto light = std::make_shared<Light>();
-				light->type = LightType::Directional;
-				light->ambient = color_green *0.2 ;
-				light->diffuse = color_pink;
-				light->specular = color_red;
-				object->add_component(light);
-
-				auto transform = std::make_shared<Transform>();
-				//transform->set_translate(vec3(0, 0, 0));
-				transform->set_rotate(vec3(0, -90, 45) );
-				object->add_component(transform);
+				//auto transform = std::make_shared<Transform>();
+				//object->add_component(transform);
+				auto gridmap = std::make_shared<GridMap>();
+				object->add_component(gridmap);
 				root->add_child(object);
 			}
-			/// ///////////////////////////////////////////////////////////////
+
 			{
-				ObjectPtr light_root = std::make_shared<Object>();
-				{
-					auto transform = std::make_shared<Transform>();
-					//transform->set_translate(vec3(0, 0, 0));
-					//transform->set_rotate(vec3(0, -90, 45));
-					light_root->add_component(transform);
-					light_transform = transform; //test
-				}
-				root->add_child(light_root);
-
 				ObjectPtr object = std::make_shared<Object>();
-				auto light = std::make_shared<Light>();
-				light->type = LightType::Point;
-				light->ambient = color_green * 0.2;
-				light->diffuse = color_pink;
-				light->specular = color_red;
-				object->add_component(light);
-
 				auto transform = std::make_shared<Transform>();
-				transform->set_translate(vec3(2, 0, 0));
-				//transform->set_rotate(vec3(0, -90, 45));
+				transform->set_translate(vec3(0, 1, 1));
 				object->add_component(transform);
-				
-				light_root->add_child(object);
+				auto gridmap = std::make_shared<GridMap>();
+				object->add_component(gridmap);
+				root->add_child(object);
 			}
+
+			{
+				ObjectPtr object = std::make_shared<Object>();
+				auto transform = std::make_shared<Transform>();
+				transform->set_translate(vec3(0, 2, 2));
+				object->add_component(transform);
+				auto gridmap = std::make_shared<GridMap>();
+				object->add_component(gridmap);
+				root->add_child(object);
+			}
+			trave(root, [](ObjectPtr object) {
+				for (auto c : object->components)
+				{
+					c->start();
+					c->state = ComponentState::Start;
+				}
+			});
 		}
 		
 		void update() {
-			rotate += 1;
-			comp_transform->set_scale(vec3(10, 10, 10));
-			comp_transform->set_rotate(vec3(90, 0, 0));
-			comp_transform->set_translate(vec3(0, 0, 0));
+			//rotate += 1;
+			//comp_transform->set_scale(vec3(10, 10, 10));
+			//comp_transform->set_rotate(vec3(90, 0, 0));
+			//comp_transform->set_translate(vec3(0, 0, 0));
 
-			light_transform->set_rotate(vec3(0, rotate, 0));
+			//light_transform->set_rotate(vec3(0, rotate, 0));
 			//light_transform->set_translate(vec3(2, 0, 0));
-			
+
+			trave(root, [](ObjectPtr object) {
+				for (auto& c : object->components)
+				{
+					if (c->state==ComponentState::Aweak)
+					{
+						c->start();
+						c->state = ComponentState::Start;
+					}
+					c->update();
+				}
+			});
+		}
+
+		void trave(ObjectPtr object, std::function<void(ObjectPtr object)> op) {
+			if (!object->active) {
+				return;
+			}
+			op(object);
+			for (auto& child : object->children) {
+				trave(child, op);
+			}
 		}
 
 		void trave(ObjectPtr object, mat4 father_matrix, bool consider_active,std::function<void(ObjectPtr object, mat4 matrix)> op) {

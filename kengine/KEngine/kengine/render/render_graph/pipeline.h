@@ -22,7 +22,7 @@ namespace kengine {
 			states[(int)PipelineStateType::CLEAR_VALUE] = std::make_shared<ClearValue>(color_black,1.0f,0);
 			states[(int)PipelineStateType::VIEW_PORT] = std::make_shared<ViewPortState>(Rectf(0,0,1,1) );
 			states[(int)PipelineStateType::SCISSOR_STATE] = std::make_shared<ScissorState>(false,Rectf(0, 0, 1, 1));
-
+			states[(int)PipelineStateType::BLEND_MODE] = std::make_shared<BlendMode>(true);
 			for (auto state : states) {
 				if (state != nullptr) {
 					state->setup();

@@ -10,6 +10,7 @@
 #include "service/name_service.h"
 #include "service/async_service.h"
 #include "service/event_service.h"
+#include "service/input_service.h"
 #define Env Environment::instance()
 #define NAME(str) Env.name_service.get_id(str) 
 namespace kengine
@@ -41,6 +42,8 @@ namespace kengine
 		NameService name_service;
 		AsyncService async_service;
 		EventService event_service;
+		InputService input_service;
 		AssetsDatabase assets_database;
+		
 	};
 }

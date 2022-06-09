@@ -61,6 +61,10 @@ namespace kengine {
 			local_dirty = true;
 		}
 
+		void set_matrix(const mat4 m) {
+			mat_local = m;
+		}
+
 	};
 	typedef shared_ptr<Transform> TransformPtr;
 }

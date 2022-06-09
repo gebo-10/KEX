@@ -5,3 +5,4 @@
 #include "clear_value.h"
 #include "view_port_state.h"
 #include "scissor_state.h"
+#include "blend_mode.h"

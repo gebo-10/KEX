@@ -16,7 +16,7 @@ namespace kengine {
 			//auto ts_evaluation = build_shader(GL_TESS_EVALUATION_SHADER, ts_evaluation_source);
 
 			auto succ = build_program(vs, fs, cs, 0, 0, 0);
-
+			assert(succ);
 			if (fs != 0 && vs != 0) {
 				glDeleteShader(vs);
 				glDeleteShader(fs);

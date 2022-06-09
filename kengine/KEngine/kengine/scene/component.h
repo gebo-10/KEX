@@ -8,11 +8,20 @@ namespace kengine {
 		MESH_SKIN,
 		CAMERA,
 		LIGHT,
+		ARCBALL_MONITOR,
+		GRID_MAP,
+	};
+	enum class ComponentState {
+		Undefine,
+		Aweak,
+		Start,
+		Destory,
 	};
 	class Object;
 	class Component
 	{
 	public:
+		ComponentState state= ComponentState::Undefine;
 		ComponentType type;
 		Object* go;
 		Component(ComponentType t):type(t)
@@ -23,8 +32,10 @@ namespace kengine {
 		{
 		}
 
-		virtual void on_attach() {}
-		virtual void on_dettach() {}
+		virtual void aweak() {}
+		virtual void start(){}
+		virtual void dettach() {}
+		virtual void update(){}
 	};
 	typedef shared_ptr<Component> ComponentPtr;
 }

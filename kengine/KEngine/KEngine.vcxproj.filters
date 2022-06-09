@@ -137,6 +137,12 @@
     <Filter Include="kengine\script">
       <UniqueIdentifier>{d56f5fd4-5093-40c4-90eb-df7637dba1e0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="kengine\font">
+      <UniqueIdentifier>{53066b2e-8778-4994-acc4-4263c0017e94}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="kengine\scene\logic">
+      <UniqueIdentifier>{dccbc0b2-277f-4b09-9243-14a9dfde3ae9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="window\main.cc">
@@ -192,6 +198,12 @@
     </ClCompile>
     <ClCompile Include="kengine\script\reg_kengine.cc">
       <Filter>kengine\script</Filter>
+    </ClCompile>
+    <ClCompile Include="kengine\scene\logic\grid_map.cc">
+      <Filter>kengine\scene\logic</Filter>
+    </ClCompile>
+    <ClCompile Include="kengine\scene\logic\arcball_monitor.cc">
+      <Filter>kengine\scene\logic</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -648,6 +660,23 @@
     </ClInclude>
     <ClInclude Include="kengine\script\auto_registe.h">
       <Filter>kengine\script</Filter>
+    </ClInclude>
+    <ClInclude Include="kengine\font\font.h">
+      <Filter>kengine\font</Filter>
+    </ClInclude>
+    <ClInclude Include="kengine\font\character.h" />
+    <ClInclude Include="kengine\font\font_bitmap_cache.h" />
+    <ClInclude Include="kengine\service\input_service.h">
+      <Filter>kengine\service</Filter>
+    </ClInclude>
+    <ClInclude Include="kengine\scene\logic\grid_map.h">
+      <Filter>kengine\scene\logic</Filter>
+    </ClInclude>
+    <ClInclude Include="kengine\scene\logic\arcball_monitor.h">
+      <Filter>kengine\scene\logic</Filter>
+    </ClInclude>
+    <ClInclude Include="kengine\resource\ram\stream_texture.h">
+      <Filter>kengine\resource\ram</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

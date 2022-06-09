@@ -2,16 +2,16 @@
 #include"resource.h"
 #include "../gpu/gpu_texture.h"
 namespace kengine {
-	class Texture : public Resource
+	class StreamTexture : public Resource
 	{
 	public:
-		GPUTexturePtr gpu_texture=nullptr;
+		GPUTexturePtr gpu_texture = nullptr;
 		TextureDesc desc;
 		bool read_enable = false;
 		bool write_enable = false;
 		std::vector<BufferPtr> buffers;
-		Texture() = delete;
-		Texture(TextureDesc& desc): desc(desc){
+		StreamTexture() = delete;
+		StreamTexture(TextureDesc& desc) : desc(desc) {
 			buffers.clear();
 		}
 
@@ -40,7 +40,6 @@ namespace kengine {
 			if (gpu_texture == nullptr) return;
 			gpu_texture->update_data(buffers);
 		}
-
 		//void bind(int bind_pont) {
 		//	if (gpu_texture == nullptr) {
 		//		gpucache();
@@ -48,5 +47,5 @@ namespace kengine {
 		//	gpu_texture->bind(bind_pont);
 		//}
 	};
-	typedef shared_ptr<Texture> TexturePtr;
+	typedef shared_ptr<StreamTexture> StreamTexturePtr;
 }

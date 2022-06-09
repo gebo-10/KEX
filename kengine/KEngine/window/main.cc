@@ -25,7 +25,11 @@
 #pragma comment(lib, "odbc32.lib")
 #pragma comment(lib, "odbccp32.lib")
 #pragma comment(lib , "flatbuffers.lib")
-//#pragma comment(lib, "freetype.lib")
+
+
+#pragma comment(lib, "freetype.lib")
+#pragma comment(lib,"bz2.lib")
+#pragma comment(lib,"libpng16.lib")
 
 #pragma comment(lib, "libzmq.lib")
 
@@ -44,6 +48,7 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 #include <kengine/kengine.h>
+#include <kengine/environment.h>
 kengine::KEngine* engine=nullptr;
 //#include <Effekseer/Effekseer.h>
 //#include <EffekseerRendererGL/EffekseerRendererGL.h>
@@ -79,8 +84,8 @@ int main()
     /* Initialize the library */
     if (!glfwInit())
         return -1;
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 5);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
     glfwWindowHint(GLFW_SAMPLES, 4);
     
@@ -118,6 +123,19 @@ int main()
         //glClearDepth(1.0);
         //glEnable(GL_STENCIL_TEST);
         //glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT |GL_STENCIL_BUFFER_BIT);
+		double xpos, ypos;
+		glfwGetCursorPos(window, &xpos, &ypos);
+        kengine::Env.input_service.mouse_position.x = xpos;;
+        kengine::Env.input_service.mouse_position.y = ypos;
+
+		int state = glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT);
+		if (state == GLFW_PRESS)
+		{
+            kengine::Env.input_service.mouse_button[0] = true;
+        }
+        else {
+            kengine::Env.input_service.mouse_button[0] = false;
+        }
 
         engine->update();
         glfwSwapBuffers(window);

@@ -6,19 +6,19 @@ namespace kengine {
 	//https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glTexStorage2D.xhtml
 	enum class TextureDataFormat
 	{
-		ALPHA= GL_ALPHA,
-		RGBA=GL_RGBA, 
+		ALPHA = GL_ALPHA,
+		RGBA = GL_RGBA,
 		RGB = GL_RGB,
 		RG,
-		RED, 
+		RED=GL_RED,
 		RGBA_INTEGER,
 		RGB_INTEGER,
 		RG_INTEGER,
 		RED_INTEGER,
 		DEPTH_COMPONENT = GL_DEPTH_COMPONENT,
 		DEPTH_STENCIL = GL_DEPTH_STENCIL,
-		LUMINANCE_ALPHA, 
-		LUMINANCE
+		LUMINANCE_ALPHA,
+		LUMINANCE = GL_LUMINANCE
 	};
 	enum class TextureDataType {
 		BYTE = GL_BYTE,
@@ -53,7 +53,7 @@ namespace kengine {
 		DEPTH_COMPONENT32F = GL_DEPTH_COMPONENT32F,
 		DEPTH24_STENCIL8 = GL_DEPTH24_STENCIL8,
 		DEPTH32F_STENCIL8 = GL_DEPTH32F_STENCIL8,
-		LUMINANCE_ALPHA, LUMINANCE, ALPHA = GL_ALPHA,
+		LUMINANCE_ALPHA, LUMINANCE=GL_LUMINANCE, ALPHA = GL_ALPHA,
 
 		COMPRESSED_RGBA8_ETC2_EAC = GL_COMPRESSED_RGBA8_ETC2_EAC,
 		COMPRESSED_R11_EAC,
@@ -115,11 +115,15 @@ namespace kengine {
 		TextureWarpMode t_warp = TextureWarpMode::CLAMP_TO_EDGE;
 
 		bool compressed = false;
+		bool pbo_mode = false;
 		int width=0;
 		int height=0;
 		int depth = 1;
 		int board = 0;
 		int samples = 1;
+		int alignment = 4;
+
+		int memery_size = 0;
 	};
 
 	class GPUTexture
@@ -127,6 +131,7 @@ namespace kengine {
 	public:
 		TextureDesc m_desc;
 		GPUID gpu_id = -1;
+		GPUBufferPtr pbo[2];
 		GPUTexture(const TextureDesc &desc, const std::vector<BufferPtr>& buffers) {
 			assert(buffers.size() != 0);
 			CheckGLError
@@ -134,6 +139,7 @@ namespace kengine {
 			//glEnable((GLenum)desc.type);
 			glGenTextures(1, &gpu_id);
 			glBindTexture((GLenum)desc.type, gpu_id);
+			create(desc);
 			texture_data(desc, buffers);
 			param(desc);
 			CheckGLError
@@ -155,12 +161,23 @@ namespace kengine {
 				//glTexStorage2D((GLenum)desc.type, 0, (GLenum)desc.internal_format, desc.width, desc.height);
 				glTexImage2D((GLenum)desc.type, 0, (GLenum)desc.internal_format, desc.width, desc.height, desc.board, (GLenum)desc.data_format, (GLenum)desc.data_type, 0);
 			}
+			create(desc);
 			param(desc);
 			CheckGLError
 		}
 
 		~GPUTexture() {
 			glDeleteTextures(1, &gpu_id);
+		}
+
+		void create(const TextureDesc& desc){
+			if (desc.pbo_mode) {
+				assert(desc.memery_size > 0);
+				CheckGLError
+				pbo[0] = std::make_shared<GPUBuffer>(desc.memery_size, GPUBufferType::PIXEL_UNPACK_BUFFER, GPUBufferHit::STREAM_DRAW);
+				pbo[1] = std::make_shared<GPUBuffer>(desc.memery_size, GPUBufferType::PIXEL_UNPACK_BUFFER, GPUBufferHit::STREAM_DRAW);
+				CheckGLError
+			}
 		}
 
 		void update_data(const std::vector<BufferPtr>& buffers) {
@@ -173,7 +190,7 @@ namespace kengine {
 			glBindTexture(GL_TEXTURE_2D, gpu_id);
 			texture_data(desc, buffers);
 		}
-		
+
 		void bind(int index) {
 			assert(gpu_id != 0);
 			glActiveTexture(GL_TEXTURE0 + index);
@@ -195,27 +212,79 @@ namespace kengine {
 
 	private:
 		void texture_data(const TextureDesc& desc, const std::vector<BufferPtr>& buffers) {
-			switch (desc.type)
-			{
-			case kengine::TextureType::TEXTURE_2D:
-				if (desc.compressed) {
-					glCompressedTexImage2D((GLenum)desc.type, 0, (GLenum)desc.internal_format, desc.width, desc.height, desc.board, buffers[0]->size, buffers[0]->data);
-				}
-				else {
-					glTexImage2D((GLenum)desc.type, 0, (GLenum)desc.internal_format, desc.width, desc.height, desc.board, (GLenum)desc.data_format, (GLenum)desc.data_type, buffers[0]->data);
-				}
-				break;
-			case kengine::TextureType::TEXTURE_CUBE_MAP:
-				break;
-			case kengine::TextureType::TEXTURE_2D_ARRAY:
-				break;
-			case kengine::TextureType::TEXTURE_3D:
-				break;
-			case kengine::TextureType::TEXTURE_2D_MULTISAMPLE:
-				break;
-			default:
-				break;
+			glPixelStorei(GL_UNPACK_ALIGNMENT, desc.alignment);
+
+			if (desc.pbo_mode) {
+				pbo_upload(desc, buffers);
 			}
+			else {
+				switch (desc.type)
+				{
+				case kengine::TextureType::TEXTURE_2D:
+					if (desc.compressed) {
+						glCompressedTexImage2D((GLenum)desc.type, 0, (GLenum)desc.internal_format, desc.width, desc.height, desc.board, buffers[0]->size, buffers[0]->data);
+					}
+					else {
+						glTexImage2D((GLenum)desc.type, 0, (GLenum)desc.internal_format, desc.width, desc.height, desc.board, (GLenum)desc.data_format, (GLenum)desc.data_type, buffers[0]->data);
+					}
+					break;
+				case kengine::TextureType::TEXTURE_CUBE_MAP:
+					break;
+				case kengine::TextureType::TEXTURE_2D_ARRAY:
+					glTexImage3D((GLenum)desc.type, 0, (GLenum)desc.internal_format, desc.width, desc.height, desc.depth, desc.board, (GLenum)desc.data_format, (GLenum)desc.data_type, buffers[0]->data);
+					break;
+				case kengine::TextureType::TEXTURE_3D:
+					glTexImage3D((GLenum)desc.type, 0, (GLenum)desc.internal_format, desc.width, desc.height, desc.depth, desc.board, (GLenum)desc.data_format, (GLenum)desc.data_type, buffers[0]->data);
+					break;
+				case kengine::TextureType::TEXTURE_2D_MULTISAMPLE:
+					break;
+				default:
+					break;
+				}
+			}
+		}
+
+		void pbo_upload(const TextureDesc& desc, const std::vector<BufferPtr>& buffers) {
+			static int index = 0;
+			// "index" is used to copy pixels from a PBO to a texture object
+			// "nextIndex" is used to update pixels in the other PBO
+			index = (index + 1) % 2;
+			int nextIndex = (index + 1) % 2;
+			CheckGLError
+			// bind the texture and PBO
+			glBindTexture(GL_TEXTURE_2D, gpu_id);
+			//glBindBuffer(GL_PIXEL_UNPACK_BUFFER, pbo[index]->gpu_id);
+			pbo[index]->bind();
+			CheckGLError
+			// copy pixels from PBO to texture object
+			// Use offset instead of ponter.
+			//glTexSubImage2D((GLenum)desc.type, 0, 0, 0, desc.width, desc.height, (GLenum)desc.data_format, (GLenum)desc.data_type, 0);
+			glTexImage2D((GLenum)desc.type, 0, (GLenum)desc.internal_format, desc.width, desc.height, desc.board, (GLenum)desc.data_format, (GLenum)desc.data_type, 0);
+			CheckGLError
+			// bind PBO to update texture source
+			pbo[nextIndex]->bind();
+
+			// Note that glMapBuffer() causes sync issue.
+			// If GPU is working with this buffer, glMapBuffer() will wait(stall)
+			// until GPU to finish its job. To avoid waiting (idle), you can call
+			// first glBufferData() with NULL pointer before glMapBuffer().
+			// If you do that, the previous data in PBO will be discarded and
+			// glMapBuffer() returns a new allocated pointer immediately
+			// even if GPU is still working with the previous data.
+			//glBufferData(GL_PIXEL_UNPACK_BUFFER, desc.memery_size, 0, GL_DYNAMIC_DRAW);
+			CheckGLError
+			// map the buffer object into client's memory
+			void* ptr = pbo[nextIndex]->map(GPUBufferHit::WRITE_ONLY);
+			CheckGLError
+			if (ptr)
+			{
+				std::memcpy(ptr, buffers[0]->data, buffers[0]->size);
+				pbo[nextIndex]->unmap();
+			}
+			CheckGLError
+			// it is good idea to release PBOs with ID 0 after use.
+			// Once bound with 0, all pixel operations are back to normal ways.
+			glBindBuffer(GL_PIXEL_UNPACK_BUFFER, 0);
 		}
 
 		void param(const TextureDesc& desc) {

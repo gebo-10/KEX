@@ -16,6 +16,8 @@ namespace kengine {
 		std::vector<ComponentPtr> components;
 		Object()
 		{
+			children.clear();
+			components.clear();
 		}
 
 		virtual ~Object()
@@ -28,7 +30,8 @@ namespace kengine {
 			}
 			component->go = this;
 			components.push_back(component);
-			component->on_attach();
+			component->aweak();
+			component->state = ComponentState::Aweak;
 			return true;
 		}
 

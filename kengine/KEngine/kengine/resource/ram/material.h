@@ -164,6 +164,15 @@ namespace kengine {
             texture_uniforms.push_back(TextureUniform{ bind_point , texture});
         }
 
+        TexturePtr get_texture(int bind_point) {
+			for (auto& uniform : texture_uniforms) {
+				if (uniform.bind_point == bind_point) {
+                    return uniform.texture;
+				}
+			}
+            return nullptr;
+        }
+
         void add_textures(std::vector<TextureUniform> &uniforms) {
             for (auto& uniform : uniforms) {
                 add_texture(uniform.bind_point, uniform.texture);
